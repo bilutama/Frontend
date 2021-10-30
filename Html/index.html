@@ -5,6 +5,100 @@
     <title>The first html page</title>
 </head>
 <body>
+<h1>The title of the page</h1>
 
+<div>
+    <a href="content_page.html">Content page with an image, an embedded map and other html-elements</a>
+</div>
+
+<hr/>
+<h2>Form</h2>
+<h3>Please fill the form:</h3>
+<form method="post">
+    <div>
+        <label>Name:
+            <input name="username" type="text" placeholder="John Smith">
+        </label>
+
+        <label>Degree
+            <select name="degree">
+                <option value="0" selected>not specified</option>
+                <option value="1">Middle school</option>
+                <option value="2">High School</option>
+                <option value="3">Bachelor</option>
+                <option value="4">Master</option>
+                <option value="5">Ph.D.</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        Age group:
+        <label>
+            <input type="radio" name="radiobuttons" value="0" checked>
+            not specified
+        </label>
+        <label>
+            <input type="radio" name="radiobuttons" value="1">
+            less 18
+        </label>
+        <label>
+            <input type="radio" name="radiobuttons" value="2">
+            18-34
+        </label>
+        <label>
+            <input type="radio" name="radiobuttons" value="3">
+            35+
+        </label>
+    </div>
+    <br/>
+
+    <div>
+        <label>e-mail:
+            <input name="email" type="text" placeholder="johnsmith@mail.com">
+        </label>
+
+    </div>
+    <br/>
+
+    <div>
+        <label>Choose food you like (multiple options possible)<br/>
+            <select multiple name="preferable_food_type">
+                <option value="0">beef</option>
+                <option value="1">pork</option>
+                <option value="2">lamb</option>
+                <option value="3">chicken</option>
+                <option value="4">turkey</option>
+                <option value="5">vegetables</option>
+                <option value="6">fruits</option>
+                <option value="6">bakery</option>
+                <option value="7">diary</option>
+                <option value="7">porridge</option>
+            </select>
+        </label>
+    </div>
+    <br/>
+
+    <div>
+        <label>
+            You can leave a comment:
+            <br/>
+            <textarea name="comment" placeholder="Type here"></textarea>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input name="checkbox" id="personalDataAgreed" type="checkbox"
+                   onchange="isChecked(checkbox, 'submitButton')"/>
+            Agree with privacy policy
+        </label>
+
+    </div>
+
+    <button type="submit" id="submitButton" disabled>Send form</button>
+</form>
+
+<script type="text/javascript" src="checkbox_handler.js"></script>
 </body>
 </html>

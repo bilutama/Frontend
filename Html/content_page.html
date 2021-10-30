@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example content page</title>
+</head>
+<body>
+<h1 id="page_top">Content page</h1>
+
+<h2>Paragraphs</h2>
+<div>
+    <p>
+        This is the first paragraph
+    </p>
+    <p>
+        This is the second paragraph
+    </p>
+</div>
+
+<div>
+    <a href="index.html">Back to the main page</a>
+    <a href="https://www.google.com">Google search page</a>
+</div>
+<hr/>
+
+<h2>Image & embedded map</h2>
+
+<div>
+    <span>The image</span><br/>
+    <img src="resources/field.jpg" alt="Field">
+</div>
+<br/>
+
+<div>
+    <span>The map</span><br/>
+    <iframe width="640" height="350"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=83.08433175086977%2C54.84285243917224%2C83.10266733169557%2C54.847127311978866&amp;layer=mapnik"
+            style="border: 1px solid black"></iframe>
+    <br/>
+    <small><a href="https://www.openstreetmap.org/#map=17/54.84499/83.09350">See larger map</a></small>
+</div>
+<br/>
+<hr/>
+
+<h2>Page elements: lists and tables</h2>
+<span>Unordered list (tag UL)</span>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+</ul>
+<span>Ordered list (tag OL)</span>
+<ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+</ol>
+
+<span>This is the initial table</span>
+<table border="2">
+    <thead>
+    <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+        <th>Column 4</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            Cell 1
+        </td>
+        <td>
+            Cell 2
+        </td>
+        <td>
+            Cell 3
+        </td>
+        <td>
+            Cell 4
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Cell 5
+        </td>
+        <td>
+            Cell 6
+        </td>
+        <td>
+            Cell 7
+        </td>
+        <td>
+            Cell 8
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<span>This is the modified table</span>
+<table border="2">
+    <thead>
+    <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+        <th>Column 4</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="3">
+            Cell 1
+        </td>
+        <td rowspan="2">
+            Cell 2
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            Cell 3
+        </td>
+        <td>
+            Cell 4
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Cell 5
+        </td>
+        <td>
+            Cell 6
+        </td>
+        <td colspan="2">
+            Cell 7
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="#page_top">To the page top</a>
+</body>
+</html>
