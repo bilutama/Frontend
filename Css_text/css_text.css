@@ -1,23 +1,29 @@
-.paragraph {
-    color: red;
-    font-size: 28px;
+.main_text_block {
+    font: 12pt/27px Arial, regular;
+    font-weight: lighter;
+
+    background-color: #feeed6;
+    color: #676565;
+    box-sizing: content-box;
+    margin: 15px 15px 15px 15px;
+    padding: 10px 15px 10px 15px;
+    width: 815px;
+    height: 465px;
+    max-width: 95%;
 }
 
-.main_text_block {
-    background-color: #feeed6;
-    color: #588db3;
-    box-sizing: content-box;
-    width: 800px;
-    margin: 2px 4px 6px 8px;
-    padding: 10px;
+h2 {
+    font: 25pt Arial, regular;
+    margin: 2px 0 2px 0;
 }
 
 .subheader {
-    color: black;
+    color: #588db3;
 }
 
 p {
     text-indent: 20px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: justify;
 }
