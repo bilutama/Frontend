@@ -1,0 +1,23 @@
+.paragraph {
+    color: red;
+    font-size: 28px;
+}
+
+.main_text_block {
+    background-color: #feeed6;
+    color: #588db3;
+    box-sizing: content-box;
+    width: 800px;
+    margin: 2px 4px 6px 8px;
+    padding: 10px;
+}
+
+.subheader {
+    color: black;
+}
+
+p {
+    text-indent: 20px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
