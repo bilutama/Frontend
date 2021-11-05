@@ -39,7 +39,8 @@ section.course_information {
     letter-spacing: 0.08mm;
     line-height: 32px;
     text-align: left;
-    margin: 2px 0 5px 0;
+    margin-top: 2px;
+    margin-bottom: 5px;
 }
 
 section.course_content {
