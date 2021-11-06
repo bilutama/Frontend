@@ -1,65 +1,61 @@
-div.course_description {
-    font: 13pt Arial, regular;
+.course_description {
+    font-family: Arial, regular, sans-serif;
+    font-size: 18px;
     font-weight: lighter;
     background-color: #feeed6;
     color: #676565;
-    box-sizing: content-box;
+    box-sizing: border-box;
     margin: 15px;
     padding: 5px 15px 3px 11px;
-    max-width: 824px;
-    min-height: 452px;
+    max-width: 850px;
 }
 
-h2.course_description_header {
-    font: 24pt/34px Arial, regular;
+.course_description_header {
+    font: 30px/34px Arial, regular;
     margin-top: 3px;
     margin-bottom: 9px;
     text-align: left;
-    letter-spacing: 0.02mm;
 }
 
-span.subheader_information {
-    letter-spacing: 0.1mm;
+.subheader_information {
     font-weight: bold;
     color: #588db3;
     text-align: left;
 }
 
-span.content_subheader {
+.content_subheader {
     font-size: 14pt;
     font-weight: bold;
-    letter-spacing: 0.1mm;
     color: #588db3;
     text-align: left;
 }
 
-section.course_information {
-    font-size: 14pt;
-    letter-spacing: 0.08mm;
+.course_information {
+    font-size: 20px;
     line-height: 32px;
     text-align: left;
     margin-top: 2px;
     margin-bottom: 5px;
 }
 
-
-section.course_content {
-    letter-spacing: 0.04mm;
+.course_content {
     line-height: 32px;
     text-align: justify;
-    text-align-last: left;
+    text-align-last: auto;
+    word-spacing: -2px;
 }
-span.strikethrough_text {
+
+.strikethrough_text {
     text-decoration: line-through
 }
 
-p {
+p.course_content {
     text-indent: 18px;
     line-height: 24px;
     margin-top: 3px;
     margin-bottom: 12px;
 }
 
-p:last-child {
+p.course_content:last-child {
     margin-bottom: 0;
 }
