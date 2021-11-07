@@ -3,30 +3,30 @@
     margin: 15px;
 }
 
-.user_data_table {
-    font-family: Calibri, r, serif;
+table.data_table {
+    font-family: Calibri, serif;
     font-size: 23px;
     font-weight: normal;
     border-collapse: collapse;
-    border: 1px solid #cccccc;
+    border: 1px solid lightgray;
     width: 100%;
 }
 
-.header_cell, .content_cell {
-    border: 1px solid #cccccc;
+th.data_table, td.data_table {
+    border: 1px solid lightgray;
     padding: 12px;
 }
 
-.header_cell {
+th.data_table {
     text-align: left;
     background: #369bde;
-    color: #ffffff;
+    color: white;
 }
 
-.table_row {
+tr.data_table {
     background: #eeeeee;
 }
 
-.table_row:nth-child(2n) {
-    background: #ffffff;
+tr.data_table:nth-child(2n) {
+    background: white;
 }
