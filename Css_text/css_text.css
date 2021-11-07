@@ -14,26 +14,22 @@
     font: 30px/34px Arial, regular;
     margin-top: 3px;
     margin-bottom: 9px;
-    text-align: left;
 }
 
 .subheader_information {
     font-weight: bold;
     color: #588db3;
-    text-align: left;
 }
 
 .content_subheader {
     font-size: 19px;
     font-weight: bold;
     color: #588db3;
-    text-align: left;
 }
 
 .course_information {
     font-size: 20px;
     line-height: 32px;
-    text-align: left;
     margin-top: 2px;
     margin-bottom: 5px;
 }
@@ -46,7 +42,7 @@
 }
 
 .strikethrough_text {
-    text-decoration: line-through
+    text-decoration: line-through;
 }
 
 p.course_content {
