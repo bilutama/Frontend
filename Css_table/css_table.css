@@ -1,0 +1,32 @@
+.main_container {
+    max-width: 860px;
+    margin: 15px;
+}
+
+.user_data_table {
+    font-family: Calibri, r, serif;
+    font-size: 23px;
+    font-weight: normal;
+    border-collapse: collapse;
+    border: 1px solid #cccccc;
+    width: 100%;
+}
+
+.header_cell, .content_cell {
+    border: 1px solid #cccccc;
+    padding: 12px;
+}
+
+.header_cell {
+    text-align: left;
+    background: #369bde;
+    color: #ffffff;
+}
+
+.table_row {
+    background: #eeeeee;
+}
+
+.table_row:nth-child(2n) {
+    background: #ffffff;
+}
