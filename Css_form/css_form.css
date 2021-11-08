@@ -1,0 +1,27 @@
+.form_header {
+    font-family: Arial, sans-serif;
+    font-size: 33px;
+    font-weight: lighter;
+    color: #676565;
+    box-sizing: border-box;
+    margin: 10px 30px;
+}
+
+
+.enroll_form {
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    background-color: #feeed6;
+    color: #676565;
+    box-sizing: border-box;
+    margin: -5px 10px;
+    padding: 18px 15px 3px 22px;
+    max-width: 845px;
+}
+
+button.submit_button {
+    float: right;
+    width: 180px;
+    height: 30px;
+}
