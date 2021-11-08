@@ -3,30 +3,30 @@
     margin: 15px;
 }
 
-table.data_table {
+.data_table {
     font-family: Calibri, serif;
     font-size: 23px;
     font-weight: normal;
     border-collapse: collapse;
-    border: 1px solid lightgray;
+    border: 1px solid #ccc;
     width: 100%;
 }
 
-th.data_table, td.data_table {
-    border: 1px solid lightgray;
+.data_table th, td {
+    border: 1px solid #ccc;
     padding: 12px;
 }
 
-th.data_table {
+.data_table th {
     text-align: left;
     background: #369bde;
     color: white;
 }
 
-tr.data_table {
-    background: #eeeeee;
+.data_table tr {
+    background: #eee;
 }
 
-tr.data_table:nth-child(2n) {
-    background: white;
+.data_table tr:nth-child(2n) {
+    background: #fff;
 }
