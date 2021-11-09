@@ -40,6 +40,7 @@
 .feedback_form textarea {
     min-height: 20px;
     height: 105px;
+    resize: vertical;
 }
 
 .feedback_form label.call_to_action {
