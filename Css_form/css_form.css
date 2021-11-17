@@ -1,25 +1,28 @@
-.form_header {
+.form_header h2 {
     font-family: Arial, sans-serif;
     font-size: 33px;
     font-weight: lighter;
     color: #676565;
     box-sizing: border-box;
-    margin: 10px 30px;
+    margin: 6px 32px;
 }
 
 .feedback_form {
     font-family: Arial, sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
     background-color: #feeed6;
     color: #676565;
     box-sizing: border-box;
-    margin: -5px 10px;
-    padding: 18px 15px 13px 22px;
+    margin: 0 10px;
+    padding: 18px 14px 13px 22px;
+}
+
+.form_header, .feedback_form {
     max-width: 845px;
 }
 
-.feedback_form div {
+.feedback_form div.form_input_div {
     margin-right: 27px;
 }
 
@@ -43,27 +46,38 @@
     resize: vertical;
 }
 
-.feedback_form label.call_to_action {
+.feedback_form .call_to_action {
     font-weight: normal;
     color: #737373;
 }
 
-.feedback_form div.submit_button_container {
-    margin-right: 4px;
+.call_to_action {
+    margin-bottom: 13px;
+}
+
+.feedback_form .submit_button_container {
+    margin-right: 8px;
 }
 
 .submit_button_container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 8px;
+    margin-top: 9px;
+    margin-bottom: 3px;
 }
 
-button {
+button#submitButton {
+    cursor: pointer;
+    font-weight: bold;
     text-align: center;
-    width: 172px;
-    height: 38px;
-    background-color: #588db3;
+    width: 170px;
+    height: 36px;
+    background-color: #378db2;
     color: #fff;
     border: none;
     margin: 0;
+}
+
+button:hover {
+    background-color: #32728d;
 }

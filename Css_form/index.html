@@ -7,28 +7,38 @@
     <link rel="stylesheet" href="css_form.css"/>
 </head>
 <body>
-<h2 class="form_header">Отправить заявку</h2>
+<div class="form_header">
+    <h2>Отправить заявку</h2>
+</div>
+
 <div class="feedback_form">
     <form method="post">
-        <div>
-            <label>Ваше имя<br>
+        <div class="form_input_div">
+            <label>Ваше имя
                 <input name="name" type="text" placeholder="Ваше имя *" required>
-            </label><br>
+            </label>
+        </div>
 
-            <label>Ваш номер телефона<br>
+        <div class="form_input_div">
+            <label>Ваш номер телефона
                 <input name="telephone" type="text" placeholder="Ваш номер телефона *" required>
-            </label><br>
+            </label>
+        </div>
 
-            <label>Ваш email или VK<br>
+        <div class="form_input_div">
+            <label>Ваш email или VK
                 <input name="contact" type="text" placeholder="Ваш email или VK *" required>
-            </label><br>
+            </label>
+        </div>
 
-            <label>Комментарий<br>
+        <div class="form_input_div">
+            <label>Комментарий
                 <textarea name="comment" type="text" placeholder="Комментарий (не обязательно)"></textarea>
-            </label><br>
+            </label>
+        </div>
 
-            <label class="call_to_action">Заполните и отправьте форму, и мы перезвоним Вам по указанному
-                номеру</label><br>
+        <div class="call_to_action">
+            <label>Заполните и отправьте форму, и мы перезвоним Вам по указанному номеру</label>
         </div>
 
         <div class="submit_button_container">
