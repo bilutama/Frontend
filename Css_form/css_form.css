@@ -22,7 +22,7 @@
     max-width: 845px;
 }
 
-.feedback_form div.form_input_div {
+.feedback_form div.input_form_div {
     margin-right: 27px;
 }
 
@@ -78,6 +78,6 @@ button#submitButton {
     margin: 0;
 }
 
-button:hover {
+button#submitButton:hover {
     background-color: #32728d;
 }
