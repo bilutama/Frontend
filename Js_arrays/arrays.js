@@ -30,7 +30,7 @@
         oneHundredElementsArray.push(i);
     }
 
-    console.log("new array: " + oneHundredElementsArray.join(", "));
+    console.log("New array: " + oneHundredElementsArray.join(", "));
 
     var filterEvenNumbers = function (element) {
         if (element % 2 === 0) {
@@ -43,5 +43,5 @@
     }
 
     var evenElementsSquares = oneHundredElementsArray.filter(filterEvenNumbers).map(getNumberSquare);
-    console.log("Even squares: " + evenElementsSquares.join(", "));
+    console.log("Even elements squares: " + evenElementsSquares.join(", "));
 })()
