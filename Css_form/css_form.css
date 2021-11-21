@@ -1,10 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
 .form_header h2 {
     font-family: Arial, sans-serif;
     font-size: 33px;
     font-weight: lighter;
     color: #676565;
     box-sizing: border-box;
-    margin: 6px 32px;
+    margin: 6px 0;
+    padding-left: 22px;
+    border: #588db3;
 }
 
 .feedback_form {
@@ -14,16 +20,18 @@
     background-color: #feeed6;
     color: #676565;
     box-sizing: border-box;
-    margin: 0 10px;
-    padding: 18px 14px 13px 22px;
+    padding-top: 18px;
+    padding-bottom: 11px;
+}
+
+.form_header h2, .feedback_form {
+    padding-left: 22px;
+    padding-right: 22px;
 }
 
 .form_header, .feedback_form {
-    max-width: 845px;
-}
-
-.feedback_form div.input_form_div {
-    margin-right: 27px;
+    margin: 0 10px;
+    max-width: 844px;
 }
 
 .feedback_form input, .feedback_form textarea {
@@ -32,7 +40,7 @@
     height: 15px;
     margin-top: 8px;
     margin-bottom: 19px;
-    padding: 12px 10px;
+    padding: 20px 10px;
     border: none;
 }
 
@@ -42,7 +50,8 @@
 
 .feedback_form textarea {
     min-height: 20px;
-    height: 105px;
+    height: 128px;
+    padding: 10px;
     resize: vertical;
 }
 
@@ -55,18 +64,13 @@
     margin-bottom: 13px;
 }
 
-.feedback_form .submit_button_container {
-    margin-right: 8px;
-}
-
 .submit_button_container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 9px;
-    margin-bottom: 3px;
+    margin: 9px 0 4px;
 }
 
-button#submitButton {
+.submit_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
@@ -78,6 +82,6 @@ button#submitButton {
     margin: 0;
 }
 
-button#submitButton:hover {
+.submit_button:hover {
     background-color: #32728d;
 }
