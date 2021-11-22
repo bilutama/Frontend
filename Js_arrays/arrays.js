@@ -23,7 +23,7 @@
         return accumulator;
     }, 0);
 
-    console.log("Sum of even elements of array: " + evenElementsSum);
+    console.log("Even array elements sum: " + evenElementsSum);
 
     var newArrayLength = 100;
     var oneHundredElementsArray = [];
