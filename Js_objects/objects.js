@@ -1,7 +1,9 @@
 (function () {
+    "use strict";
+
     var countries = [
         {
-            country: "Germany",
+            countryName: "Germany",
             cities: [
                 {
                     city: "Berlin",
@@ -18,10 +20,14 @@
                 {
                     city: "Cologne",
                     population: 965300
+                },
+                {
+                    city: "Frankfurt",
+                    population: 648000
                 }]
         },
         {
-            country: "France",
+            countryName: "France",
             cities: [
                 {
                     city: "Paris",
@@ -41,7 +47,7 @@
                 }]
         },
         {
-            country: "UK",
+            countryName: "UK",
             cities: [
                 {
                     city: "London",
@@ -61,7 +67,7 @@
                 }]
         },
         {
-            country: "Italy",
+            countryName: "Italy",
             cities: [
                 {
                     city: "Rome",
@@ -81,7 +87,7 @@
                 }]
         },
         {
-            country: "Spain",
+            countryName: "Spain",
             cities: [
                 {
                     city: "Madrid",
@@ -102,5 +108,19 @@
         },
     ];
 
+    var maximumCitiesCount = 0;
+    countries.forEach(function (country) {
+        maximumCitiesCount = country.cities.length > maximumCitiesCount ? country.cities.length : maximumCitiesCount;
+    });
 
+    console.log("Maximum cities count is " + maximumCitiesCount);
+
+    var countriesWithMaximumCitiesCount = [];
+    countries.forEach(function (country){
+        if (country.cities.length === maximumCitiesCount) {
+            countriesWithMaximumCitiesCount.push(country);
+        }
+    });
+
+    console.log(countriesWithMaximumCitiesCount.join(", "))
 })()
