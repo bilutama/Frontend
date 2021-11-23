@@ -1,4 +1,6 @@
 (function () {
+    "use strict";
+
     var array = [1, 3, 4, 5, 6, 9, 0, 17, 20, 2, 56, 31, 15];
     console.log("Initial array: " + array.join(", "));
 
