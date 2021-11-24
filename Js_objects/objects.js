@@ -6,23 +6,23 @@
             countryName: "Germany",
             cities: [
                 {
-                    city: "Berlin",
+                    cityName: "Berlin",
                     population: 3275000
                 },
                 {
-                    city: "Hamburg",
+                    cityName: "Hamburg",
                     population: 1686100
                 },
                 {
-                    city: "Munich",
+                    cityName: "Munich",
                     population: 1185400
                 },
                 {
-                    city: "Cologne",
+                    cityName: "Cologne",
                     population: 965300
                 },
                 {
-                    city: "Frankfurt",
+                    cityName: "Frankfurt",
                     population: 648000
                 }]
         },
@@ -30,19 +30,19 @@
             countryName: "France",
             cities: [
                 {
-                    city: "Paris",
+                    cityName: "Paris",
                     population: 2187526
                 },
                 {
-                    city: "Marseille",
+                    cityName: "Marseille",
                     population: 863310
                 },
                 {
-                    city: "Lyon",
+                    cityName: "Lyon",
                     population: 516092
                 },
                 {
-                    city: "Toulouse",
+                    cityName: "Toulouse",
                     population: 479553
                 }]
         },
@@ -50,19 +50,19 @@
             countryName: "UK",
             cities: [
                 {
-                    city: "London",
+                    cityName: "London",
                     population: 9304016
                 },
                 {
-                    city: "Manchester",
+                    cityName: "Manchester",
                     population: 2730076
                 },
                 {
-                    city: "Birmingham",
+                    cityName: "Birmingham",
                     population: 2607437
                 },
                 {
-                    city: "Leeds",
+                    cityName: "Leeds",
                     population: 1889095
                 }]
         },
@@ -70,19 +70,19 @@
             countryName: "Italy",
             cities: [
                 {
-                    city: "Rome",
+                    cityName: "Rome",
                     population: 2318895
                 },
                 {
-                    city: "Milan",
+                    cityName: "Milan",
                     population: 1236837
                 },
                 {
-                    city: "Naples",
+                    cityName: "Naples",
                     population: 959470
                 },
                 {
-                    city: "Turin",
+                    cityName: "Turin",
                     population: 870456
                 }]
         },
@@ -90,19 +90,19 @@
             countryName: "Spain",
             cities: [
                 {
-                    city: "Madrid",
+                    cityName: "Madrid",
                     population: 3266126
                 },
                 {
-                    city: "Barcelona",
+                    cityName: "Barcelona",
                     population: 1636762
                 },
                 {
-                    city: "Valencia",
+                    cityName: "Valencia",
                     population: 794288
                 },
                 {
-                    city: "Seville",
+                    cityName: "Seville",
                     population: 688592
                 }]
         }
@@ -122,10 +122,12 @@
         }
     });
 
-    countriesWithMaximumCitiesCount.forEach(function (country){
-        console.log(country.countryName + ", cities: " + country.cities.join(", "))
-    });
+    for (var country in countriesWithMaximumCitiesCount) {
+        console.log(country.countryName + ", cities: ");
 
+        for (var city in country.cities) {
+            console.log(city.cityName + ", population: " + city.population)
+        }
+    }
 
-    console.log(countriesWithMaximumCitiesCount.join(", "))
 })()

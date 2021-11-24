@@ -18,11 +18,8 @@
     var lastFiveElements = array.slice(array.length >= elementsCount ? array.length - elementsCount : 0);
     console.log("Last five elements: " + lastFiveElements.join(", "));
 
-    var evenElementsSum;
-
-    evenElementsSum = array.reduce(function (accumulator, element) {
-        accumulator += element % 2 === 0 ? element : 0;
-        return accumulator;
+    var evenElementsSum = array.reduce(function (accumulator, element) {
+        return element % 2 === 0 ? accumulator + element : accumulator;
     }, 0);
 
     console.log("Even array elements sum: " + evenElementsSum);
@@ -36,16 +33,13 @@
 
     console.log("New array: " + oneHundredElementsArray.join(", "));
 
-    var filterEvenNumbers = function (element) {
-        if (element % 2 === 0) {
-            return element;
-        }
-    }
+    var evenElementsSquares = oneHundredElementsArray
+        .filter(function (element) {
+            return element % 2 === 0;
+        })
+        .map(function (element) {
+            return Math.pow(element, 2);
+        });
 
-    var getNumberSquare = function (element) {
-        return Math.pow(element, 2);
-    }
-
-    var evenElementsSquares = oneHundredElementsArray.filter(filterEvenNumbers).map(getNumberSquare);
     console.log("Even elements squares: " + evenElementsSquares.join(", "));
-})()
+})();
