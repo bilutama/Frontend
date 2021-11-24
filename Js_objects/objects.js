@@ -105,7 +105,7 @@
                     city: "Seville",
                     population: 688592
                 }]
-        },
+        }
     ];
 
     var maximumCitiesCount = 0;
@@ -121,6 +121,11 @@
             countriesWithMaximumCitiesCount.push(country);
         }
     });
+
+    countriesWithMaximumCitiesCount.forEach(function (country){
+        console.log(country.countryName + ", cities: " + country.cities.join(", "))
+    });
+
 
     console.log(countriesWithMaximumCitiesCount.join(", "))
 })()
