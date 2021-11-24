@@ -115,19 +115,40 @@
 
     console.log("Maximum cities count is " + maximumCitiesCount);
 
+    // Adding countries with maximum cities count
     var countriesWithMaximumCitiesCount = [];
-    countries.forEach(function (country){
+    countries.forEach(function (country) {
         if (country.cities.length === maximumCitiesCount) {
             countriesWithMaximumCitiesCount.push(country);
         }
     });
 
-    for (var country in countriesWithMaximumCitiesCount) {
-        console.log(country.countryName + ", cities: ");
+    console.log("Countries with maximum cities count:");
 
-        for (var city in country.cities) {
-            console.log(city.cityName + ", population: " + city.population)
-        }
-    }
+    // Printing countries with cities and their population
+    countriesWithMaximumCitiesCount.forEach(function (country) {
+        console.log(country.countryName);
+        country.cities.forEach(function (city) {
+            console.log(city.cityName + ", " + city.population + " citizens");
+        });
+    });
 
-})()
+    var countriesWithPopulation = [];
+
+    countriesWithMaximumCitiesCount.forEach(function (country) {
+        countriesWithPopulation.push({
+            countryName: country.countryName,
+            countryPopulation: country.cities
+                .map(function (city) {
+                    return city.population
+                })
+                .reduce(function (accumulator, population) {
+                    return accumulator + population;
+                })
+        });
+    });
+
+    countriesWithPopulation.forEach(function (country) {
+        console.log(country.countryName + ", total population " + country.countryPopulation);
+    });
+})();
