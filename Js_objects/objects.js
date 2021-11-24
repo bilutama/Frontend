@@ -84,6 +84,10 @@
                 {
                     cityName: "Turin",
                     population: 870456
+                },
+                {
+                    cityName: "Palermo",
+                    population: 648260
                 }]
         },
         {
