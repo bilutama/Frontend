@@ -1,21 +1,32 @@
 (function () {
-    var input = document.getElementsByClassName("input_field");
-    var output = document.getElementsByClassName("output_field");
+    "use strict";
 
-    var input_temperature = input.value.trim();
+    var input_field = document.getElementById("input_field");
+    var output_field = document.getElementById("output_field");
+    var convert_button = document.getElementById("convert_button");
 
-    if (input_temperature === "") {
-        return;
-    }
+    input_field.addEventListener("change", function () {
+        input_field.removeAttribute("style");
+    })
 
-    if (isNaN(parseFloat(input_temperature))) {
-        input_temperature = parseFloat(input_temperature.replace(",", "."));
+    convert_button.addEventListener("click", function () {
+        var input_temperature = input_field.value.trim();
+        output_field.value = "";
 
-        if (isNaN(input_temperature)) {
+        if (input_temperature === "") {
             return;
         }
 
-        input.value = input_temperature;
-        output.value = (input_temperature * 9 / 5 + 32).toFixed(2);
-    }
-})()
+        if (isNaN(Number(input_temperature))) {
+            input_temperature = parseFloat(input_temperature.replace(",", "."));
+
+            if (isNaN(input_temperature)) {
+                input_field.setAttribute("style", "border-color: red");
+                return;
+            }
+        }
+
+        input_field.value = input_temperature;
+        output_field.value = (input_temperature * 9 / 5 + 32).toFixed(2);
+    });
+})();
