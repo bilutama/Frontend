@@ -135,7 +135,6 @@
     }
 
     var countriesWithMaximumCitiesCount = getCountriesWithMaximumCitiesCount(countries);
-
     console.log("Countries with maximum cities count:");
 
     // Printing countries with cities and their population
@@ -160,6 +159,5 @@
     }
 
     var countriesWithPopulation = getCountriesWithPopulation(countries);
-
     console.log(countriesWithPopulation);
 })();
