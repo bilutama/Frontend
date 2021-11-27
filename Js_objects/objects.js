@@ -127,8 +127,10 @@
 
     // Get countries array with maximum cities count
     function getCountriesWithMaximumCitiesCount(countries) {
+        var maximumCitiesCount = getMaximumCitiesCount(countries);
+
         return countries.filter(function (country) {
-            return country.cities.length === getMaximumCitiesCount(countries);
+            return country.cities.length === maximumCitiesCount;
         });
     }
 
