@@ -3,156 +3,154 @@
 
     var countries = [
         {
-            countryName: "Germany",
+            name: "Germany",
             cities: [
                 {
-                    cityName: "Berlin",
+                    name: "Berlin",
                     population: 3275000
                 },
                 {
-                    cityName: "Hamburg",
+                    name: "Hamburg",
                     population: 1686100
                 },
                 {
-                    cityName: "Munich",
+                    name: "Munich",
                     population: 1185400
                 },
                 {
-                    cityName: "Cologne",
+                    name: "Cologne",
                     population: 965300
                 },
                 {
-                    cityName: "Frankfurt",
+                    name: "Frankfurt",
                     population: 648000
                 }]
         },
         {
-            countryName: "France",
+            name: "France",
             cities: [
                 {
-                    cityName: "Paris",
+                    name: "Paris",
                     population: 2187526
                 },
                 {
-                    cityName: "Marseille",
+                    name: "Marseille",
                     population: 863310
                 },
                 {
-                    cityName: "Lyon",
+                    name: "Lyon",
                     population: 516092
                 },
                 {
-                    cityName: "Toulouse",
+                    name: "Toulouse",
                     population: 479553
-                }]
+                }
+            ]
         },
         {
-            countryName: "UK",
+            name: "UK",
             cities: [
                 {
-                    cityName: "London",
+                    name: "London",
                     population: 9304016
                 },
                 {
-                    cityName: "Manchester",
+                    name: "Manchester",
                     population: 2730076
                 },
                 {
-                    cityName: "Birmingham",
+                    name: "Birmingham",
                     population: 2607437
                 },
                 {
-                    cityName: "Leeds",
+                    name: "Leeds",
                     population: 1889095
-                }]
+                }
+            ]
         },
         {
-            countryName: "Italy",
+            name: "Italy",
             cities: [
                 {
-                    cityName: "Rome",
+                    name: "Rome",
                     population: 2318895
                 },
                 {
-                    cityName: "Milan",
+                    name: "Milan",
                     population: 1236837
                 },
                 {
-                    cityName: "Naples",
+                    name: "Naples",
                     population: 959470
                 },
                 {
-                    cityName: "Turin",
+                    name: "Turin",
                     population: 870456
                 },
                 {
-                    cityName: "Palermo",
+                    name: "Palermo",
                     population: 648260
-                }]
+                }
+            ]
         },
         {
-            countryName: "Spain",
+            name: "Spain",
             cities: [
                 {
-                    cityName: "Madrid",
+                    name: "Madrid",
                     population: 3266126
                 },
                 {
-                    cityName: "Barcelona",
+                    name: "Barcelona",
                     population: 1636762
                 },
                 {
-                    cityName: "Valencia",
+                    name: "Valencia",
                     population: 794288
                 },
                 {
-                    cityName: "Seville",
+                    name: "Seville",
                     population: 688592
-                }]
+                }
+            ]
         }
     ];
 
-    var maximumCitiesCount = 0;
-    countries.forEach(function (country) {
-        maximumCitiesCount = country.cities.length > maximumCitiesCount ? country.cities.length : maximumCitiesCount;
-    });
+    var maximumCitiesCount = countries.reduce(function (accumulator, country) {
+        return Math.max(country.cities.length, accumulator);
+    }, 0);
 
     console.log("Maximum cities count is " + maximumCitiesCount);
 
-    // Adding countries with maximum cities count
-    var countriesWithMaximumCitiesCount = [];
-    countries.forEach(function (country) {
-        if (country.cities.length === maximumCitiesCount) {
-            countriesWithMaximumCitiesCount.push(country);
-        }
-    });
+    // Get countries array with maximum cities count
+    var getCountriesWithMaximumCitiesCount = function () {
+        return countries.filter(function (country) {
+            return country.cities.length === maximumCitiesCount;
+        });
+    }
 
     console.log("Countries with maximum cities count:");
 
     // Printing countries with cities and their population
-    countriesWithMaximumCitiesCount.forEach(function (country) {
-        console.log(country.countryName);
+    getCountriesWithMaximumCitiesCount().forEach(function (country) {
+        console.log(country.name);
         country.cities.forEach(function (city) {
-            console.log(city.cityName + ", " + city.population + " citizens");
+            console.log(city.name + ", " + city.population + " citizens");
         });
     });
 
-    var countriesWithPopulation = [];
+    // Get object where keys are countries and values are total population
+    var getCountriesWithPopulation = function () {
+        var countries = {};
 
-    countriesWithMaximumCitiesCount.forEach(function (country) {
-        countriesWithPopulation.push({
-            countryName: country.countryName,
-            countryPopulation: country.cities
-                .map(function (city) {
-                    return city.population
-                })
-                .reduce(function (accumulator, population) {
-                    return accumulator + population;
-                })
+        getCountriesWithMaximumCitiesCount().map(function (country) {
+            countries[country.name] = country.cities.reduce(function (accumulator, city) {
+                return accumulator + city.population;
+            }, 0)
         });
-    });
 
-    countriesWithPopulation.forEach(function (country) {
-        console.log(country.countryName + ", total population " + country.countryPopulation);
-    });
+        return countries;
+    };
+
+    console.log(getCountriesWithPopulation());
 })();
