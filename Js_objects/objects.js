@@ -24,7 +24,8 @@
                 {
                     name: "Frankfurt",
                     population: 648000
-                }]
+                }
+            ]
         },
         {
             name: "France",
@@ -116,23 +117,27 @@
         }
     ];
 
-    var maximumCitiesCount = countries.reduce(function (accumulator, country) {
-        return Math.max(country.cities.length, accumulator);
-    }, 0);
+    function getMaximumCitiesCount(countries) {
+        return countries.reduce(function (accumulator, country) {
+            return Math.max(country.cities.length, accumulator);
+        }, 0);
+    }
 
-    console.log("Maximum cities count is " + maximumCitiesCount);
+    console.log("Maximum cities count is " + getMaximumCitiesCount(countries));
 
     // Get countries array with maximum cities count
-    var getCountriesWithMaximumCitiesCount = function () {
+    function getCountriesWithMaximumCitiesCount(countries) {
         return countries.filter(function (country) {
-            return country.cities.length === maximumCitiesCount;
+            return country.cities.length === getMaximumCitiesCount(countries);
         });
     }
+
+    var countriesWithMaximumCitiesCount = getCountriesWithMaximumCitiesCount(countries);
 
     console.log("Countries with maximum cities count:");
 
     // Printing countries with cities and their population
-    getCountriesWithMaximumCitiesCount().forEach(function (country) {
+    countriesWithMaximumCitiesCount.forEach(function (country) {
         console.log(country.name);
         country.cities.forEach(function (city) {
             console.log(city.name + ", " + city.population + " citizens");
@@ -140,17 +145,19 @@
     });
 
     // Get object where keys are countries and values are total population
-    var getCountriesWithPopulation = function () {
-        var countries = {};
+    function getCountriesWithPopulation(countries) {
+        var countriesWithPopulation = {};
 
-        getCountriesWithMaximumCitiesCount().map(function (country) {
-            countries[country.name] = country.cities.reduce(function (accumulator, city) {
+        countries.forEach(function (country) {
+            countriesWithPopulation[country.name] = country.cities.reduce(function (accumulator, city) {
                 return accumulator + city.population;
-            }, 0)
+            }, 0);
         });
 
-        return countries;
-    };
+        return countriesWithPopulation;
+    }
 
-    console.log(getCountriesWithPopulation());
+    var countriesWithPopulation = getCountriesWithPopulation(countries);
+
+    console.log(countriesWithPopulation);
 })();

@@ -2,11 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Конвертер температур</title>
+    <title>Temperature converter</title>
     <link rel="stylesheet" href="normalize.css"/>
     <link rel="stylesheet" href="temperature.css"/>
+    <script defer src="converter.js"></script>
 </head>
 <body>
-
+<form class="converter_form">
+    <div>
+        <label>Input temperature
+        <input class="input_field" type="text">
+    </label>
+    </div><div>
+        <label>Output temperature
+            <input class="output_field" type="text">
+        </label>
+    </div>
+    <button class="convert_button" type="button">convert</button>
+</form>
 </body>
 </html>
