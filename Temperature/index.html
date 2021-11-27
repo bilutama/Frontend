@@ -8,18 +8,24 @@
     <script defer src="converter.js"></script>
 </head>
 <body>
-<form class="converter_form">
-    <div>
-        <label>Input temperature
-            <input id="input_field" type="text">
-        </label>
-    </div>
-    <div>
-        <label>Output temperature
-            <input disabled id="output_field" type="text">
-        </label>
-    </div>
-    <button id="convert_button" type="button">convert</button>
-</form>
+<div class="form_header">
+    <h2>Temperature converter</h2>
+</div>
+
+<div class="temperature_converter_form">
+    <form class="converter_form">
+        <div>
+            <label>Input temperature
+                <input id="input_field" type="text">
+            </label>
+        </div>
+        <div>
+            <label>Output temperature
+                <input disabled id="output_field" type="text">
+            </label>
+        </div>
+        <button id="convert_button" type="button">convert</button>
+    </form>
+</div>
 </body>
 </html>

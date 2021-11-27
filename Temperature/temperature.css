@@ -4,34 +4,34 @@
 
 .form_header h2 {
     font-family: Arial, sans-serif;
-    font-size: 33px;
+    font-size: 20px;
     font-weight: lighter;
     color: #676565;
     margin: 6px 0;
     border: #588db3;
 }
 
-.feedback_form {
+.temperature_converter_form {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
-    background-color: #feeed6;
+    background-color: #E2DED0;
     color: #676565;
     padding-top: 18px;
     padding-bottom: 11px;
 }
 
-.form_header h2, .feedback_form {
+.form_header h2, .temperature_converter_form {
     padding-left: 22px;
     padding-right: 22px;
 }
 
-.form_header, .feedback_form {
+.form_header, .temperature_converter_form {
     margin: 0 10px;
-    max-width: 844px;
+    max-width: 400px;
 }
 
-.feedback_form input, .feedback_form textarea {
+.temperature_converter_form input, .temperature_converter_form textarea {
     font-weight: normal;
     width: 100%;
     margin-top: 8px;
@@ -40,18 +40,22 @@
     border: none;
 }
 
-.feedback_form input::placeholder, .feedback_form textarea::placeholder {
+.temperature_converter_form input:focus{
+    outline: none;
+}
+
+.temperature_converter_form input::placeholder, .temperature_converter_form textarea::placeholder {
     color: #999;
 }
 
-.feedback_form textarea {
+.temperature_converter_form textarea {
     min-height: 20px;
     height: 128px;
     padding: 10px;
     resize: vertical;
 }
 
-.feedback_form .call_to_action {
+.temperature_converter_form .call_to_action {
     font-weight: normal;
     color: #737373;
 }
@@ -66,18 +70,18 @@
     margin: 9px 0 4px;
 }
 
-.submit_button {
+#convert_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
     width: 170px;
     height: 36px;
-    background-color: #378db2;
+    background-color: #747474;
     color: #fff;
     border: none;
     margin: 0;
 }
 
-.submit_button:hover {
-    background-color: #32728d;
+#convert_button:hover {
+    background-color: #646464;
 }
