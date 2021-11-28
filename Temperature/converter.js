@@ -24,7 +24,7 @@
             input_temperature = parseFloat(input_temperature.replace(",", "."));
 
             if (isNaN(input_temperature)) {
-                input_field.style.border = "2px solid red";
+                input_field.style.border = "2px solid #E33914";
                 input_field.style.padding = "9px 8px";
                 return;
             }
