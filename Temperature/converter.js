@@ -5,8 +5,8 @@
     var output_field = document.getElementById("output_field");
     var convert_button = document.getElementById("convert_button");
 
-    input_field.addEventListener("change", function () {
-        input_field.removeAttribute("style");
+    input_field.addEventListener("focus", function () {
+        input_field.style.border = "none";
     })
 
     convert_button.addEventListener("click", function () {
@@ -21,7 +21,7 @@
             input_temperature = parseFloat(input_temperature.replace(",", "."));
 
             if (isNaN(input_temperature)) {
-                input_field.setAttribute("style", "border-color: red");
+                input_field.style.border = "2px solid red";
                 return;
             }
         }

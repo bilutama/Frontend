@@ -31,7 +31,7 @@
     max-width: 400px;
 }
 
-.temperature_converter_form input, .temperature_converter_form textarea {
+.temperature_converter_form input {
     font-weight: normal;
     width: 100%;
     margin-top: 8px;
@@ -42,6 +42,10 @@
 
 .temperature_converter_form input:focus{
     outline: none;
+}
+
+.temperature_converter_form :disabled{
+    background-color: #eee;
 }
 
 .temperature_converter_form input::placeholder, .temperature_converter_form textarea::placeholder {
