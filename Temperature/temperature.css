@@ -48,38 +48,16 @@
     background-color: #eee;
 }
 
-.temperature_converter_form input::placeholder, .temperature_converter_form textarea::placeholder {
+.temperature_converter_form input::placeholder {
     color: #999;
-}
-
-.temperature_converter_form textarea {
-    min-height: 20px;
-    height: 128px;
-    padding: 10px;
-    resize: vertical;
-}
-
-.temperature_converter_form .call_to_action {
-    font-weight: normal;
-    color: #737373;
-}
-
-.call_to_action {
-    margin-bottom: 13px;
-}
-
-.submit_button_container {
-    display: flex;
-    justify-content: flex-end;
-    margin: 9px 0 4px;
 }
 
 #convert_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    width: 170px;
-    height: 36px;
+    width: 180px;
+    height: 32px;
     background-color: #747474;
     color: #fff;
     border: none;
