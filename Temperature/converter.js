@@ -8,6 +8,7 @@
 
     input_field.addEventListener("focus", function () {
         input_field.style.border = "none";
+        input_field.style.padding = "11px 10px";
     })
 
     convert_button.addEventListener("click", function () {
@@ -24,6 +25,7 @@
 
             if (isNaN(input_temperature)) {
                 input_field.style.border = "2px solid red";
+                input_field.style.padding = "9px 8px";
                 return;
             }
         }
