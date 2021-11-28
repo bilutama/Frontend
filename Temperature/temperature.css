@@ -40,11 +40,11 @@
     border: none;
 }
 
-.temperature_converter_form input:focus{
+.temperature_converter_form input:focus {
     outline: none;
 }
 
-.temperature_converter_form :disabled{
+.temperature_converter_form :disabled {
     background-color: #eee;
 }
 
