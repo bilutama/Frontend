@@ -31,7 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         input_field.value = input_temperature;
-        output_field_kelvins.value = (Number(input_temperature) + 273.15).toFixed(2);
-        output_field_fahrenheits.value = (input_temperature * 9 / 5 + 32).toFixed(2);
+
+        function getKelvinsFromCelsius(celsiusDegrees) {
+            return Number(celsiusDegrees) + 273.15;
+        }
+
+        output_field_kelvins.value = getKelvinsFromCelsius(input_temperature).toFixed(2);
+
+        function getFahrenheitsFromCelsius(celsiusDegrees) {
+            return celsiusDegrees * 9 / 5 + 32;
+        }
+
+        output_field_fahrenheits.value = getFahrenheitsFromCelsius(input_temperature).toFixed(2);
     });
 });
