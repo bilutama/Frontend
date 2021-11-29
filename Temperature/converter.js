@@ -1,4 +1,4 @@
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
     var input_field = document.getElementById("input_field");
@@ -34,4 +34,4 @@
         output_field_kelvins.value = (Number(input_temperature) + 273.15).toFixed(2);
         output_field_fahrenheits.value = (input_temperature * 9 / 5 + 32).toFixed(2);
     });
-})();
+});
