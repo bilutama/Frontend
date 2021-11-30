@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature converter</title>
+    <link rel="icon" href="resources/todo_icon.svg">
+    <link rel="stylesheet" href="normalize.css"/>
+    <link rel="stylesheet" href="todo_list.css"/>
+    <script defer src="todo_list.css"></script>
+</head>
+<body>
+<div class="form_header">
+    <h2>To-do list</h2>
+</div>
+
+<div class="to-do_list">
+    <form class="new_note_form">
+        <div>
+            <label>Input, &#8451
+                <input id="input_field" type="text" placeholder="Celsius">
+            </label>
+        </div>
+        <div>
+            <label>Output, K
+                <input disabled id="output_field_kelvins" type="text" placeholder="Kelvins">
+            </label>
+        </div>
+        <div>
+            <label>Output, &#8457
+                <input disabled id="output_field_fahrenheits" type="text" placeholder="Fahrenheits">
+            </label>
+        </div>
+        <button id="convert_button" type="button">convert</button>
+    </form>
+</div>
+</body>
+</html>

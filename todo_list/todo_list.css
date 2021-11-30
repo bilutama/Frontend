@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+}
+
+.form_header h2 {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: lighter;
+    color: #676565;
+    margin: 6px 0;
+    border: #588db3;
+}
+
+.temperature_converter_form {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #E2DED0;
+    color: #676565;
+    padding-top: 18px;
+    padding-bottom: 11px;
+}
+
+.form_header h2, .temperature_converter_form {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.form_header, .temperature_converter_form {
+    margin: 0 10px;
+    max-width: 300px;
+}
+
+.temperature_converter_form input {
+    font-weight: normal;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 19px;
+    padding: 11px 10px;
+    border: none;
+}
+
+.temperature_converter_form input:focus {
+    outline: none;
+}
+
+.temperature_converter_form :disabled {
+    background-color: #eee;
+}
+
+.temperature_converter_form input::placeholder {
+    color: #999;
+}
+
+#convert_button {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    width: 180px;
+    height: 32px;
+    background-color: #747474;
+    color: #fff;
+    border: none;
+    margin: 0;
+}
+
+#convert_button:hover {
+    background-color: #646464;
+}
