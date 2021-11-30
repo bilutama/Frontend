@@ -6,7 +6,7 @@
     <link rel="icon" href="resources/todo_icon.svg">
     <link rel="stylesheet" href="normalize.css"/>
     <link rel="stylesheet" href="todo_list.css"/>
-    <script defer src="todo_list.css"></script>
+    <script defer src="todo_list.js"></script>
 </head>
 <body>
 <div class="form_header">
@@ -15,23 +15,16 @@
 
 <div class="to-do_list">
     <form class="new_note_form">
-        <div>
-            <label>Input, &#8451
-                <input id="input_field" type="text" placeholder="Celsius">
+        <div class="input_block">
+            <label>Write your note:
+                <input id="new_note" type="text" placeholder="your text">
             </label>
         </div>
-        <div>
-            <label>Output, K
-                <input disabled id="output_field_kelvins" type="text" placeholder="Kelvins">
-            </label>
+        <div class="input_block">
+            <button id="save_note_button" type="button">save</button>
         </div>
-        <div>
-            <label>Output, &#8457
-                <input disabled id="output_field_fahrenheits" type="text" placeholder="Fahrenheits">
-            </label>
-        </div>
-        <button id="convert_button" type="button">convert</button>
     </form>
+    <ul id="todo-list_content"></ul>
 </div>
 </body>
 </html>

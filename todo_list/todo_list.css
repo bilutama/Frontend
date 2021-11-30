@@ -11,7 +11,7 @@
     border: #588db3;
 }
 
-.temperature_converter_form {
+.to-do_list {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -21,17 +21,17 @@
     padding-bottom: 11px;
 }
 
-.form_header h2, .temperature_converter_form {
+.form_header h2, .to-do_list {
     padding-left: 20px;
     padding-right: 20px;
 }
 
-.form_header, .temperature_converter_form {
+.form_header, .to-do_list {
     margin: 0 10px;
-    max-width: 300px;
+    max-width: 500px;
 }
 
-.temperature_converter_form input {
+.to-do_list input {
     font-weight: normal;
     width: 100%;
     margin-top: 8px;
@@ -40,24 +40,28 @@
     border: none;
 }
 
-.temperature_converter_form input:focus {
+.to-do_list input:focus {
     outline: none;
 }
 
-.temperature_converter_form :disabled {
+.to-do_list :disabled {
     background-color: #eee;
 }
 
-.temperature_converter_form input::placeholder {
+.to-do_list input::placeholder {
     color: #999;
 }
 
-#convert_button {
+.input_block {
+    display: inline-block;
+}
+
+#save_note_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    width: 180px;
-    height: 32px;
+    width: 110px;
+    height: 40px;
     background-color: #747474;
     color: #fff;
     border: none;
