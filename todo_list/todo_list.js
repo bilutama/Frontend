@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         var newTodoListItem = document.createElement("li");
-        newTodoListItem.innerHTML = "<span class='todo_note'></span><button class='delete_button' type='button'>";
+        newTodoListItem.innerHTML = "<span class='todo_note'></span><button class='edit_button' type='button'>edit</button><button class='delete_button' type='button'>delete</button>";
         newTodoListItem.querySelector(".todo_note").textContent = text;
 
         todoList.appendChild(newTodoListItem);

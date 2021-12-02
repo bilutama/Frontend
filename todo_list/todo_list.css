@@ -33,7 +33,7 @@
 
 .to-do_list input {
     font-weight: normal;
-    width: 100%;
+    width: auto;
     margin-top: 8px;
     margin-bottom: 19px;
     padding: 11px 10px;
@@ -60,7 +60,7 @@
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    width: 110px;
+    width: 80px;
     height: 40px;
     background-color: #747474;
     color: #fff;
@@ -71,3 +71,20 @@
 #convert_button:hover {
     background-color: #646464;
 }
+
+ul {
+    list-style-type: none;
+}
+
+.delete_button, .edit_button {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    width: auto;
+    height: 30px;
+    background-color: #747474;
+    color: #fff;
+    border: none;
+    margin: 0;
+}
+
