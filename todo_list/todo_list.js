@@ -21,5 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteButton.addEventListener("click", function (){
             newTodoListItem.remove();
         });
+
+        var editButton = newTodoListItem.querySelector(".edit_button");
+        deleteButton.addEventListener("click", function (){
+            newTodoListItem.remove();
+        });
     });
 });
