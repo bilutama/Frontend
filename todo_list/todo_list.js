@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     saveNoteButton.addEventListener("click", function () {
         var text = newNote.value.trim();
 
-        if (text === "") {
+        if (text.length === 0) {
             return
         }
 
