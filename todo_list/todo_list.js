@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var newTodoItem = document.createElement("li");
 
         function setEditMode() {
-            newTodoItem.innerHTML = "<input class='edit-note'>"
+            newTodoItem.innerHTML = "<input class='edit_note'>"
                 + "<button class='save_button' type='button'>save</button>"
                 + "<button class='cancel_button' type='button'>cancel</button>";
 
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         function setViewMode() {
-            newTodoItem.innerHTML = "<span class='todo_note'>"
-                + "</span><button class='edit_button' type='button'>edit</button>"
+            newTodoItem.innerHTML = "<span class='todo_note'></span>"
+                + "<button class='edit_button' type='button'>edit</button>"
                 + "<button class='delete_button' type='button'>delete</button>";
 
             newTodoItem.querySelector(".todo_note").textContent = text;
