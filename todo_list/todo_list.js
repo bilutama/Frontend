@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function setViewMode() {
             newTodoItem.innerHTML = "<span class='todo_note'></span>"
-                + "<button class='edit_button' type='button'>edit</button>"
+                + "<button class='edit_button' type='image' src=\"resources/edit.png\">edit</button>"
                 + "<button class='delete_button' type='button'>delete</button>";
 
             newTodoItem.querySelector(".todo_note").textContent = text;
