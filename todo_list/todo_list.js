@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 setViewMode();
             });
 
-            todoNote.querySelector(".cancel_button").addEventListener("click", function () {
-                setViewMode();
-            });
+            todoNote.querySelector(".cancel_button").addEventListener("click", setViewMode);
         }
 
         function setViewMode() {
@@ -56,12 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 todoNote.remove();
             });
 
-            todoNote.querySelector(".todo_note").addEventListener("click", function () {
-                setEditMode();
-            });
-            todoNote.querySelector(".edit_button").addEventListener("click", function () {
-                setEditMode();
-            });
+            todoNote.querySelector(".todo_note").addEventListener("click", setEditMode);
+            todoNote.querySelector(".edit_button").addEventListener("click", setEditMode);
         }
 
         setViewMode();
