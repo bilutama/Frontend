@@ -6,38 +6,60 @@
     font-family: Arial, sans-serif;
     font-size: 20px;
     font-weight: lighter;
-    color: #676565;
+    color: #443f3f;
     margin: 6px 0;
-    border: #588db3;
+    /*border: #588db3;*/
 }
 
 .to-do_list {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
-    background-color: #E2DED0;
-    color: #676565;
-    padding-top: 18px;
-    padding-bottom: 11px;
+    background-color: #F2F2F2;
+    color: #443f3f;
+    padding: 10px 0;
+    border-radius: 8px;
 }
+ ul#todo-list_content {
+     list-style-type: none;
+     padding-left: 20px;
+ }
 
 .form_header h2, .to-do_list {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .form_header, .to-do_list {
     margin: 0 10px;
-    max-width: 500px;
+    max-width: 600px;
 }
 
-.to-do_list input {
+.to-do_list .edit_note {
+    font-weight: normal;
+    padding: 2px;
+    border: none;
+}
+
+.save_button, .edit_button, .delete_button {
+    padding: 0;
+    margin: 0 5px;
+}
+
+.to-do_list input#new_note {
     font-weight: normal;
     width: auto;
     margin-top: 8px;
     margin-bottom: 19px;
-    padding: 11px 10px;
+    padding: 8px;
     border: none;
+}
+
+.note_block {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
 }
 
 .to-do_list input:focus {
@@ -56,35 +78,19 @@
     display: inline-block;
 }
 
-#save_note_button {
+#add_new_note_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
     width: 80px;
-    height: 40px;
+    height: 34px;
     background-color: #747474;
     color: #fff;
     border: none;
     margin: 0;
+    border-radius: 4px;
 }
 
-#convert_button:hover {
+#add_new_note_button:hover {
     background-color: #646464;
 }
-
-ul {
-    list-style-type: none;
-}
-
-.delete_button, .edit_button {
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-    width: auto;
-    height: 30px;
-    background-color: #747474;
-    color: #fff;
-    border: none;
-    margin: 0;
-}
-
