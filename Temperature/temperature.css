@@ -19,6 +19,7 @@
     color: #676565;
     padding-top: 18px;
     padding-bottom: 11px;
+    border-radius: 4px;
 }
 
 .form_header h2, .temperature_converter_form {
@@ -38,6 +39,7 @@
     margin-bottom: 19px;
     padding: 11px 10px;
     border: none;
+    border-radius: 4px;
 }
 
 input.invalid_input {
@@ -67,6 +69,7 @@ input.invalid_input {
     color: #fff;
     border: none;
     margin: 0;
+    border-radius: 4px;
 }
 
 #convert_button:hover {
