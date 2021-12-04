@@ -8,66 +8,87 @@
     font-weight: lighter;
     color: #443f3f;
     margin: 6px 0;
-    /*border: #588db3;*/
+    padding: 0 10px;
 }
 
 .to-do_list {
     font-family: Arial, sans-serif;
     font-size: 16px;
-    font-weight: bold;
-    background-color: #F2F2F2;
+    font-weight: normal;
+    background-color: #cbcbcb;
     color: #443f3f;
-    padding: 10px 0;
+    padding: 10px 10px;
     border-radius: 8px;
 }
- ul#todo-list_content {
-     list-style-type: none;
-     padding-left: 20px;
- }
 
-.form_header h2, .to-do_list {
-    padding-left: 10px;
-    padding-right: 10px;
+ul#todo-list_content {
+    list-style-type: none;
+    padding-left: 0;
 }
 
 .form_header, .to-do_list {
     margin: 0 10px;
-    max-width: 600px;
+    max-width: 400px;
 }
 
 .to-do_list .edit_note {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
     font-weight: normal;
-    padding: 2px;
+    padding: 3px;
     border: none;
+    width: 100%;
+    background-color: #a8a8a8;
 }
 
-.save_button, .edit_button, .delete_button {
+input#new_note {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    width: 100%;
+    margin: 8px 0 5px;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+}
+
+span.error_message {
+    margin: 0 15px;
+}
+
+.note_block > *, .edit_note_block > * {
+    display: inline;
+    vertical-align: middle;
+    overflow-wrap: inherit;
+    word-break: break-all;
+}
+
+.save_button, .cancel_button, .edit_button, .delete_button {
     padding: 0;
     margin: 0 5px;
 }
 
-.to-do_list input#new_note {
-    font-weight: normal;
-    width: auto;
-    margin-top: 8px;
-    margin-bottom: 19px;
-    padding: 8px;
-    border: none;
+.save_button {
+    display: inline-block;
 }
 
 .note_block {
-    display: inline-block;
-    width: auto;
-    height: auto;
-    vertical-align: middle;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #a8a8a8;
+    border-radius: 4px;
+}
+
+.note_block:hover {
+    background-color: #9d9d9d;
+}
+
+.note_block:hover .edit_button, .note_block:hover .delete_button {
+    display: inline;
 }
 
 .to-do_list input:focus {
     outline: none;
-}
-
-.to-do_list :disabled {
-    background-color: #eee;
 }
 
 .to-do_list input::placeholder {
@@ -78,17 +99,24 @@
     display: inline-block;
 }
 
-#add_new_note_button {
+#add_new_note_button, .save_button, .cancel_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    width: 80px;
-    height: 34px;
+    width: 100px;
+    height: 30px;
     background-color: #747474;
     color: #fff;
     border: none;
     margin: 0;
     border-radius: 4px;
+}
+
+.save_button, .cancel_button {
+    height: 22px;
+    width: 70px;
+    margin: 0 2px;
+    background-color: #6D8299;
 }
 
 #add_new_note_button:hover {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>To-to list</title>
@@ -15,14 +15,11 @@
 
 <div class="to-do_list">
     <form class="new_note_form">
-        <div class="input_block">
-            <label>
-                <input id="new_note" type="text" placeholder="Write your note here">
-            </label>
-        </div>
-        <div class="input_block">
-            <button id="add_new_note_button" type="button">add</button>
-        </div>
+        <label>
+            <input id="new_note" type="text" placeholder="Write your note here">
+        </label>
+        <button id="add_new_note_button" type="button">add</button>
+        <span class="error_message" style="display: none; color: #f00">error: new note cannot be empty</span>
     </form>
     <ul id="todo-list_content"></ul>
 </div>
