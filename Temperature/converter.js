@@ -1,47 +1,52 @@
 document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
-    var input_field = document.getElementById("input_field");
-    var output_field_kelvins = document.getElementById("output_field_kelvins");
-    var output_field_fahrenheits = document.getElementById("output_field_fahrenheits");
-    var convert_button = document.getElementById("convert_button");
+    var inputField = document.getElementById("input_field");
+    var outputFieldKelvins = document.getElementById("output_field_kelvins");
+    var outputFieldFahrenheitDegrees = document.getElementById("output_field_fahrenheit_degrees");
+    var convertButton = document.getElementById("convert_button");
 
-    input_field.addEventListener("focus", function () {
-        input_field.style.border = "none";
-        input_field.style.padding = "11px 10px";
-    })
+    inputField.addEventListener("focus", function () {
+        inputField.classList.remove("invalid_input");
+        document.querySelector(".invalid_input_message").style.display = "none";
+    });
 
-    convert_button.addEventListener("click", function () {
-        var input_temperature = input_field.value.trim();
-        output_field_kelvins.value = "";
-        output_field_fahrenheits.value = "";
+    convertButton.addEventListener("click", function () {
+        var inputTemperature = inputField.value.trim();
+        outputFieldKelvins.value = "";
+        outputFieldFahrenheitDegrees.value = "";
 
-        if (input_temperature === "") {
+        function displayInvalidInputMessage() {
+            document.querySelector(".invalid_input_message").style.display = "inline";
+            inputField.classList.add("invalid_input");
+        }
+
+        if (inputTemperature.length === 0) {
+            displayInvalidInputMessage();
             return;
         }
 
-        if (isNaN(Number(input_temperature))) {
-            input_temperature = parseFloat(input_temperature.replace(",", "."));
+        if (isNaN(Number(inputTemperature))) {
+            inputTemperature = parseFloat(inputTemperature.replace(",", "."));
 
-            if (isNaN(input_temperature)) {
-                input_field.style.border = "2px solid #E33914";
-                input_field.style.padding = "9px 8px";
+            if (isNaN(inputTemperature)) {
+                displayInvalidInputMessage();
                 return;
             }
         }
 
-        input_field.value = input_temperature;
+        inputField.value = inputTemperature;
 
         function getKelvinsFromCelsius(celsiusDegrees) {
             return Number(celsiusDegrees) + 273.15;
         }
 
-        output_field_kelvins.value = getKelvinsFromCelsius(input_temperature).toFixed(2);
+        outputFieldKelvins.value = getKelvinsFromCelsius(inputTemperature).toFixed(2);
 
-        function getFahrenheitsFromCelsius(celsiusDegrees) {
+        function getFahrenheitFromCelsius(celsiusDegrees) {
             return celsiusDegrees * 9 / 5 + 32;
         }
 
-        output_field_fahrenheits.value = getFahrenheitsFromCelsius(input_temperature).toFixed(2);
+        outputFieldFahrenheitDegrees.value = getFahrenheitFromCelsius(inputTemperature).toFixed(2);
     });
 });

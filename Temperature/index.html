@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Temperature converter</title>
@@ -16,8 +16,8 @@
 <div class="temperature_converter_form">
     <form class="converter_form">
         <div>
-            <label>Input, &#8451
-                <input id="input_field" type="text" placeholder="Celsius">
+            <label>Input, &#8451<span class="invalid_input_message" style="display: none; color: #f00"> - empty or invalid value</span>
+                <input id="input_field" type="text" placeholder="Celsius degrees">
             </label>
         </div>
         <div>
@@ -27,7 +27,7 @@
         </div>
         <div>
             <label>Output, &#8457
-                <input disabled id="output_field_fahrenheits" type="text" placeholder="Fahrenheits">
+                <input disabled id="output_field_fahrenheit_degrees" type="text" placeholder="Fahrenheit degrees">
             </label>
         </div>
         <button id="convert_button" type="button">convert</button>
