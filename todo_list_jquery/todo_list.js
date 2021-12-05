@@ -63,9 +63,9 @@ $(document).ready(function () {
         newTodoNote.val("");
     }
 
-    newTodoNote.keypress(function(event){
+    newTodoNote.keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode === 13){
+        if (keycode === 13) {
             event.preventDefault();
             addNewNoteHandler();
         }
