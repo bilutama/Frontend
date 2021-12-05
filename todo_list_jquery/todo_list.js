@@ -63,15 +63,6 @@ $(document).ready(function () {
         newTodoNote.val("");
     }
 
-    // $(document).on("keypress", function (e) {
-    //     if (e.key === "Enter" && newTodoNote === document.activeElement) {
-    //         alert("ENTER");
-    //         //e.preventDefault(); // Preventing form to be sent and page to reload
-    //         addNewNoteHandler();
-    //         return false;
-    //     }
-    // });
-
     newTodoNote.keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode === 13){
