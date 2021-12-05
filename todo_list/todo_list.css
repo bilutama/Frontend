@@ -32,9 +32,6 @@ ul#todo-list_content {
 }
 
 .to-do_list .edit_note {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: normal;
     padding: 3px;
     border: none;
     width: 100%;
@@ -60,16 +57,12 @@ span.error_message {
     display: inline;
     vertical-align: middle;
     overflow-wrap: inherit;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .save_button, .cancel_button, .edit_button, .delete_button {
     padding: 0;
     margin: 0 5px;
-}
-
-.save_button {
-    display: inline-block;
 }
 
 .note_block {
@@ -83,10 +76,6 @@ span.error_message {
     background-color: #9d9d9d;
 }
 
-.note_block:hover .edit_button, .note_block:hover .delete_button {
-    display: inline;
-}
-
 .to-do_list input:focus {
     outline: none;
 }
@@ -95,20 +84,16 @@ span.error_message {
     color: #999;
 }
 
-.input_block {
-    display: inline-block;
-}
-
 #add_new_note_button, .save_button, .cancel_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
     width: 100px;
     height: 30px;
+    margin: 0;
     background-color: #747474;
     color: #fff;
     border: none;
-    margin: 0;
     border-radius: 4px;
 }
 

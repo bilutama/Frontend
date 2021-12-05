@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     var todoList = document.getElementById("todo-list_content");
-    var newTodoNoteElement = document.getElementById("new_note");
+    var newTodoNote = document.getElementById("new_note");
     var addNewNoteButton = document.getElementById("add_new_note_button");
 
-    newTodoNoteElement.addEventListener("focus", function () {
+    newTodoNote.addEventListener("focus", function () {
         document.querySelector("span.error_message").style.display = "none";
     });
 
     function addNewNoteHandler() {
-        var text = newTodoNoteElement.value.trim();
+        var text = newTodoNote.value.trim();
 
         if (text.length === 0) {
             document.querySelector("span.error_message").style.display = "inline";
@@ -60,11 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setViewMode();
         todoList.appendChild(todoNote);
-        newTodoNoteElement.value = "";
+        newTodoNote.value = "";
     }
 
     window.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && newTodoNoteElement === document.activeElement) {
+        if (e.key === "Enter" && newTodoNote === document.activeElement) {
             e.preventDefault(); // Preventing form to be sent and page to reload
             addNewNoteHandler();
         }
