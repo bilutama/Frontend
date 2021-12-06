@@ -19,13 +19,15 @@ $(document).ready(function () {
 
         function setEditMode() {
             todoNote.html("<div class='note_block'>" +
-                "<input class='edit_note' type='text'>" +
+                "<textarea class='edit_note autosize'></textarea>" +
                 "<button class='save_button' type='button'>save</button>" +
                 "<button class='cancel_button' type='button'>cancel</button>" +
                 "</div>");
 
             todoNote.find(".edit_note").val(text);
             todoNote.find(".edit_note").focus();
+
+            autosize();
 
             todoNote.find(".save_button").click(function () {
                 text = todoNote.find(".edit_note").val().trim();
@@ -61,6 +63,24 @@ $(document).ready(function () {
         setViewMode();
         todoList.append(todoNote);
         newTodoNote.val("");
+
+        function autosize() {
+            var text = $('.autosize');
+
+            text.each(function () {
+                $(this).attr('rows', 1);
+                resize($(this));
+            });
+
+            text.on('input', function () {
+                resize($(this));
+            });
+
+            function resize($text) {
+                $text.css('height', 'auto');
+                $text.css('height', $text[0].scrollHeight + 'px');
+            }
+        }
     }
 
     newTodoNote.keydown(function (event) {
