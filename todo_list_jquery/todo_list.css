@@ -88,6 +88,7 @@ input::placeholder, textarea::placeholder {
 .autosize {
     resize: none;
     overflow: hidden;
+    padding: 0;
 }
 
 #add_new_note_button, .save_button, .cancel_button {

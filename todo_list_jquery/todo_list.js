@@ -65,20 +65,20 @@ $(document).ready(function () {
         newTodoNote.val("");
 
         function autosize() {
-            var text = $('.autosize');
+            var textArea = $('.autosize');
 
-            text.each(function () {
+            textArea.each(function () {
                 $(this).attr('rows', 1);
                 resize($(this));
             });
 
-            text.on('input', function () {
+            textArea.on('input', function () {
                 resize($(this));
             });
 
-            function resize($text) {
-                $text.css('height', 'auto');
-                $text.css('height', $text[0].scrollHeight + 'px');
+            function resize($textArea) {
+                $textArea.css('height', 'auto');
+                $textArea.css('height', $textArea[0].scrollHeight + 'px');
             }
         }
     }
