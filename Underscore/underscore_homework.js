@@ -54,6 +54,7 @@ $(document).ready(function () {
         }
     ];
 
+    //== Task 1 ==
     // Returns average people's age / 0 for empty array
     function getAverageAge(people) {
         if (people.length === 0) {
@@ -69,9 +70,10 @@ $(document).ready(function () {
             / people.length;
     }
 
-    console.log("Average people's age is " + getAverageAge(people));
+    console.log("Task 1: average people's age is " + getAverageAge(people));
 
-    function getSortedAndFilteredPeople(people, minAge, maxAge) {
+    //== Task 2 ==
+    function getSortedAndFilteredPeopleList(people, minAge, maxAge) {
         return _.chain(people)
             .filter(function (person) {
                 return person.age >= minAge && person.age <= maxAge;
@@ -80,38 +82,35 @@ $(document).ready(function () {
             .value();
     }
 
-    console.log("Sortered and ordered people list:");
-    console.log(getSortedAndFilteredPeople(people, 20, 30));
+    var minAge = 20;
+    var maxAge = 30;
 
-    // PURE FUNCTION
-    // returns a copy of "people" with added fullName (name + last name) property
-    function getPeopleWithFullNames(people) {
-        return _.map(people, function (person) {
-            return {
-                age: person.age,
-                name: person.name,
-                lastName: person.lastName,
-                fullName: person.name + " " + person.lastName
-            };
-        });
+    console.log("Task2: the sorted and ordered people list:");
+    console.log(getSortedAndFilteredPeopleList(people, minAge, maxAge));
+
+    //== Task 3 ==
+    function getUniqueAndSortedPeopleList(people, minAge, maxAge) {
+        return _.chain(people)
+            .filter(function (person) {
+                return person.age >= minAge && person.age <= maxAge;
+            })
+            .pluck("name")
+            .uniq()
+            .sortBy()
+            .reverse()
+            .value()
     }
 
-    var peopleWithFullNames = getPeopleWithFullNames(people);
+    console.log("Task 3: sorted unique people names aged between " + minAge + " and " + maxAge);
+    console.log(getUniqueAndSortedPeopleList(people, minAge, maxAge));
 
-    console.log("Initial people array:")
-    console.log(people);
-
-    console.log("New people array with full names:")
-    console.log(peopleWithFullNames);
-
-    // NOT A PURE FUNCTION
-    function addFullNameProperty(people) {
-        _.each(people, function (person) {
-            _.extend(person, {"fullName": person.name + " " + person.lastName});
-        });
+    //== Task 4 ==
+    function getPeopleCountByName(people) {
+        return _.countBy(people, function (person) {
+            return person.name;
+        })
     }
 
-    addFullNameProperty(people);
-    console.log("Modified initial people array:")
-    console.log(people);
+    console.log("Task 4: count people by names:");
+    console.log(getPeopleCountByName(people));
 });
