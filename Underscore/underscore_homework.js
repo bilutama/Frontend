@@ -28,8 +28,8 @@ $(document).ready(function () {
             lastName: "Anikin"
         },
         {
-            age: 16,
-            name: "Andrej",
+            age: 29,
+            name: "Artyom",
             lastName: "Surkov"
         },
         {
