@@ -20,8 +20,8 @@ $(document).ready(function () {
         function setEditMode() {
             todoNote.html("<div class='note_block'>" +
                 "<textarea class='edit_note autosize'></textarea>" +
-                "<button class='save_button' type='button'>save</button>" +
-                "<button class='cancel_button' type='button'>cancel</button>" +
+                "<button class='save_button' type='button'><i class=\"bi bi-check2-square\"></i></button>" +
+                "<button class='cancel_button' type='button'><i class=\"bi bi-x-circle\"></i></button>" +
                 "</div>");
 
             todoNote.find(".edit_note").val(text);
@@ -49,6 +49,8 @@ $(document).ready(function () {
                 "<input class='edit_button' type='image' alt='edit' src='resources/edit.png' height='20' width='20'>" +
                 "<input class='delete_button' type='image' alt='delete' src='resources/remove.png' height='20' width='20'>" +
                 "</div>");
+
+
 
             todoNote.find(".todo_note").text(text);
 
