@@ -98,7 +98,7 @@ $(document).ready(function () {
             .uniq()
             .sortBy()
             .reverse()
-            .value()
+            .value();
     }
 
     console.log("Task 3: sorted unique people names aged between " + minAge + " and " + maxAge);
@@ -108,7 +108,7 @@ $(document).ready(function () {
     function getPeopleCountByName(people) {
         return _.countBy(people, function (person) {
             return person.name;
-        })
+        });
     }
 
     console.log("Task 4: count people by names:");
