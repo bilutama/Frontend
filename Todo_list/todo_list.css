@@ -21,7 +21,7 @@
     border-radius: 8px;
 }
 
-ul#todo-list_content {
+ul.todo-list_content {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
@@ -34,12 +34,13 @@ ul#todo-list_content {
 
 .to-do_list .edit_note {
     padding: 3px;
+    margin: 3px;
     border: none;
     width: 100%;
     background-color: #a8a8a8;
 }
 
-input#new_note {
+input.new_note {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: normal;
@@ -52,6 +53,7 @@ input#new_note {
 
 span.error_message {
     margin: 0 15px;
+    color: #f00;
 }
 
 .note_block > *, .edit_note_block > * {
@@ -62,12 +64,11 @@ span.error_message {
 }
 
 .save_button, .cancel_button, .edit_button, .delete_button {
-    padding: 0;
-    margin: 0 5px;
+
 }
 
 .note_block {
-    margin: 10px 0;
+    margin: 8px 0;
     padding: 10px;
     background-color: #a8a8a8;
     border-radius: 4px;
@@ -85,7 +86,7 @@ span.error_message {
     color: #999;
 }
 
-#add_new_note_button, .save_button, .cancel_button {
+.add_new_note_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
@@ -98,13 +99,24 @@ span.error_message {
     border-radius: 4px;
 }
 
-.save_button, .cancel_button {
-    height: 22px;
-    width: 70px;
-    margin: 0 2px;
-    background-color: #6D8299;
+.button_group {
+    white-space: nowrap;
 }
 
-#add_new_note_button:hover {
+.save_button, .cancel_button, .edit_button, .delete_button {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    height: 24px;
+    width: 70px;
+    padding: 0;
+    margin: 3px;
+    background-color: #6D8299;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.add_new_note_button:hover {
     background-color: #646464;
 }
