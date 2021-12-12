@@ -85,7 +85,7 @@ $(document).ready(function () {
     var minAge = 20;
     var maxAge = 30;
 
-    console.log("Task2: the sorted and ordered people list:");
+    console.log("Task 2: the sorted and ordered people list:");
     console.log(getSortedAndFilteredPeopleList(people, minAge, maxAge));
 
     //== Task 3 ==
