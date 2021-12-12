@@ -63,10 +63,6 @@ span.error_message {
     word-break: break-word;
 }
 
-.save_button, .cancel_button, .edit_button, .delete_button {
-
-}
-
 .note_block {
     margin: 8px 0;
     padding: 10px;
@@ -86,35 +82,30 @@ span.error_message {
     color: #999;
 }
 
-.add_new_note_button {
+.button_group {
+    white-space: nowrap;
+}
+
+.add_new_note_button, .save_button, .cancel_button, .edit_button, .delete_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    width: 100px;
-    height: 30px;
-    margin: 0;
     background-color: #747474;
     color: #fff;
     border: none;
     border-radius: 4px;
 }
 
-.button_group {
-    white-space: nowrap;
+.add_new_note_button {
+    width: 100px;
+    height: 30px;
+    margin: 0;
 }
 
 .save_button, .cancel_button, .edit_button, .delete_button {
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
     height: 24px;
     width: 70px;
-    padding: 0;
     margin: 3px;
-    background-color: #6D8299;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
 }
 
 .add_new_note_button:hover {
