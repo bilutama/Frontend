@@ -73,26 +73,26 @@ $(document).ready(function () {
     console.log("Task 1: average people's age is " + getAverageAge(people));
 
     //== Task 2 ==
-    function getSortedAndFilteredPeopleList(people, minAge, maxAge) {
+    function getSortedAndFilteredPeopleList(people, minimumAge, maximumAge) {
         return _.chain(people)
             .filter(function (person) {
-                return person.age >= minAge && person.age <= maxAge;
+                return person.age >= minimumAge && person.age <= maximumAge;
             })
             .sortBy("age")
             .value();
     }
 
-    var minAge = 20;
-    var maxAge = 30;
+    var minimumAge = 20;
+    var maximumAge = 30;
 
     console.log("Task 2: the sorted and ordered people list:");
-    console.log(getSortedAndFilteredPeopleList(people, minAge, maxAge));
+    console.log(getSortedAndFilteredPeopleList(people, minimumAge, maximumAge));
 
     //== Task 3 ==
-    function getUniqueAndSortedPeopleList(people, minAge, maxAge) {
+    function getUniqueAndSortedPeopleList(people, minimumAge, maximumAge) {
         return _.chain(people)
             .filter(function (person) {
-                return person.age >= minAge && person.age <= maxAge;
+                return person.age >= minimumAge && person.age <= maximumAge;
             })
             .pluck("name")
             .uniq()
@@ -101,8 +101,8 @@ $(document).ready(function () {
             .value();
     }
 
-    console.log("Task 3: sorted unique people names aged between " + minAge + " and " + maxAge);
-    console.log(getUniqueAndSortedPeopleList(people, minAge, maxAge));
+    console.log("Task 3: sorted unique people names aged between " + minimumAge + " and " + maximumAge);
+    console.log(getUniqueAndSortedPeopleList(people, minimumAge, maximumAge));
 
     //== Task 4 ==
     function getPeopleCountByName(people) {
