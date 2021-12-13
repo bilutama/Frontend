@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var todoList = document.getElementById("todo-list_content_1");
-    var newTodoNote = document.getElementById("new_note_1");
-    var addNewNoteButton = document.getElementById("add_new_note_button_1");
+    var todoList = document.getElementById("todo-list_content");
+    var newTodoNote = document.getElementById("new_note");
+    var addNewNoteButton = document.getElementById("add_new_note_button");
 
     newTodoNote.addEventListener("focus", function () {
         document.querySelector("span.error_message").style.display = "none";
@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
             todoNote.innerHTML = "<div class='note_block'>" +
                 "<input class='edit_note' type='text'>" +
                 "<span class='button_group'>" +
-                "<button class='save_button' type='button'>save</button>" +
-                "<button class='cancel_button' type='button'>cancel</button>" +
+                "<button class='list_button note_button save_button' type='button'>save</button>" +
+                "<button class='list_button note_button cancel_button' type='button'>cancel</button>" +
                 "</span>" +
                 "</div>";
 
@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
             todoNote.innerHTML = "<div class='note_block'>" +
                 "<span class='todo_note'></span>" +
                 "<span class='button_group'>" +
-                "<button class='edit_button' type='button'>edit</button>" +
-                "<button class='delete_button' type='button'>delete</button>" +
+                "<button class='list_button note_button edit_button' type='button'>edit</button>" +
+                "<button class='list_button note_button delete_button' type='button'>delete</button>" +
                 "</span>" +
                 "</div>";
 

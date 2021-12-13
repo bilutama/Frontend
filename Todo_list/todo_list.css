@@ -86,7 +86,7 @@ span.error_message {
     white-space: nowrap;
 }
 
-.add_new_note_button, .save_button, .cancel_button, .edit_button, .delete_button {
+.list_button {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
@@ -102,7 +102,7 @@ span.error_message {
     margin: 0;
 }
 
-.save_button, .cancel_button, .edit_button, .delete_button {
+.note_button {
     height: 24px;
     width: 70px;
     margin: 3px;
