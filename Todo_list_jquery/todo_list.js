@@ -1,17 +1,17 @@
 $(document).ready(function () {
-    var todoList = $("#todo-list_content_1");
-    var newTodoNote = $("#new_note_1");
-    var addNewNoteButton = $("#add_new_note_button_1");
+    var todoList = $("#todo-list_content");
+    var newTodoNote = $("#new_note");
+    var addNewNoteButton = $("#add_new_note_button");
 
     newTodoNote.click(function () {
-        $("span.error_message").css("display", "none");
+        $("span.error_message").hide();
     });
 
     function addNewNoteHandler() {
         var text = newTodoNote.val().trim();
 
         if (text.length === 0) {
-            $("span.error_message").css("display", "inline");
+            $("span.error_message").show();
             return;
         }
 
@@ -21,8 +21,8 @@ $(document).ready(function () {
             todoNote.html("<div class='note_block'>" +
                 "<textarea class='edit_note autosize'></textarea>" +
                 "<span class='button_group'>" +
-                "<button class='save_button' type='button'>save</button>" +
-                "<button class='cancel_button' type='button'>cancel</button>" +
+                "<button class='list_button note_button save_button' type='button'>save</button>" +
+                "<button class='list_button note_button cancel_button' type='button'>cancel</button>" +
                 "</span>" +
                 "</div>");
 
@@ -49,8 +49,8 @@ $(document).ready(function () {
             todoNote.html("<div class='note_block'>" +
                 "<span class='todo_note'></span>" +
                 "<span class='button_group'>" +
-                "<button class='edit_button' type='button'>edit</button>" +
-                "<button class='delete_button' type='button'>delete</button>" +
+                "<button class='list_button note_button edit_button' type='button'>edit</button>" +
+                "<button class='list_button note_button delete_button' type='button'>delete</button>" +
                 "</span>" +
                 "</div>");
 
@@ -88,9 +88,9 @@ $(document).ready(function () {
     }
 
     newTodoNote.keydown(function (event) {
-        var keycode = (event.keyCode ? event.keyCode : event.which);
+        var keyCode = (event.keyCode ? event.keyCode : event.which);
 
-        if (keycode === 13) {
+        if (keyCode === 13) {
             event.preventDefault();
             addNewNoteHandler();
         }
