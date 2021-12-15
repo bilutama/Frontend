@@ -8,11 +8,39 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="phonebook.css"/>
 
-    <link rel="stylesheet" href="node_modules/jquery/dist/jquery.js"/>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/js/bootstrap.js"/>
+    <script defer src="node_modules/jquery/dist/jquery.js"></script>
+    <script defer src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script defer src="form-validation.js"></script>
     <script defer src="phonebook.js"></script>
 </head>
 <body>
-<div class="container"></div>
+<div class="container">
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">First name</label>
+            <input type="text" class="form-control" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom02" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="validationCustom02" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom03" class="form-label">Telephone</label>
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-primary" type="submit">Add contact</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>
