@@ -105,7 +105,7 @@
 
     //== Task 4 ==
     function getPeopleCountByName(people) {
-        return _.countBy(people, person => person.name);
+        return _.countBy(people, 'name');
     }
 
     console.log("Task 4: count people by names:");
