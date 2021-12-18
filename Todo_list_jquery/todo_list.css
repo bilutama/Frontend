@@ -63,11 +63,6 @@ span.error_message {
     word-break: break-word;
 }
 
-.save_button, .cancel_button, .edit_button, .delete_button {
-    padding: 0;
-    margin: 0 5px;
-}
-
 .note_block {
     margin: 10px 0;
     padding: 10px;

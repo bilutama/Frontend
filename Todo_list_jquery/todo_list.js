@@ -81,8 +81,8 @@ $(document).ready(function () {
             });
 
             function resize($textArea) {
-                $textArea.height("auto");
-                $textArea.height($textArea[0].scrollHeight + "px");
+                $textArea.css("height", "auto");
+                $textArea.css("height", $textArea[0].scrollHeight + "px");
             }
         }
     }
