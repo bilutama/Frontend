@@ -1,4 +1,4 @@
-$(document).ready(function () {
+(function () {
     "use strict";
 
     var people = [
@@ -61,13 +61,9 @@ $(document).ready(function () {
             return 0;
         }
 
-        return _.chain(people)
-                .pluck("age")
-                .reduce(function (accumulator, currentAge) {
-                    return accumulator + currentAge;
-                })
-                .value()
-            / people.length;
+        return people.reduce(function (currentAgeSum, person) {
+            return currentAgeSum + person.age;
+        }, 0) / people.length;
     }
 
     console.log("Task 1: average people's age is " + getAverageAge(people));
@@ -96,9 +92,12 @@ $(document).ready(function () {
             })
             .pluck("name")
             .uniq()
-            .sortBy()
-            .reverse()
-            .value();
+            .value()
+            .sort(function (person1, person2) {
+                if (person1 < person2) return 1;
+                if (person2 < person1) return -1;
+                return 0;
+            });
     }
 
     console.log("Task 3: sorted unique people names aged between " + minimumAge + " and " + maximumAge);
@@ -106,11 +105,9 @@ $(document).ready(function () {
 
     //== Task 4 ==
     function getPeopleCountByName(people) {
-        return _.countBy(people, function (person) {
-            return person.name;
-        });
+        return _.countBy(people, person => person.name);
     }
 
     console.log("Task 4: count people by names:");
     console.log(getPeopleCountByName(people));
-});
+})();
