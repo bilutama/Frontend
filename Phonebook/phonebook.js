@@ -8,35 +8,58 @@ $(document).ready(function () {
     var addContactButton = $("#addContactButton");
     var phonebookContent = $("#phonebook").children("tbody");
 
-    var newContact = $("<tr>");
+    function getCapitalizedString(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
 
-    function validateForm(contactInputForm) {
-        var inputFields = contactInputForm.children(":input:not(:button)");
+    function isFormValid(contactInputForm) {
         var isFormValid = true;
 
-        inputFields.each(function () {
-            var inputFieldContent = this.val().trim();
+        contactInputForm.children().children().filter(":input:not(:button)").each(function () {
+            var inputFieldContent = $(this).val().trim();
 
             if (inputFieldContent.length === 0) {
                 isFormValid = false;
             }
 
-            contactInputForm.addClass("was-validated");
-            this.text(inputFieldContent);
+            $(this).val(inputFieldContent);
         });
 
+        contactInputForm.addClass("was-validated");
         return isFormValid;
     }
 
-    function addContact() {
-        if (validateForm(contactInputForm))
+    function clearForm(contactInputForm) {
+        contactInputForm.children().children().filter(":input:not(:button)").each(function () {
+            $(this).val("");
+        });
+    }
+
+    function addContactHandler() {
+        if (!isFormValid(contactInputForm)) {
+            return;
+        }
+
+        var newContact = $("<tr>");
 
         newContact.html("<th scope='row' class='rowNumber'></th>" +
             "<td class='contactFirstName'></td>" +
-            "<td class='contactSecondName'></td>" +
+            "<td class='contactLastName'></td>" +
             "<td class='contactTelephone'></td>"
         );
 
-        newContact.find("rowNumber").text();
+        var currentContactsCount = phonebookContent.children().length;
+
+        newContact.find(".rowNumber").text(currentContactsCount + 1);
+        newContact.find(".contactFirstName").text(getCapitalizedString(firstName.val()));
+        newContact.find(".contactLastName").text(getCapitalizedString(lastName.val()));
+        newContact.find(".contactTelephone").text(telephoneNumber.val());
+
+        phonebookContent.append(newContact);
+
+        clearForm(contactInputForm);
+        contactInputForm.removeClass("was-validated");
     }
+
+    addContactButton.click(addContactHandler);
 });
