@@ -45,7 +45,8 @@ $(document).ready(function () {
         newContact.html("<th scope='row' class='rowNumber'></th>" +
             "<td class='contactFirstName'></td>" +
             "<td class='contactLastName'></td>" +
-            "<td class='contactTelephone'></td>"
+            "<td class='contactTelephone'></td>" +
+            "<td><button type='button' class='btn-close' aria-label='Delete'></button></td>"
         );
 
         var currentContactsCount = phonebookContent.children().length;
@@ -54,6 +55,10 @@ $(document).ready(function () {
         newContact.find(".contactFirstName").text(getCapitalizedString(firstName.val()));
         newContact.find(".contactLastName").text(getCapitalizedString(lastName.val()));
         newContact.find(".contactTelephone").text(telephoneNumber.val());
+
+        newContact.find(".btn-close").click(function () {
+            newContact.remove();
+        });
 
         phonebookContent.append(newContact);
 
