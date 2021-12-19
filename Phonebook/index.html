@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Phonebook</title>
     <link rel="icon" href="resources/phone-book-contacts.svg">
+
+    <script defer src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script defer src="node_modules/jquery/dist/jquery.js"></script>
+    <script defer src="phonebook.js"></script>
+
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="phonebook.css"/>
 
-    <script defer src="node_modules/jquery/dist/jquery.js"></script>
-    <script defer src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script defer src="phonebook.js"></script>
 </head>
 <body>
 <div class="container">
@@ -54,6 +56,25 @@
         <tbody>
         </tbody>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Delete confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal-cancel">Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal-delete">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
