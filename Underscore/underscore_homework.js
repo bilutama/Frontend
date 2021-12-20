@@ -93,10 +93,8 @@
             .pluck("name")
             .uniq()
             .value()
-            .sort(function (person1, person2) {
-                if (person1 < person2) return 1;
-                if (person2 < person1) return -1;
-                return 0;
+            .sort(function (name1, name2) {
+                return (-1) * name1.localeCompare(name2);
             });
     }
 
@@ -105,7 +103,7 @@
 
     //== Task 4 ==
     function getPeopleCountByName(people) {
-        return _.countBy(people, 'name');
+        return _.countBy(people, "name");
     }
 
     console.log("Task 4: count people by names:");
