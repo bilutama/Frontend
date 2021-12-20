@@ -38,6 +38,8 @@
     border: none;
     width: 100%;
     background-color: #a8a8a8;
+    resize: none;
+    overflow: hidden;
 }
 
 .new_note {
@@ -80,11 +82,6 @@ input:focus, textarea:focus {
 
 input::placeholder, textarea::placeholder {
     color: #999;
-}
-
-.autosize {
-    resize: none;
-    overflow: hidden;
 }
 
 .button_group {
