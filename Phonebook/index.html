@@ -15,6 +15,15 @@
 
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="resources/phone-book-contacts.svg" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            Phonebook v1.0
+        </a>
+    </div>
+</nav>
 <div class="container">
     <form class="row g-3 needs-validation mt-3" novalidate id="contact_input_form">
         <div class="col-md-4">
@@ -66,7 +75,7 @@
         </tbody>
     </table>
 
-    <!-- Modal -->
+    <!-- Confirm Delete Modal -->
     <div class="modal fade" id="delete_confirmation_modal" tabindex="-1" aria-labelledby="modalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -86,6 +95,27 @@
                             class="btn btn-danger"
                             data-bs-dismiss="modal"
                             id="modal-delete">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact exist Modal -->
+    <div class="modal fade" id="contact_exists_modal" tabindex="-1" aria-labelledby="contactExistsModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactExistsModalLabel">Cannot add the contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Telephone number already exists.</div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-warning"
+                            data-bs-dismiss="modal"
+                            id="modal-dismiss">Dismiss
                     </button>
                 </div>
             </div>
