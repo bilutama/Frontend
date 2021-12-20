@@ -108,8 +108,6 @@ $(document).ready(function () {
 
     // GENERAL_CHECKBOX status handling on change
     generalCheckbox.change(function () {
-        //event.stopPropagation();
-
         if ($(this).is(":checked")) {
             phonebookContent.children("tr").each(function () {
                 $(this).find(".form-check-input").prop('checked', true);
@@ -119,14 +117,11 @@ $(document).ready(function () {
                 $(this).find(".form-check-input").prop('checked', false);
             });
         }
-
-        console.log("MAIN CHECKBOX CLICKED");
     });
 
     phonebookContent.delegate("tr", "click", function () {
         var checkbox = $(this).find(".form-check-input");
         checkbox.prop('checked', !checkbox.prop('checked'));
-        console.log("ROW CLICKED");
         return false;
     });
 });
