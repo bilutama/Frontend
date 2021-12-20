@@ -18,6 +18,19 @@ $(document).ready(function () {
         var todoNote = $("<li>");
 
         function setEditMode() {
+            function autosize(textArea) {
+                textArea.attr("rows", 1);
+
+                textArea.on("input", function () {
+                    resize(textArea);
+                });
+
+                function resize(element) {
+                    element.css("height", "auto");
+                    element.css("height", element.scrollHeight + "px");
+                }
+            }
+
             todoNote.html("<div class='note_block'>" +
                 "<textarea class='edit_note autosize'></textarea>" +
                 "<span class='button_group'>" +
@@ -28,8 +41,13 @@ $(document).ready(function () {
 
             todoNote.find(".edit_note").val(text);
             todoNote.find(".edit_note").focus();
+            todoNote.find(".edit_note").on("input", function () {
+                //$(this).attr("rows", 1);
+                $(this).css("height", "auto");
+                $(this).css("height", $(this)[0].scrollHeight + "px");
+            });
 
-            autosize();
+            //autosize();
 
             todoNote.find(".save_button").click(function () {
                 text = todoNote.find(".edit_note").val().trim();
@@ -68,23 +86,23 @@ $(document).ready(function () {
         todoList.append(todoNote);
         newTodoNote.val("");
 
-        function autosize() {
-            var textArea = $(".autosize");
-
-            textArea.each(function () {
-                $(this).attr("rows", 1);
-                resize($(this));
-            });
-
-            textArea.on("input", function () {
-                resize($(this));
-            });
-
-            function resize($textArea) {
-                $textArea.css("height", "auto");
-                $textArea.css("height", $textArea[0].scrollHeight + "px");
-            }
-        }
+        // function autosize() {
+        //     var textArea = $(".autosize");
+        //
+        //     textArea.each(function () {
+        //         $(this).attr("rows", 1);
+        //         resize($(this));
+        //     });
+        //
+        //     textArea.on("input", function () {
+        //         resize($(this));
+        //     });
+        //
+        //     function resize($textArea) {
+        //         $textArea.css("height", "auto");
+        //         $textArea.css("height", $textArea[0].scrollHeight + "px");
+        //     }
+        // }
     }
 
     newTodoNote.keydown(function (event) {
