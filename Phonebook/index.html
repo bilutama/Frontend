@@ -16,37 +16,46 @@
 </head>
 <body>
 <div class="container">
-    <form class="row g-3 needs-validation mt-3" novalidate id="contactInputForm">
+    <form class="row g-3 needs-validation mt-3" novalidate id="contact_input_form">
         <div class="col-md-4">
-            <label for="firstName" class="form-label">First name</label>
-            <input type="text" class="form-control" id="firstName" required>
+            <label for="first_name" class="form-label">First name</label>
+            <input type="text" class="form-control" id="first_name" required>
             <div class="invalid-feedback">
                 Please provide your name
             </div>
         </div>
         <div class="col-md-4">
-            <label for="lastName" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="lastName" required>
+            <label for="last_name" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="last_name" required>
             <div class="invalid-feedback">
                 Please provide your second name
             </div>
         </div>
         <div class="col-md-4">
-            <label for="telephoneNumber" class="form-label">Telephone</label>
-            <input type="tel" class="form-control" id="telephoneNumber" required>
+            <label for="telephone_number" class="form-label">Telephone</label>
+            <input type="tel" class="form-control" id="telephone_number" required>
             <div class="invalid-feedback">
                 You have to enter phone number
             </div>
         </div>
-        <div class="col-md-12">
-            <button class="btn btn-primary" type="button" id="addContactButton">Add contact</button>
+        <div>
+            <button class="btn btn-primary" type="button" id="add_contact_button">Add contact</button>
+            <button class="btn btn-danger" type="button" id="delete_selected_button">Delete selected</button>
         </div>
     </form>
 
     <table class="table table-hover mt-3" id="phonebook">
         <thead class="table-light">
         <tr>
-            <th class="col-md-1" scope="col">#</th>
+            <th class="col-auto" scope="col">
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           value=""
+                           id="general_checkbox">
+                </div>
+            </th>
+            <th class="col-auto" scope="col">#</th>
             <th class="col-md-3" scope="col">First Name</th>
             <th class="col-md-3" scope="col">Last Name</th>
             <th class="col-md-4" scope="col">Phone number</th>
@@ -58,7 +67,8 @@
     </table>
 
     <!-- Modal -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="delete_confirmation_modal" tabindex="-1" aria-labelledby="modalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -67,9 +77,15 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal-cancel">Cancel
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                            id="modal-cancel">Cancel
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal-delete">Delete
+                    <button type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                            id="modal-delete">Delete
                     </button>
                 </div>
             </div>
