@@ -96,6 +96,7 @@ $(document).ready(function () {
 
         newContact.find(".form-check-input").click(function (event) {
             event.stopPropagation();
+            updateGeneralCheckboxStatus();
         });
 
         phonebookContent.append(newContact);
@@ -123,6 +124,7 @@ $(document).ready(function () {
             });
 
             // TODO: update general_checkbox status
+            updateGeneralCheckboxStatus();
         });
     });
 
@@ -146,22 +148,39 @@ $(document).ready(function () {
             generalCheckbox.prop("checked", false);
         }
 
-        var allSelected = true;
-        var hasUnchecked = true;
+        var allChecked = true;
+        var undetermined = false;
 
         phonebookContent.children("tr").each(function (index) {
             if ($(this).find(".form-check-input").is(":checked")) {
-                hasUnchecked = false;
+                if (!allChecked) {
+                    undetermined = true;
+                    return false;
+                }
             } else if ($(this).find(".form-check-input").is(":not(:checked)")) {
-                allSelected = false;
+                allChecked = false;
             }
-
         });
+
+
+        if (undetermined) {
+            generalCheckbox.prop("selected", false);
+            generalCheckbox.prop("indeterminate", true);
+        } else {
+            generalCheckbox.prop("indeterminate", false);
+
+            if (allChecked) {
+                generalCheckbox.prop("selected", true);
+            } else {
+                generalCheckbox.prop("selected", false);
+            }
+        }
     }
 
     phonebookContent.delegate("tr", "click", function () {
         var checkbox = $(this).find(".form-check-input");
         checkbox.prop("checked", !checkbox.prop("checked"));
+        updateGeneralCheckboxStatus();
         return false;
     });
 });
