@@ -148,33 +148,39 @@ $(document).ready(function () {
             generalCheckbox.prop("checked", false);
         }
 
-        var allChecked = true;
-        var undetermined = false;
+        var checked = 0;
+        var unchecked = 0;
 
         phonebookContent.children("tr").each(function (index) {
             if ($(this).find(".form-check-input").is(":checked")) {
-                if (!allChecked) {
-                    undetermined = true;
+                ++checked;
+
+                if (unchecked > 0) {
                     return false;
                 }
             } else if ($(this).find(".form-check-input").is(":not(:checked)")) {
-                allChecked = false;
+                ++unchecked;
+
+                if (checked > 0) {
+                    return false;
+                }
             }
         });
 
+        generalCheckbox.prop("indeterminate", false);
+        generalCheckbox.prop("selected", false);
 
-        if (undetermined) {
-            generalCheckbox.prop("selected", false);
-            generalCheckbox.prop("indeterminate", true);
-        } else {
-            generalCheckbox.prop("indeterminate", false);
-
-            if (allChecked) {
-                generalCheckbox.prop("selected", true);
-            } else {
-                generalCheckbox.prop("selected", false);
-            }
+        if (checked === 0) {
+            return;
         }
+
+        if (unchecked === 0) {
+            generalCheckbox.prop("indeterminate", false);
+            generalCheckbox.prop("selected", true);
+            return;
+        }
+
+        generalCheckbox.prop("indeterminate", true);
     }
 
     phonebookContent.delegate("tr", "click", function () {
