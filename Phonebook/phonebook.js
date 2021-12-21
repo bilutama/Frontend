@@ -43,7 +43,7 @@ $(document).ready(function () {
         });
     }
 
-    function addContactHandler() {
+    addContactButton.click(function () {
         if (!isFormValid(contactInputForm)) {
             return;
         }
@@ -88,7 +88,7 @@ $(document).ready(function () {
 
             contactToDelete = newContact;
             deleteContactDialog.show();
-            $(".modal-body").text("Delete contact " +
+            $("#delete_confirmation_modal").find(".modal-body").text("Delete contact " +
                 contactToDelete.find(".contact_first_name").text() +
                 " " +
                 contactToDelete.find(".contact_last_name").text() +
@@ -105,9 +105,18 @@ $(document).ready(function () {
         clearForm(contactInputForm);
         contactInputForm.removeClass("was-validated");
         updateGeneralCheckboxStatus();
-    }
+    });
 
-    addContactButton.click(addContactHandler);
+    deleteSelectedButton.click(function () {
+        contactToDelete = phonebookContent.children().has(".form-check-input:checked");
+
+        if (contactToDelete.length === 0) {
+            return;
+        }
+
+        deleteContactDialog.show();
+        $("#delete_confirmation_modal").find(".modal-body").text("Delete selected contacts?");
+    })
 
     // Modal dialog to confirm contact delete
     $(document).on("shown.bs.modal", "#delete_confirmation_modal", function () {
@@ -127,13 +136,6 @@ $(document).ready(function () {
             updateGeneralCheckboxStatus();
         });
     });
-
-    deleteSelectedButton.click(function () {
-        contactToDelete = phonebookContent.children().has(".form-check-input:checked");
-
-        deleteContactDialog.show();
-        $("#delete_confirmation_modal").find(".modal-body").text("Delete selected contacts?");
-    })
 
     // GENERAL_CHECKBOX status handling on change
     generalCheckbox.change(function () {
@@ -173,12 +175,12 @@ $(document).ready(function () {
             }
         });
 
-        generalCheckbox.prop("indeterminate", false);
-
         if (checked > 0 && unchecked > 0) {
             generalCheckbox.prop("indeterminate", true);
             return;
         }
+
+        generalCheckbox.prop("indeterminate", false);
 
         if (checked === 0) {
             generalCheckbox.prop("checked", false);
@@ -188,11 +190,11 @@ $(document).ready(function () {
         generalCheckbox.prop("checked", true);
     }
 
-    // NOT TESTED
-    // phonebookContent.delegate("tr", "click", function () {
-    //     var checkbox = $(this).find(".form-check-input");
-    //     checkbox.prop("checked", !checkbox.prop("checked"));
+    //NOT TESTED
+    // phonebookContent.delegate("tr", "click", function (event) {
+    //     event.stopPropagation();
+    //     var thisCheckbox = $(this).find(".form-check-input");
+    //     thisCheckbox.prop("checked", !thisCheckbox.prop("checked"));
     //     updateGeneralCheckboxStatus();
-    //     return false;
     // });
 });
