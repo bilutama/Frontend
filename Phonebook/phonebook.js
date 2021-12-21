@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     var addContactButton = $("#add_contact_button");
     var deleteSelectedButton = $("#delete_selected_button");
-    var phonebookContent = $("#phonebook").children("tbody");
+    var phonebookContent = $("#phonebook > tbody");
 
     var deleteContactDialog = new bootstrap.Modal($("#delete_confirmation_modal"), {});
     var contactExistsDialog = new bootstrap.Modal($("#contact_exists_modal"), {});
