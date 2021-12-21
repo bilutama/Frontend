@@ -81,7 +81,7 @@ $(document).ready(function () {
         newContact.find(".contact_last_name").text(getCapitalizedString(lastNameInput.val()));
         newContact.find(".contact_telephone").text(telephoneNumber.toLowerCase());
 
-        // Handler for contact removing
+        // Remove contact
         newContact.find(".btn-close").click(function (event) {
             event.stopPropagation();
 
@@ -94,16 +94,16 @@ $(document).ready(function () {
                 "?");
         });
 
-        newContact.find(".form-check-input").click(function (event) {
+        newContact.find(".form-check-input").change(function (event) {
             event.stopPropagation();
             updateGeneralCheckboxStatus();
         });
 
         phonebookContent.append(newContact);
-        // TODO: update general_checkbox status
 
         clearForm(contactInputForm);
         contactInputForm.removeClass("was-validated");
+        updateGeneralCheckboxStatus();
     }
 
     addContactButton.click(addContactHandler);
@@ -123,7 +123,6 @@ $(document).ready(function () {
                 $(this).find(".row_number").text(index + 1);
             });
 
-            // TODO: update general_checkbox status
             updateGeneralCheckboxStatus();
         });
     });
@@ -142,16 +141,15 @@ $(document).ready(function () {
     });
 
     function updateGeneralCheckboxStatus() {
-        var contactsCount = phonebookContent.children().length;
-
-        if (contactsCount === 0) {
+        if (phonebookContent.children().length === 0) {
+            generalCheckbox.prop("indeterminate", false);
             generalCheckbox.prop("checked", false);
         }
 
         var checked = 0;
         var unchecked = 0;
 
-        phonebookContent.children("tr").each(function (index) {
+        phonebookContent.children("tr").each(function () {
             if ($(this).find(".form-check-input").is(":checked")) {
                 ++checked;
 
@@ -168,25 +166,25 @@ $(document).ready(function () {
         });
 
         generalCheckbox.prop("indeterminate", false);
-        generalCheckbox.prop("selected", false);
+
+        if (checked > 0 && unchecked > 0) {
+            generalCheckbox.prop("indeterminate", true);
+            return;
+        }
 
         if (checked === 0) {
+            generalCheckbox.prop("checked", false);
             return;
         }
 
-        if (unchecked === 0) {
-            generalCheckbox.prop("indeterminate", false);
-            generalCheckbox.prop("selected", true);
-            return;
-        }
-
-        generalCheckbox.prop("indeterminate", true);
+        generalCheckbox.prop("checked", true);
     }
 
-    phonebookContent.delegate("tr", "click", function () {
-        var checkbox = $(this).find(".form-check-input");
-        checkbox.prop("checked", !checkbox.prop("checked"));
-        updateGeneralCheckboxStatus();
-        return false;
-    });
+    // NOT TESTED
+    // phonebookContent.delegate("tr", "click", function () {
+    //     var checkbox = $(this).find(".form-check-input");
+    //     checkbox.prop("checked", !checkbox.prop("checked"));
+    //     updateGeneralCheckboxStatus();
+    //     return false;
+    // });
 });
