@@ -94,7 +94,7 @@
             .uniq()
             .value()
             .sort(function (name1, name2) {
-                return (-1) * name1.localeCompare(name2);
+                return -name1.localeCompare(name2);
             });
     }
 
