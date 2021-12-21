@@ -7,22 +7,37 @@ $(document).ready(function () {
 
     var addContactButton = $("#add_contact_button");
     var deleteSelectedButton = $("#delete_selected_button");
+    var clearFormButton = $("#clear_form_button");
+
+    var resetFilterButton = $("#reset_filter_button");
+    var enableFilterButton = $("#enable_filter_button");
+    var filterInput = $("#filter_input");
+
     var phonebookContent = $("#phonebook > tbody");
 
     var deleteContactDialog = new bootstrap.Modal($("#delete_confirmation_modal"), {});
     var contactExistsDialog = new bootstrap.Modal($("#contact_exists_modal"), {});
 
     var generalCheckbox = $("#general_checkbox");
-    var contactToDelete = null;
+    var contactsToDelete = null;
 
-    function getCapitalizedString(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    function beautifyString(string, isCapitalized) {
+        var separator = " ";
+        var stringArray = string.trim().toLowerCase().split(separator);
+
+        if (isCapitalized) {
+            for (var j = 0; j < stringArray.length; ++j) {
+                stringArray[j] = stringArray[j].charAt(0).toUpperCase() + stringArray[j].slice(1);
+            }
+        }
+
+        return stringArray.join(separator);
     }
 
-    function isFormValid(contactInputForm) {
+    function isFormValid(form) {
         var isFormValid = true;
 
-        contactInputForm.children().children().filter(":input:not(:button)").each(function () {
+        form.children().children().filter(":input:not(:button)").each(function () {
             var inputFieldContent = $(this).val().trim();
 
             if (inputFieldContent.length === 0) {
@@ -33,12 +48,12 @@ $(document).ready(function () {
             $(this).val(inputFieldContent);
         });
 
-        contactInputForm.addClass("was-validated");
+        form.addClass("was-validated");
         return isFormValid;
     }
 
-    function clearForm(contactInputForm) {
-        contactInputForm.children().children().filter(":input:not(:button)").each(function () {
+    function clearForm(form) {
+        form.children().children().filter(":input:not(:button)").each(function () {
             $(this).val("");
         });
     }
@@ -51,7 +66,7 @@ $(document).ready(function () {
         var telephoneNumber = telephoneNumberInput.val();
         var contactExists = false;
 
-        // Look for a number in existing contacts
+        // Check if existing contacts contains the number
         phonebookContent.children("tr").each(function () {
             if ($(this).find(".contact_telephone").text() === telephoneNumber) {
                 contactExists = true;
@@ -59,7 +74,7 @@ $(document).ready(function () {
             }
         });
 
-        // Exit _ADD CONTACT_ if telephone number exists
+        // Modal dialog if telephone number exists in the phonebook
         if (contactExists) {
             contactExistsDialog.show();
             return;
@@ -78,20 +93,20 @@ $(document).ready(function () {
         var currentContactsCount = phonebookContent.children().length;
 
         newContact.find(".row_number").text(currentContactsCount + 1);
-        newContact.find(".contact_first_name").text(getCapitalizedString(firstNameInput.val()));
-        newContact.find(".contact_last_name").text(getCapitalizedString(lastNameInput.val()));
-        newContact.find(".contact_telephone").text(telephoneNumber.toLowerCase());
+        newContact.find(".contact_first_name").text(beautifyString(firstNameInput.val(), true));
+        newContact.find(".contact_last_name").text(beautifyString(lastNameInput.val(), true));
+        newContact.find(".contact_telephone").text(beautifyString(telephoneNumber, false));
 
         // Remove contact
         newContact.find(".btn-close").click(function (event) {
             event.stopPropagation();
 
-            contactToDelete = newContact;
+            contactsToDelete = newContact;
             deleteContactDialog.show();
             $("#delete_confirmation_modal").find(".modal-body").text("Delete contact " +
-                contactToDelete.find(".contact_first_name").text() +
+                contactsToDelete.find(".contact_first_name").text() +
                 " " +
-                contactToDelete.find(".contact_last_name").text() +
+                contactsToDelete.find(".contact_last_name").text() +
                 "?");
         });
 
@@ -108,9 +123,9 @@ $(document).ready(function () {
     });
 
     deleteSelectedButton.click(function () {
-        contactToDelete = phonebookContent.children().has(".form-check-input:checked");
+        contactsToDelete = phonebookContent.children().has(".form-check-input:checked");
 
-        if (contactToDelete.length === 0) {
+        if (contactsToDelete.length === 0) {
             return;
         }
 
@@ -126,7 +141,7 @@ $(document).ready(function () {
 
         // Modal dialog DELETE button handler
         $("#modal-delete").click(function () {
-            contactToDelete.remove();
+            contactsToDelete.remove();
 
             // Recalculate remaining contacts numbers
             phonebookContent.children("tr").each(function (index) {
@@ -135,6 +150,10 @@ $(document).ready(function () {
 
             updateGeneralCheckboxStatus();
         });
+    });
+
+    clearFormButton.click(function () {
+        clearForm(contactInputForm);
     });
 
     // GENERAL_CHECKBOX status handling on change
@@ -190,11 +209,26 @@ $(document).ready(function () {
         generalCheckbox.prop("checked", true);
     }
 
-    //NOT TESTED
-    // phonebookContent.delegate("tr", "click", function (event) {
-    //     event.stopPropagation();
-    //     var thisCheckbox = $(this).find(".form-check-input");
-    //     thisCheckbox.prop("checked", !thisCheckbox.prop("checked"));
-    //     updateGeneralCheckboxStatus();
-    // });
+    // Handling filter form buttons
+    enableFilterButton.click(function () {
+        resetFilterButton.trigger("click");
+
+        var filterText = filterInput.val().trim().toLowerCase();
+
+        var matchedRows = phonebookContent.children("tr").filter(function () {
+            var isInFirstName = $(this).find("td.contact_first_name").text().toLowerCase().includes(filterText);
+            var isInLastName = $(this).find("td.contact_last_name").text().toLowerCase().includes(filterText);
+            var isInTelephone = $(this).find("td.contact_telephone").text().toLowerCase().includes(filterText);
+
+            return !(isInFirstName || isInLastName || isInTelephone);
+        });
+
+        matchedRows.hide();
+    });
+
+    resetFilterButton.click(function () {
+        phonebookContent.children("tr").each(function () {
+            $(this).show();
+        });
+    });
 });
