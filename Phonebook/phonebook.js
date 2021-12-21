@@ -6,6 +6,7 @@ $(document).ready(function () {
     var telephoneNumberInput = $("#telephone_number");
 
     var addContactButton = $("#add_contact_button");
+    var deleteSelectedButton = $("#delete_selected_button");
     var phonebookContent = $("#phonebook").children("tbody");
 
     var deleteContactDialog = new bootstrap.Modal($("#delete_confirmation_modal"), {});
@@ -126,6 +127,13 @@ $(document).ready(function () {
             updateGeneralCheckboxStatus();
         });
     });
+
+    deleteSelectedButton.click(function () {
+        contactToDelete = phonebookContent.children().has(".form-check-input:checked");
+
+        deleteContactDialog.show();
+        $("#delete_confirmation_modal").find(".modal-body").text("Delete selected contacts?");
+    })
 
     // GENERAL_CHECKBOX status handling on change
     generalCheckbox.change(function () {
