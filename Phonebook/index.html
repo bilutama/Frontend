@@ -26,21 +26,21 @@
 </nav>
 <div class="container">
     <form class="row g-3 border needs-validation mt-3 py-2" novalidate id="contact_input_form">
-        <div class="col-4 mt-0">
+        <div class="col-md-4 mt-0">
             <label for="first_name" class="form-label">First name</label>
             <input type="text" class="form-control" id="first_name" required>
             <div class="invalid-feedback">
                 Please provide your name
             </div>
         </div>
-        <div class="col-4 mt-0">
+        <div class="col-md-4 mt-0">
             <label for="last_name" class="form-label">Last name</label>
             <input type="text" class="form-control" id="last_name" required>
             <div class="invalid-feedback">
                 Please provide your last name
             </div>
         </div>
-        <div class="col-4 mt-0">
+        <div class="col-md-4 mt-0">
             <label for="telephone_number" class="form-label">Telephone</label>
             <input type="tel" class="form-control" id="telephone_number" required>
             <div class="invalid-feedback">
@@ -48,14 +48,14 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-primary" type="button" id="add_contact_button">Add contact</button>
-            <button class="btn btn-danger" type="button" id="delete_selected_button">Delete selected</button>
-            <button class="btn btn-secondary" type="button" id="clear_form_button">Clear form</button>
+            <button class="btn btn-primary my-1" type="button" id="add_contact_button">Add contact</button>
+            <button class="btn btn-danger my-1" type="button" id="delete_selected_button">Delete selected</button>
+            <button class="btn btn-secondary my-1" type="button" id="clear_form_button">Clear form</button>
         </div>
     </form>
 
-    <div class="row justify-content-md-center">
-        <form class="row g-3 col-6 border mt-3 py-3" novalidate id="search_form">
+    <div class="row justify-content-center">
+        <form class="row g-3 col-md-6 col-12 border mt-3 py-3" novalidate id="search_form">
             <div class="input-group">
                 <button class="btn btn-outline-secondary" type="button" id="reset_filter_button">Reset</button>
                 <input type="text" class="form-control" placeholder="Type to search" aria-label="Search panel" id="filter_input">
@@ -67,7 +67,7 @@
     <table class="table table-hover mt-3" id="phonebook">
         <thead class="table-light">
         <tr>
-            <th class="col-auto" scope="col">
+            <th class="col-auto align-middle" scope="col">
                 <div class="form-check">
                     <input class="form-check-input"
                            type="checkbox"
@@ -75,11 +75,11 @@
                            id="general_checkbox">
                 </div>
             </th>
-            <th class="col-auto" scope="col">#</th>
-            <th class="col-md-3" scope="col">First Name</th>
-            <th class="col-md-3" scope="col">Last Name</th>
-            <th class="col-md-4" scope="col">Phone number</th>
-            <th class="col-md-1" scope="col"></th>
+            <th class="col-auto align-middle" scope="col">#</th>
+            <th class="col-md-3 align-middle" scope="col">First Name</th>
+            <th class="col-md-3 align-middle" scope="col">Last Name</th>
+            <th class="col-md-3 align-middle" scope="col">Phone number</th>
+            <th class="col-md-auto" scope="col"></th>
         </tr>
         </thead>
         <tbody>
