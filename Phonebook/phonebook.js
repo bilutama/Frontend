@@ -134,7 +134,7 @@ $(document).ready(function () {
         }
 
         deleteContactDialog.show();
-        $("#delete_confirmation_modal").find(".modal-body").text("Delete selected contacts?");
+        $("#delete_confirmation_modal").find(".modal-body").text("If filter applied, only visible contacts will be deleted. Continue?");
     })
 
     // Modal dialog to confirm contact delete
