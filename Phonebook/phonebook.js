@@ -15,8 +15,11 @@ $(document).ready(function () {
 
     var phonebookContent = $("#phonebook > tbody");
 
-    var deleteContactDialog = new bootstrap.Modal($("#delete_confirmation_modal"), {});
-    var contactExistsDialog = new bootstrap.Modal($("#contact_exists_modal"), {});
+    var deleteContactModal = $("#delete_confirmation_modal");
+    var deleteContactModalObject = new bootstrap.Modal(deleteContactModal, {});
+
+    var contactExistsModal = $("#contact_exists_modal");
+    var contactExistsModalObject = new bootstrap.Modal(contactExistsModal, {});
 
     var generalCheckbox = $("#general_checkbox");
     var contactsToDelete = null;
@@ -79,7 +82,7 @@ $(document).ready(function () {
 
         // Modal dialog if telephone number exists in the phonebook
         if (contactExists) {
-            contactExistsDialog.show();
+            contactExistsModalObject.show();
             return;
         }
 
@@ -105,7 +108,7 @@ $(document).ready(function () {
             event.stopPropagation();
 
             contactsToDelete = newContact;
-            deleteContactDialog.show();
+            deleteContactModalObject.show();
             $("#delete_confirmation_modal").find(".modal-body").text("Delete contact " +
                 contactsToDelete.find(".contact_first_name").text() +
                 " " +
@@ -133,9 +136,24 @@ $(document).ready(function () {
             return;
         }
 
-        deleteContactDialog.show();
-        $("#delete_confirmation_modal").find(".modal-body").text("If filter applied, only visible contacts will be deleted. Continue?");
-    })
+        deleteContactModalObject.show();
+        // Check if filter is applied and warn user
+        var isFilterApplied = false;
+
+        phonebookContent.children("tr").each(function () {
+            if ($(this).find(".form-check-input").is(":not(:visible)")) {
+                isFilterApplied = true;
+                return false;
+            }
+        });
+
+        if (isFilterApplied) {
+            deleteContactModal.find(".modal-body").text("Seems that filter is applied, only visible contacts will be deleted. Continue?");
+            return;
+        }
+
+        deleteContactModal.find(".modal-body").text("Deleted selected contacts?");
+    });
 
     // Modal dialog to confirm contact delete
     $(document).on("shown.bs.modal", "#delete_confirmation_modal", function () {
