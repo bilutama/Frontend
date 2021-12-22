@@ -21,6 +21,9 @@ $(document).ready(function () {
     var generalCheckbox = $("#general_checkbox");
     var contactsToDelete = null;
 
+    // Run to set general checkbox DISABLED when table in initially empty
+    updateGeneralCheckboxStatus();
+
     function beautifyString(string, isCapitalized) {
         var separator = " ";
         var stringArray = string.trim().toLowerCase().split(separator);
@@ -123,7 +126,8 @@ $(document).ready(function () {
     });
 
     deleteSelectedButton.click(function () {
-        contactsToDelete = phonebookContent.children().has(".form-check-input:checked");
+        // If filter is applied, only visible contacts will be subject to delete
+        contactsToDelete = phonebookContent.children().has(".form-check-input:checked:visible");
 
         if (contactsToDelete.length === 0) {
             return;
@@ -162,18 +166,24 @@ $(document).ready(function () {
             phonebookContent.children("tr").each(function () {
                 $(this).find(".form-check-input").prop("checked", true);
             });
-        } else if ($(this).is(":not(:checked)")) {
-            phonebookContent.children("tr").each(function () {
-                $(this).find(".form-check-input").prop("checked", false);
-            });
+
+            return;
         }
+
+        phonebookContent.children("tr").each(function () {
+            $(this).find(".form-check-input").prop("checked", false);
+        });
     });
 
     function updateGeneralCheckboxStatus() {
         if (phonebookContent.children().length === 0) {
             generalCheckbox.prop("indeterminate", false);
             generalCheckbox.prop("checked", false);
+            generalCheckbox.attr("disabled", true);
+            return;
         }
+
+        generalCheckbox.removeAttr("disabled");
 
         var checked = 0;
         var unchecked = 0;
@@ -214,7 +224,6 @@ $(document).ready(function () {
         resetFilterButton.trigger("click");
 
         var filterText = filterInput.val().trim().toLowerCase();
-
         var matchedRows = phonebookContent.children("tr").filter(function () {
             var isInFirstName = $(this).find("td.contact_first_name").text().toLowerCase().includes(filterText);
             var isInLastName = $(this).find("td.contact_last_name").text().toLowerCase().includes(filterText);
