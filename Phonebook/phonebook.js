@@ -64,6 +64,19 @@ $(document).ready(function () {
         });
     }
 
+    function isFilterApplied() {
+        var isFilterApplied = false;
+
+        phonebookContent.children("tr").each(function () {
+            if ($(this).find(".form-check-input").is(":not(:visible)")) {
+                isFilterApplied = true;
+                return false;
+            }
+        });
+
+        return isFilterApplied;
+    }
+
     addContactButton.click(function () {
         if (!isFormValid(contactInputForm)) {
             return;
@@ -138,16 +151,7 @@ $(document).ready(function () {
 
         deleteContactModalObject.show();
         // Check if filter is applied and warn user
-        var isFilterApplied = false;
-
-        phonebookContent.children("tr").each(function () {
-            if ($(this).find(".form-check-input").is(":not(:visible)")) {
-                isFilterApplied = true;
-                return false;
-            }
-        });
-
-        if (isFilterApplied) {
+        if (isFilterApplied()) {
             deleteContactModal.find(".modal-body").text("Seems that filter is applied, only visible contacts will be deleted. Continue?");
             return;
         }
