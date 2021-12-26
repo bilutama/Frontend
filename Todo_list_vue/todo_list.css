@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+}
+
+.form_header h2 {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: lighter;
+    color: #443f3f;
+    margin: 6px 0;
+    padding: 0 10px;
+}
+
+.to-do_list {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    background-color: #cbcbcb;
+    color: #443f3f;
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+.todo-list_content {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.form_header, .to-do_list {
+    margin: 0 10px;
+    max-width: 400px;
+}
+
+.edit_note {
+    padding: 3px;
+    margin: 3px;
+    border: none;
+    width: 100%;
+    background-color: #a8a8a8;
+    resize: none;
+    overflow: hidden;
+}
+
+.new_note {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    width: 100%;
+    margin: 8px 0 5px;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+}
+
+.error_message {
+    margin: 0 15px;
+    color: #f00;
+}
+
+.note_block > *, .edit_note_block > * {
+    display: inline;
+    vertical-align: middle;
+    overflow-wrap: inherit;
+    word-break: break-word;
+}
+
+.note_block {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #a8a8a8;
+    border-radius: 4px;
+}
+
+.note_block:hover {
+    background-color: #9d9d9d;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #999;
+}
+
+.button_group {
+    white-space: nowrap;
+}
+
+.list_button {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    background-color: #747474;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.add_new_note_button {
+    width: 100px;
+    height: 30px;
+    margin: 0;
+}
+
+.note_button {
+    height: 24px;
+    width: 70px;
+    margin: 3px;
+}
+
+.add_new_note_button:hover {
+    background-color: #646464;
+}
