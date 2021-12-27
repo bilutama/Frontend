@@ -98,9 +98,7 @@ $(document).ready(function () {
             "<td><button type='button' class='btn-close' aria-label='Delete' data-bs-toggle='modal' data-bs-target='#delete_confirmation_modal'></button></td>"
         );
 
-        var currentContactsCount = phonebookContent.children().length;
-
-        newContact.find(".contact_id").text(currentContactsCount + 1);
+        newContact.find(".contact_id").text(phonebookContent.children().length + 1);
         newContact.find(".contact_first_name").text(formatString(firstNameInput.val(), true));
         newContact.find(".contact_last_name").text(formatString(lastNameInput.val(), true));
         newContact.find(".contact_telephone").text(formatString(telephoneNumber, false));
