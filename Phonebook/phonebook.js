@@ -43,7 +43,7 @@ $(document).ready(function () {
     function isFormValid(form) {
         var isFormValid = true;
 
-        form.children().children().filter(":input:not(:button)").each(function () {
+        form.find(":input:not(:button)").each(function () {
             var inputFieldContent = $(this).val().trim();
 
             if (inputFieldContent.length === 0) {
