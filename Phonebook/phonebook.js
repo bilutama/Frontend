@@ -27,13 +27,13 @@ $(document).ready(function () {
     // Run to set general checkbox DISABLED when table in initially empty
     updateGeneralCheckboxStatus();
 
-    function beautifyString(string, isCapitalized) {
+    function formatString(string, isCapitalized) {
         var separator = " ";
         var stringArray = string.trim().toLowerCase().split(separator);
 
         if (isCapitalized) {
-            for (var j = 0; j < stringArray.length; ++j) {
-                stringArray[j] = stringArray[j].charAt(0).toUpperCase() + stringArray[j].slice(1);
+            for (var i = 0; i < stringArray.length; ++i) {
+                stringArray[i] = stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1);
             }
         }
 
@@ -59,22 +59,11 @@ $(document).ready(function () {
     }
 
     function clearForm(form) {
-        form.children().children().filter(":input:not(:button)").each(function () {
-            $(this).val("");
-        });
+        form.find(":input:not(:button)").val("");
     }
 
     function isFilterApplied() {
-        var isFilterApplied = false;
-
-        phonebookContent.children("tr").each(function () {
-            if ($(this).find(".form-check-input").is(":not(:visible)")) {
-                isFilterApplied = true;
-                return false;
-            }
-        });
-
-        return isFilterApplied;
+        return phonebookContent.find(".form-check-input:hidden").length > 0;
     }
 
     addContactButton.click(function () {
@@ -102,7 +91,7 @@ $(document).ready(function () {
         var newContact = $("<tr>");
 
         newContact.html("<th class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></th>" +
-            "<th scope='row' class='row_number'></th>" +
+            "<th scope='col' class='contact_id'></th>" +
             "<td class='contact_first_name'></td>" +
             "<td class='contact_last_name'></td>" +
             "<td class='contact_telephone'></td>" +
@@ -111,10 +100,10 @@ $(document).ready(function () {
 
         var currentContactsCount = phonebookContent.children().length;
 
-        newContact.find(".row_number").text(currentContactsCount + 1);
-        newContact.find(".contact_first_name").text(beautifyString(firstNameInput.val(), true));
-        newContact.find(".contact_last_name").text(beautifyString(lastNameInput.val(), true));
-        newContact.find(".contact_telephone").text(beautifyString(telephoneNumber, false));
+        newContact.find(".contact_id").text(currentContactsCount + 1);
+        newContact.find(".contact_first_name").text(formatString(firstNameInput.val(), true));
+        newContact.find(".contact_last_name").text(formatString(lastNameInput.val(), true));
+        newContact.find(".contact_telephone").text(formatString(telephoneNumber, false));
 
         // Remove contact
         newContact.find(".btn-close").click(function (event) {
@@ -171,7 +160,7 @@ $(document).ready(function () {
 
             // Recalculate remaining contacts numbers
             phonebookContent.children("tr").each(function (index) {
-                $(this).find(".row_number").text(index + 1);
+                $(this).find(".contact_id").text(index + 1);
             });
 
             updateGeneralCheckboxStatus();
@@ -185,27 +174,22 @@ $(document).ready(function () {
     // GENERAL_CHECKBOX status handling on change
     generalCheckbox.change(function () {
         if ($(this).is(":checked")) {
-            phonebookContent.children("tr").each(function () {
-                $(this).find(".form-check-input").prop("checked", true);
-            });
-
+            phonebookContent.find(".form-check-input").prop("checked", true);
             return;
         }
 
-        phonebookContent.children("tr").each(function () {
-            $(this).find(".form-check-input").prop("checked", false);
-        });
+        phonebookContent.find(".form-check-input").prop("checked", false);
     });
 
     function updateGeneralCheckboxStatus() {
         if (phonebookContent.children().length === 0) {
             generalCheckbox.prop("indeterminate", false);
             generalCheckbox.prop("checked", false);
-            generalCheckbox.attr("disabled", true);
+            generalCheckbox.prop("disabled", true);
             return;
         }
 
-        generalCheckbox.removeAttr("disabled");
+        generalCheckbox.prop("disabled", false);
 
         var checked = 0;
         var unchecked = 0;
@@ -217,7 +201,7 @@ $(document).ready(function () {
                 if (unchecked > 0) {
                     return false;
                 }
-            } else if ($(this).find(".form-check-input").is(":not(:checked)")) {
+            } else {
                 ++unchecked;
 
                 if (checked > 0) {
@@ -232,34 +216,26 @@ $(document).ready(function () {
         }
 
         generalCheckbox.prop("indeterminate", false);
-
-        if (checked === 0) {
-            generalCheckbox.prop("checked", false);
-            return;
-        }
-
-        generalCheckbox.prop("checked", true);
+        generalCheckbox.prop("checked", checked > 0);
     }
 
     // Handling filter form buttons
     enableFilterButton.click(function () {
-        resetFilterButton.trigger("click");
+        resetFilterButton.click();
 
         var filterText = filterInput.val().trim().toLowerCase();
         var matchedRows = phonebookContent.children("tr").filter(function () {
-            var isInFirstName = $(this).find("td.contact_first_name").text().toLowerCase().includes(filterText);
-            var isInLastName = $(this).find("td.contact_last_name").text().toLowerCase().includes(filterText);
-            var isInTelephone = $(this).find("td.contact_telephone").text().toLowerCase().includes(filterText);
+            var isNotInFirstName = !$(this).find("td.contact_first_name").text().toLowerCase().includes(filterText);
+            var isNotInLastName = !$(this).find("td.contact_last_name").text().toLowerCase().includes(filterText);
+            var isNotInTelephone = !$(this).find("td.contact_telephone").text().toLowerCase().includes(filterText);
 
-            return !(isInFirstName || isInLastName || isInTelephone);
+            return isNotInFirstName && isNotInLastName && isNotInTelephone;
         });
 
         matchedRows.hide();
     });
 
     resetFilterButton.click(function () {
-        phonebookContent.children("tr").each(function () {
-            $(this).show();
-        });
+        phonebookContent.children("tr").show();
     });
 });
