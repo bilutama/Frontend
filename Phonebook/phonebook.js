@@ -234,6 +234,6 @@ $(document).ready(function () {
     });
 
     resetFilterButton.click(function () {
-        phonebookContent.children("tr").show();
+        phonebookContent.find("tr").show();
     });
 });
