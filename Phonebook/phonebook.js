@@ -90,8 +90,8 @@ $(document).ready(function () {
 
         var newContact = $("<tr>");
 
-        newContact.html("<th scope='row' class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></th>" +
-            "<th class='contact_id'></th>" +
+        newContact.html("<td class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></td>" +
+            "<th scope='row' class='contact_id'></th>" +
             "<td class='contact_first_name'></td>" +
             "<td class='contact_last_name'></td>" +
             "<td class='contact_telephone'></td>" +
