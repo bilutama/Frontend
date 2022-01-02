@@ -1,3 +1,18 @@
+new Vue({
+    el: "#app",
+    data: {
+        name: "",
+        surname: "",
+        fullName: ""
+    },
+    methods: {
+        getFullName: function () {
+            this.fullName = this.name + " " + this.surname
+        }
+    }
+});
+
+/*
 $(document).ready(function () {
     var todoList = $("#todo-list_content");
     var newTodoNote = $("#new_note");
@@ -89,4 +104,4 @@ $(document).ready(function () {
     });
 
     addNewNoteButton.click(addNewNoteHandler);
-});
+});*/
