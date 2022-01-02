@@ -91,7 +91,7 @@ $(document).ready(function () {
         var newContact = $("<tr>");
 
         newContact.html("<th class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></th>" +
-            "<th scope='col' class='contact_id'></th>" +
+            "<th scope='row' class='contact_id'></th>" +
             "<td class='contact_first_name'></td>" +
             "<td class='contact_last_name'></td>" +
             "<td class='contact_telephone'></td>" +
@@ -157,8 +157,8 @@ $(document).ready(function () {
             contactsToDelete.remove();
 
             // Recalculate remaining contacts numbers
-            phonebookContent.children("tr").each(function (index) {
-                $(this).find(".contact_id").text(index + 1);
+            phonebookContent.find(".contact_id").each(function (index) {
+                $(this).text(index + 1);
             });
 
             updateGeneralCheckboxStatus();
@@ -171,12 +171,7 @@ $(document).ready(function () {
 
     // GENERAL_CHECKBOX status handling on change
     generalCheckbox.change(function () {
-        if ($(this).is(":checked")) {
-            phonebookContent.find(".form-check-input").prop("checked", true);
-            return;
-        }
-
-        phonebookContent.find(".form-check-input").prop("checked", false);
+        phonebookContent.find(".form-check-input").prop("checked", $(this).is(":checked"));
     });
 
     function updateGeneralCheckboxStatus() {
