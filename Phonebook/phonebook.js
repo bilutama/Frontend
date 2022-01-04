@@ -27,6 +27,11 @@ $(document).ready(function () {
     // Run to set general checkbox DISABLED when table in initially empty
     updateGeneralCheckboxStatus();
 
+    // Trim strings in main form's inputs
+    contactInputForm.find(":input:not(:button)").on("input",function () {
+        $(this).val($(this).val().trimStart());
+    });
+
     function formatString(string, isCapitalized) {
         var separator = " ";
         var stringArray = string.trim().toLowerCase().split(separator);
@@ -91,11 +96,11 @@ $(document).ready(function () {
         var newContact = $("<tr>");
 
         newContact.html("<td class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></td>" +
-            "<th scope='row' class='contact_id'></th>" +
+            "<td class='contact_id'></td>" +
             "<td class='contact_first_name'></td>" +
             "<td class='contact_last_name'></td>" +
             "<td class='contact_telephone'></td>" +
-            "<td><button type='button' class='btn-close' aria-label='Delete' data-bs-toggle='modal' data-bs-target='#delete_confirmation_modal'></button></td>"
+            "<td><button type='button' class='btn-close' aria-label='Delete' data-bs-toggle='modal' title='Delete' data-bs-target='#delete_confirmation_modal'></button></td>"
         );
 
         newContact.find(".contact_id").text(phonebookContent.children().length + 1);
