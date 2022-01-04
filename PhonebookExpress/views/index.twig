@@ -12,30 +12,30 @@
     </div>
 </nav>
 <div class="container" id="app">
-    <form @submit.prevent="addContact" class="row g-3 border needs-validation mt-3 py-2" novalidate id="contact_input_form">
+    <form @submit.prevent="addContact" class="row g-3 border needs-validation mt-3 py-2" novalidate>
         <div class="col-md-4 mt-0">
             <label for="first_name" class="form-label">First name</label>
-            <input type="text" class="form-control" id="first_name" v-model="firstName"  required>
+            <input type="text" id="first_name" class="form-control" v-model.trim="firstName" :class="{'is-invalid': isFirstNameInvalid}" required>
             <div class="invalid-feedback">
                 Please provide your name
             </div>
         </div>
         <div class="col-md-4 mt-0">
             <label for="last_name" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="last_name" v-model="lastName" required>
+            <input type="text" id="last_name" class="form-control" v-model.trim="lastName" :class="{'is-invalid': isLastNameInvalid}" required>
             <div class="invalid-feedback">
                 Please provide your last name
             </div>
         </div>
         <div class="col-md-4 mt-0">
             <label for="telephone_number" class="form-label">Telephone</label>
-            <input type="tel" class="form-control" id="telephone_number" v-model="telephone" required>
+            <input type="tel" id="telephone_number" class="form-control" v-model.trim="telephone" :class="{'is-invalid': isTelephoneInvalid}" required>
             <div class="invalid-feedback">
                 You have to enter phone number
             </div>
         </div>
         <div>
-            <button class="btn btn-primary my-1" type="submit" id="add_contact_button">Add contact</button>
+            <button class="btn btn-primary my-1" id="add_contact_button">Add contact</button>
             <button class="btn btn-danger my-1" type="button" id="delete_selected_button">Delete selected</button>
             <button @click.prevent="clearForm" class="btn btn-secondary my-1" type="button" id="clear_form_button">Clear form</button>
         </div>
@@ -51,38 +51,30 @@
         </form>
     </div>
 
-    <table v-cloak class="table table-responsive table-hover mt-3 row-cols-auto" id="phonebook">
-        <thead class="table-light">
-        <tr>
-            <th class="col-auto align-middle" scope="col">
-                <div class="form-check">
-                    <input class="form-check-input"
-                           type="checkbox"
-                           value=""
-                           id="general_checkbox">
-                </div>
-            </th>
-            <th class="col-auto align-middle" scope="col">#</th>
-            <th class="col-md-3 align-middle" scope="col">First Name</th>
-            <th class="col-md-3 align-middle" scope="col">Last Name</th>
-            <th class="col-md-3 align-middle" scope="col">Phone number</th>
-            <th class="col-md-auto" scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(c, index) in contacts" :key="c.id">
-            <th class="contactSelector">
-                <div class="form-check"><input class="form-check-input" type="checkbox" v-model="checked"></div>
-            </th>
-                <th scope='col' class="contact_id" v-text="index + 1"></th>
-                <td class="contact_first_name" v-text="contact.firstName"></td>
-                <td class="contact_last_name" v-text="contact.lastName"></td>
-                <td class="contact_telephone" v-text="contact.telephone"></td>
-                <td><button @click="deleteContact(c)" type="button" class="btn-close" aria-label="Delete" data-bs-toggle="modal" data-bs-target="#delete_confirmation_modal"></button>
-                    </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table v-cloak class="table table-hover mt-3 row-cols-auto" id="phonebook">
+            <thead class="table-light">
+            <tr>
+                <td class="align-middle">
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               value=""
+                               id="general_checkbox">
+                    </div>
+                </td>
+                <th class="align-middle" scope="col">#</th>
+                <th class="align-middle" scope="col">First Name</th>
+                <th class="align-middle" scope="col">Last Name</th>
+                <th class="align-middle" scope="col">Phone number</th>
+                <th class="align-middle" scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <contact-item v-for="(contact, index) in contacts" :key="contact.id"></contact-item>
+            </tbody>
+        </table>
+    </div>
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-2 align-items-center">
@@ -90,6 +82,21 @@
         </div>
     </footer>
 </div>
+
+<script id="contact-item-template" type="text/x-template">
+    <tr>
+        <td class="contactSelector">
+            <div class="form-check"><input class="form-check-input" type="checkbox" v-model="contact.checked"></div>
+        </td>
+        <th scope='row' class="contact_id" v-text="index + 1"></th>
+        <td class="contact_first_name" v-text="contact.firstName"></td>
+        <td class="contact_last_name" v-text="contact.lastName"></td>
+        <td class="contact_telephone" v-text="contact.telephone"></td>
+        <td><button @click="deleteContact(contact)" type="button" class="btn-close" aria-label="Delete" data-bs-toggle="modal" data-bs-target="#delete_confirmation_modal"></button>
+            </td>
+    </tr>
+</script>
+
 <!-- Confirm delete Modal -->
 <div class="modal fade" id="delete_confirmation_modal" tabindex="-1" aria-labelledby="modalLabel"
      aria-hidden="true">

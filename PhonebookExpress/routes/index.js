@@ -1,23 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
+/* GET home page. */
+router.get("/", function (req, res, next) {
+    res.render("index", {title: "Phonebook v2.0"});
+});
+
 // Global variables
 var currentContactId = 1;
 var contacts = []; // {id, firstName, secondName, telephone}
-
-/* GET home page. */
-router.get("/", function (req, res, next) {
-    res.render("index", {title: "Express"});
-});
 
 // Get contacts request handler that uses query string /getContacts/?term=...
 router.get("/api/getContacts", function (req, res) {
     var term = (req.query.term || "").toLowerCase();
 
     var result = term.length === 0 ? contacts : contacts.filter(function (contact) {
-        return contact.firstName.toLowerCase().includes(term) ||
-            contact.lastName.toLowerCase().includes(term) ||
-            contact.telephone.toLowerCase().includes(term);
+        return contact.firstName.toLowerCase().includes(term)
+            || contact.lastName.toLowerCase().includes(term)
+            || contact.telephone.toLowerCase().includes(term);
     });
 
     res.send(result);
@@ -25,10 +25,10 @@ router.get("/api/getContacts", function (req, res) {
 
 // Add contact request handler
 router.post("/api/addContact", function (req, res) {
-    var requestedData = req.body;
+    var request = req.body;
 
     // Check if first name is provided
-    if (!requestedData.firstName) {
+    if (!request.firstName) {
         res.send({
             success: false,
             message: "First name is obligatory"
@@ -38,7 +38,7 @@ router.post("/api/addContact", function (req, res) {
     }
 
     // Check if last name is provided
-    if (!requestedData.lastName) {
+    if (!request.lastName) {
         res.send({
             success: false,
             message: "Last name is obligatory"
@@ -48,7 +48,7 @@ router.post("/api/addContact", function (req, res) {
     }
 
     // Check if telephone is provided
-    if (!requestedData.telephone) {
+    if (!request.telephone) {
         res.send({
             success: false,
             message: "Telephone is obligatory"
@@ -59,7 +59,7 @@ router.post("/api/addContact", function (req, res) {
 
     // Check if telephone already exists
     if (contacts.some(function (contact) {
-        return contact.data.telephone.toLowerCase() === requestedData.telephone.toLowerCase();
+        return contact.telephone.toLowerCase() === request.telephone.toLowerCase();
     })) {
         res.send({
             success: false,
@@ -69,21 +69,17 @@ router.post("/api/addContact", function (req, res) {
         return;
     }
 
-    // var newContact = {
-    //     id: currentContactId,
-    //     firstName: requestedData.firstName,
-    //     lastName: requestedData.lastName,
-    //     telephone: requestedData.telephone,
-    // };
-
-    contacts.push({
+    var newContact = {
         id: currentContactId,
-        firstName: requestedData.firstName,
-        lastName: requestedData.lastName,
-        telephone: requestedData.telephone
-    });
+        checked: false,
+        firstName: request.firstName,
+        lastName: request.lastName,
+        telephone: request.telephone
+    };
 
-    currentContactId = currentContactId + 1;
+    contacts.push(newContact);
+
+    ++currentContactId;
 
     res.send({
         success: true,
