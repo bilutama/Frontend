@@ -2,27 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>To-to list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To-do list v3.0</title>
     <link rel="icon" href="resources/todo_icon.svg">
-    <link rel="stylesheet" href="normalize.css"/>
-    <link rel="stylesheet" href="todo_list.css"/>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="v-cloak.css"/>
+
+    <script defer src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script defer src="node_modules/vue/dist/vue.js"></script>
     <script defer src="todo_list.js"></script>
 </head>
 <body>
-<div class="form_header">
-    <h2>To-do list</h2>
-</div>
+<nav class="navbar navbar-light bg-light">
+    <div class="container col-md-7 col-xl-5">
+        <a class="navbar-brand" href="#to-do_list">
+            <img src="resources/todo_icon.svg" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            To-do list on Vue
+        </a>
+    </div>
+</nav>
 
-<div id="app" class="to-do_list">
-    <form class="new_note_form">
-        <label>
-            <input id="new_note" class="new_note" type="text" placeholder="Write your note here">
-        </label>
-        <button id="add_new_note_button" class="list_button add_new_note_button" type="button">add</button>
-        <span class="error_message" style="display: none;">error: new note cannot be empty</span>
-    </form>
-    <ul id="todo-list_content" class="todo-list_content"></ul>
+<div v-cloak class="container col-md-7 col-xl-5" id="app">
+    <div class="border mt-3 p-2">
+        <label for="exampleFormControlTextarea1" class="form-label">Type text for a new to-do note:</label>
+        <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" v-model="newTodoText"
+                  :class="{'is-invalid': isNewTodoInvalid}"></textarea>
+        <button @click="addNewTodoNote(newTodoNote)" type="button" class="btn btn-primary">Add note</button>
+    </div>
+
+    <div class="border mt-3 p-2">
+        <ul class="list-unstyled">
+            <to-do-item v-for="(item, index) in items"
+                        :index="index"
+                        :item="item"
+                        :key="item.id"
+                        @delete-item="deleteItem"
+                        @save-item="saveItem"></to-do-item>
+        </ul>
+    </div>
 </div>
 </body>
+
+<script  id="to-do-item-template" type="text/x-template">
+    <li>
+        <div v-if="!isEditing">
+            <div v-text="item.text"></div>
+            <button class="btn btn-primary" @click="editItem">Edit</button>
+            <button class="btn btn-danger" @click="$emit('delete', item)">Delete</button>
+            <!--        title for icon button-->
+        </div>
+        <div v-else>
+            <input v-model="editingText" class="form-control">
+            <button class="btn btn-secondary" @click="isEditing = true">Cancel</button>
+            <button class="btn btn-success" @click="saveItem">Save</button>
+        </div>
+    </li>
+</script>
 </html>
