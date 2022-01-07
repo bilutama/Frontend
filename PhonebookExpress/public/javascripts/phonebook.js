@@ -17,7 +17,15 @@ Vue.component("contact-item", {
     template: "#contact-item-template",
 
     props: {
+        id: {
+            type: Number,
+            required: true
+        },
 
+        contact: {
+            type: Object,
+            required: true
+        }
     }
 });
 

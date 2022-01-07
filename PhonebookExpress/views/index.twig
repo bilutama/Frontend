@@ -55,14 +55,14 @@
         <table v-cloak class="table table-hover mt-3 row-cols-auto" id="phonebook">
             <thead class="table-light">
             <tr>
-                <td class="align-middle">
+                <th class="align-middle">
                     <div class="form-check">
                         <input class="form-check-input"
                                type="checkbox"
                                value=""
                                id="general_checkbox">
                     </div>
-                </td>
+                </th>
                 <th class="align-middle" scope="col">#</th>
                 <th class="align-middle" scope="col">First Name</th>
                 <th class="align-middle" scope="col">Last Name</th>
@@ -71,7 +71,10 @@
             </tr>
             </thead>
             <tbody>
-                <contact-item v-for="(contact, index) in contacts" :key="contact.id"></contact-item>
+                <contact-item v-for="(contact, index) in contacts"
+                                :key="contact.id"
+                                :contact="contact"
+                                :index="index"></contact-item>
             </tbody>
         </table>
     </div>
@@ -83,7 +86,7 @@
     </footer>
 </div>
 
-<script id="contact-item-template" type="text/x-template">
+<script type="text/x-template" id="contact-item-template">
     <tr>
         <td class="contactSelector">
             <div class="form-check"><input class="form-check-input" type="checkbox" v-model="contact.checked"></div>
