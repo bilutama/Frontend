@@ -189,32 +189,32 @@ $(document).ready(function () {
 
         generalCheckbox.prop("disabled", false);
 
-        var checked = 0;
-        var unchecked = 0;
+        var checkedCount = 0;
+        var uncheckedCount = 0;
 
         phonebookContent.children("tr").each(function () {
             if ($(this).find(".form-check-input").is(":checked")) {
-                ++checked;
+                ++checkedCount;
 
-                if (unchecked > 0) {
+                if (uncheckedCount > 0) {
                     return false;
                 }
             } else {
-                ++unchecked;
+                ++uncheckedCount;
 
-                if (checked > 0) {
+                if (checkedCount > 0) {
                     return false;
                 }
             }
         });
 
-        if (checked > 0 && unchecked > 0) {
+        if (checkedCount > 0 && uncheckedCount > 0) {
             generalCheckbox.prop("indeterminate", true);
             return;
         }
 
         generalCheckbox.prop("indeterminate", false);
-        generalCheckbox.prop("checked", checked > 0);
+        generalCheckbox.prop("checked", checkedCount > 0);
     }
 
     // Handling filter form buttons
