@@ -29,7 +29,7 @@ $(document).ready(function () {
 
     // Trim strings in main form's inputs
     contactInputForm.find(":input:not(:button)").on("input", function () {
-        $(this).val($(this).val().trimStart());
+        $(this).val($(this).val().trim());
     });
 
     function formatString(string, isCapitalized) {
@@ -96,14 +96,14 @@ $(document).ready(function () {
         var newContact = $("<tr>");
 
         newContact.html("<td class='contactSelector'><div class='form-check'><input class='form-check-input' type='checkbox' value=''></div></td>" +
-            "<th scope='row' class='contact_id'></th>" +
+            "<td class='contact_index'></td>" +
             "<td class='contact_first_name'></td>" +
             "<td class='contact_last_name'></td>" +
             "<td class='contact_telephone'></td>" +
             "<td><button type='button' class='btn-close' aria-label='Delete' data-bs-toggle='modal' title='Delete' data-bs-target='#delete_confirmation_modal'></button></td>"
         );
 
-        newContact.find(".contact_id").text(phonebookContent.children().length + 1);
+        newContact.find(".contact_index").text(phonebookContent.children().length + 1);
         newContact.find(".contact_first_name").text(formatString(firstNameInput.val(), true));
         newContact.find(".contact_last_name").text(formatString(lastNameInput.val(), true));
         newContact.find(".contact_telephone").text(formatString(telephoneNumber, false));
@@ -162,7 +162,7 @@ $(document).ready(function () {
             contactsToDelete.remove();
 
             // Recalculate remaining contacts numbers
-            phonebookContent.find(".contact_id").each(function (index) {
+            phonebookContent.find(".contact_index").each(function (index) {
                 $(this).text(index + 1);
             });
 
@@ -219,7 +219,7 @@ $(document).ready(function () {
 
     // Handling filter form buttons
     enableFilterButton.click(function () {
-        resetFilterButton.click();
+        phonebookContent.find("tr").show();
 
         var filterText = filterInput.val().trim().toLowerCase();
         var matchedRows = phonebookContent.children("tr").filter(function () {
@@ -234,6 +234,7 @@ $(document).ready(function () {
     });
 
     resetFilterButton.click(function () {
+        filterInput.val("");
         phonebookContent.find("tr").show();
     });
 });
