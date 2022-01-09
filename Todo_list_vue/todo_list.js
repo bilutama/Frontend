@@ -2,44 +2,54 @@ Vue.component("to-do-item", {
     template: "#to-do-item-template",
 
     props: {
-        index: {
-            type: Number,
-            required: true
-        },
-
         item: {
             type: Object,
             required: true,
         }
     },
 
-    data: {
-        isInvalid: false,
-        isEditing: false,
-        editingText: ""
+    data: function () {
+        return {
+            modifiedText: "",
+            isInvalid: false,
+            isModifying: false
+        };
     },
 
     methods: {
-        editItem: function () {
+        modifyItem: function () {
+            this.modifiedText = this.item.text;
+            this.isModifying = true;
             this.isInvalid = false;
-            this.isEditing = true;
-            this.editingText = this.text;
-        },
-
-        delete: function () {
-            this.$emit("delete-item", this.props.item);
         },
 
         saveItem: function () {
             this.isInvalid = false;
 
-            if (this.editingText.length === 0) {
+            if (this.modifiedText.length === 0) {
+                this.$emit("delete-item", this.item);
                 this.isInvalid = true;
                 return;
             }
 
-            this.$emit("save-item", this.item, this.editingText);
-            this.isEditing = false;
+            this.$emit("save-item", this.item, this.modifiedText);
+            this.isModifying = false;
+        },
+
+        autoresize: function (event) {
+            event.target.style.height = "auto";
+            event.target.style.height = event.target.scrollHeight + "px";
+            event.target.style.resize = "none";
+        }
+    },
+
+    watch: {
+        isModifying: function () {
+            this.$nextTick(function () {
+                if (this.isModifying === true) {
+                    this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
+                }
+            });
         }
     }
 });
@@ -52,6 +62,20 @@ new Vue({
         newTodoText: "",
         currentTodoId: 1,
         items: []
+    },
+
+    watch: {
+        newTodoText: function (newValue) {
+            if (newValue.trim().length > 0) {
+                this.isNewTodoInvalid = false;
+            }
+        }
+    },
+
+    created: function () {
+        this.$nextTick(function () {
+            this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
+        });
     },
 
     methods: {
@@ -70,16 +94,26 @@ new Vue({
 
             this.newTodoText = "";
             ++this.currentTodoId;
+
+            this.$nextTick(function () {
+                this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
+            });
         },
 
         deleteItem: function (item) {
-            this.items = this.items.filter(function (filteredItem) {
-                return filteredItem !== item;
-            })
+            this.items = this.items.filter(function (remainedItem) {
+                return remainedItem !== item;
+            });
         },
 
         saveItem: function (item, newTodoText) {
             item.text = newTodoText;
+        },
+
+        autoresize: function (event) {
+            event.target.style.height = "auto";
+            event.target.style.height = event.target.scrollHeight + "px";
+            event.target.style.resize = "none";
         }
     }
 });

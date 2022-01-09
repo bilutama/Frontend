@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-light bg-light">
     <div class="container col-md-7 col-xl-5">
-        <a class="navbar-brand" href="#to-do_list">
+        <a class="navbar-brand" href="#to-do-list">
             <img src="resources/todo_icon.svg" alt="" width="30" height="24"
                  class="d-inline-block align-text-top">
             To-do list on Vue
@@ -24,17 +24,24 @@
 </nav>
 
 <div v-cloak class="container col-md-7 col-xl-5" id="app">
-    <div class="border mt-3 p-2">
-        <label for="exampleFormControlTextarea1" class="form-label">Type text for a new to-do note:</label>
-        <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" v-model="newTodoText"
-                  :class="{'is-invalid': isNewTodoInvalid}"></textarea>
-        <button @click="addNewTodoNote(newTodoNote)" type="button" class="btn btn-primary">Add note</button>
+    <div class="mt-3 p-2">
+        <div class="position-relative">
+            <label for="newTodoTextArea" class="form-label">Type text for a new to-do note:</label>
+            <textarea ref="autoResizableTextArea"
+                      class="form-control mb-2" id="newTodoTextArea" rows="2"
+                      aria-describedby="newTodoValidationFeedback"
+                      v-model.trim="newTodoText" @input="autoresize"
+                      :class="{'is-invalid': isNewTodoInvalid}" required></textarea>
+            <div id="newTodoValidationFeedback" class="invalid-tooltip">
+                Note cannot be empty
+            </div>
+        </div>
+        <button @click="addNewTodoItem" type="button" class="btn btn-primary">Add note</button>
     </div>
 
-    <div class="border mt-3 p-2">
-        <ul class="list-unstyled">
-            <to-do-item v-for="(item, index) in items"
-                        :index="index"
+    <div class="mt-3 p-2">
+        <ul class="list-group">
+            <to-do-item v-for="(item) in items"
                         :item="item"
                         :key="item.id"
                         @delete-item="deleteItem"
@@ -44,18 +51,18 @@
 </div>
 </body>
 
-<script  id="to-do-item-template" type="text/x-template">
-    <li>
-        <div v-if="!isEditing">
-            <div v-text="item.text"></div>
-            <button class="btn btn-primary" @click="editItem">Edit</button>
-            <button class="btn btn-danger" @click="$emit('delete', item)">Delete</button>
-            <!--        title for icon button-->
+<script id="to-do-item-template" type="text/x-template">
+    <li class="list-group-item mb-2 border">
+        <div class="text-break" v-if="!isModifying">
+            <div class="text-wrap mb-2" v-text="item.text" @click="modifyItem"></div>
+            <button class="btn btn-outline-secondary btn-sm" @click="modifyItem">Modify</button>
+            <button class="btn btn-outline-danger btn-sm" @click="$emit('delete-item', item)">Delete</button>
         </div>
         <div v-else>
-            <input v-model="editingText" class="form-control">
-            <button class="btn btn-secondary" @click="isEditing = true">Cancel</button>
-            <button class="btn btn-success" @click="saveItem">Save</button>
+            <textarea ref="autoResizableTextArea" v-model.trim="modifiedText" class="form-control p-1 mb-2" rows="1"
+                      @input="autoresize"></textarea>
+            <button class="btn btn-outline-success btn-sm" @click="saveItem">Save</button>
+            <button class="btn btn-outline-secondary btn-sm" @click="isModifying = false">Exit</button>
         </div>
     </li>
 </script>
