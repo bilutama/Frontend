@@ -28,7 +28,7 @@
         <div class="position-relative">
             <label for="newTodoTextArea" class="form-label">Type text for a new to-do note:</label>
             <textarea ref="autoResizableTextArea"
-                      class="form-control mb-2" id="newTodoTextArea" rows="2"
+                      class="form-control mb-3" id="newTodoTextArea" rows="2"
                       aria-describedby="newTodoValidationFeedback"
                       v-model.trim="newTodoText" @input="autoresize"
                       :class="{'is-invalid': isNewTodoInvalid}" required></textarea>
@@ -36,7 +36,7 @@
                 Note cannot be empty
             </div>
         </div>
-        <button @click="addNewTodoItem" type="button" class="btn btn-primary">Add note</button>
+        <button @click="addNewTodoItem" type="button" class="btn btn-primary">Add new note</button>
     </div>
 
     <div class="mt-3 p-2">
@@ -45,7 +45,8 @@
                         :item="item"
                         :key="item.id"
                         @delete-item="deleteItem"
-                        @save-item="saveItem"></to-do-item>
+                        @save-item="saveItem">
+            </to-do-item>
         </ul>
     </div>
 </div>
