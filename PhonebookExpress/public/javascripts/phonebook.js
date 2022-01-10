@@ -61,29 +61,29 @@ new Vue({
             });
         },
 
-        addContact: function () {
-            function formatString(string, isCapitalized) {
-                var separator = " ";
-                var stringArray = string.trim().toLowerCase().split(separator);
+        formatString: function (string, isCapitalized) {
+            var separator = " ";
+            var stringArray = string.trim().toLowerCase().split(separator);
 
-                if (isCapitalized) {
-                    for (var i = 0; i < stringArray.length; ++i) {
-                        stringArray[i] = stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1);
-                    }
+            if (isCapitalized) {
+                for (var i = 0; i < stringArray.length; ++i) {
+                    stringArray[i] = stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1);
                 }
-
-                return stringArray.join(separator);
             }
 
+            return stringArray.join(separator);
+        },
+
+        addContact: function () {
             this.isFirstNameInvalid = this.firstName.trim().length === 0;
             this.isLastNameInvalid = this.lastName.trim().length === 0;
             this.isTelephoneInvalid = this.telephone.trim().length === 0;
 
             var request = {
                 checked: false,
-                firstName: formatString(this.firstName, true),
-                lastName: formatString(this.lastName, true),
-                telephone: formatString(this.telephone, false)
+                firstName: this.formatString(this.firstName, true),
+                lastName: this.formatString(this.lastName, true),
+                telephone: this.formatString(this.telephone, false)
             }
 
             var self = this;
