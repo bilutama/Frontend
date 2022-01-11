@@ -13,11 +13,12 @@ function post(url, data) {
     });
 }
 
+// noinspection JSAnnotator
 Vue.component("contact-item", {
     template: "#contact-item-template",
 
     props: {
-        id: {
+        index: {
             type: Number,
             required: true
         },
