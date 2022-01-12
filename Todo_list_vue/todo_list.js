@@ -4,14 +4,13 @@ Vue.component("to-do-item", {
     props: {
         item: {
             type: Object,
-            required: true,
+            required: true
         }
     },
 
     data: function () {
         return {
             modifiedText: "",
-            isInvalid: false,
             isModifying: false
         };
     },
@@ -20,15 +19,11 @@ Vue.component("to-do-item", {
         modifyItem: function () {
             this.modifiedText = this.item.text;
             this.isModifying = true;
-            this.isInvalid = false;
         },
 
         saveItem: function () {
-            this.isInvalid = false;
-
             if (this.modifiedText.length === 0) {
                 this.$emit("delete-item", this.item);
-                this.isInvalid = true;
                 return;
             }
 
@@ -73,9 +68,7 @@ new Vue({
     },
 
     created: function () {
-        this.$nextTick(function () {
-            this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
-        });
+        this.triggerInputEvent();
     },
 
     methods: {
@@ -95,9 +88,7 @@ new Vue({
             this.newTodoText = "";
             ++this.currentTodoId;
 
-            this.$nextTick(function () {
-                this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
-            });
+            this.triggerInputEvent();
         },
 
         deleteItem: function (item) {
@@ -108,6 +99,12 @@ new Vue({
 
         saveItem: function (item, newTodoText) {
             item.text = newTodoText;
+        },
+
+        triggerInputEvent: function () {
+            this.$nextTick(function () {
+                this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
+            });
         },
 
         autoresize: function (event) {
