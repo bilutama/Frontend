@@ -13,6 +13,22 @@ function post(url, data) {
     });
 }
 
+function PhonebookService() {
+    this.apiUrl = "/api/";
+
+    this.getContacts = function (term) {
+        return get(this.apiUrl + "getContacts", {term: term});
+    };
+
+    this.addContact = function (contact) {
+        return post(this.apiUrl + "addContact", contact);
+    };
+
+    this.deleteContact = function (id) {
+        return post(this.apiUrl + "deleteContact", {id: id});
+    };
+}
+
 new Vue({
     el: "#app",
 
@@ -27,7 +43,8 @@ new Vue({
         lastName: "",
         telephone: "",
         term: "",
-        contacts: []
+        contacts: [],
+        service: new PhonebookService()
     },
 
     created: function () {
@@ -38,7 +55,7 @@ new Vue({
         loadContacts: function () {
             var self = this;
 
-            get("/api/getContacts", {term: this.term}).done(function (contacts) {
+            this.service.getContacts(this.term).done(function (contacts) {
                 self.contacts = contacts;
             }).fail(function () {
                 alert("Contacts are not loaded");
@@ -63,7 +80,7 @@ new Vue({
             this.isLastNameInvalid = this.lastName.trim().length === 0;
             this.isTelephoneInvalid = this.telephone.trim().length === 0;
 
-            var request = {
+            var newContact = {
                 checked: false,
                 firstName: this.formatString(this.firstName, true),
                 lastName: this.formatString(this.lastName, true),
@@ -72,7 +89,7 @@ new Vue({
 
             var self = this;
 
-            post("/api/addContact", request).done(function (response) {
+            this.service.addContact(newContact).done(function (response) {
                 if (!response.success) {
                     alert(response.message);
                     return;
@@ -95,7 +112,7 @@ new Vue({
         deleteContact: function (contact) {
             var self = this;
 
-            post("/api/deleteContact", {id: contact.id}).done(function (response) {
+            this.service.deleteContact(contact.id).done(function (response) {
                 if (!response.success) {
                     alert(response.message);
                     return;
