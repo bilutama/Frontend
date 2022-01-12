@@ -68,7 +68,7 @@ new Vue({
     },
 
     created: function () {
-        this.triggerInputEvent();
+        this.triggerTextAreaInputEvent();
     },
 
     methods: {
@@ -88,7 +88,7 @@ new Vue({
             this.newTodoText = "";
             ++this.currentTodoId;
 
-            this.triggerInputEvent();
+            this.triggerTextAreaInputEvent();
         },
 
         deleteItem: function (item) {
@@ -101,7 +101,7 @@ new Vue({
             item.text = newTodoText;
         },
 
-        triggerInputEvent: function () {
+        triggerTextAreaInputEvent: function () {
             this.$nextTick(function () {
                 this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
             });
