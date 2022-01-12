@@ -13,23 +13,6 @@ function post(url, data) {
     });
 }
 
-// noinspection JSAnnotator
-Vue.component("contact-item", {
-    template: "#contact-item-template",
-
-    props: {
-        index: {
-            type: Number,
-            required: true
-        },
-
-        contact: {
-            type: Object,
-            required: true
-        }
-    }
-});
-
 new Vue({
     el: "#app",
 
