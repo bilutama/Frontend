@@ -11,8 +11,7 @@
         </a>
     </div>
 </nav>
-<div class="container">
-    <div id="app">
+<div class="container" id="app">
     <form @submit.prevent="addContact" class="row g-3 border needs-validation mt-3 py-2" novalidate>
         <div class="col-md-4 mt-0">
             <label for="first_name" class="form-label">First name</label>
@@ -82,11 +81,15 @@
                 <td>{{ contact.firstName }}</td>
                 <td>{{ contact.lastName }}</td>
                 <td>{{ contact.telephone }}</td>
-                <td><button @click="deleteContact(contact)" type="button" class="btn-close" aria-label="Delete" data-bs-toggle="modal" data-bs-target="#delete_confirmation_modal"></button>
+                <td><button @click="deleteConfirmDialog(contact)" type="button" class="btn-close" aria-label="Delete" data-bs-toggle="modal" data-bs-toggle="modal" data-bs-target="#delete_confirmation_modal"></button>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <delete-modal @confirm-delete="deleteContact" ref="confirmDeleteDialog">
+    <template v-if="isContactForDeleteExists" v-slot:contact-name> {{ contactForDelete.firstName }} {{ contactForDelete.lastName }}</template>
+    </delete-modal>
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-2 align-items-center">
@@ -94,11 +97,10 @@
         </div>
     </footer>
 </div>
-</div>
 
 <!-- Confirm delete Modal -->
-<!--<script type="text/x-template" id="delete-modal-template">-->
-<div class="modal fade" id="delete_confirmation_modal" tabindex="-1" aria-labelledby="modalLabel"
+<script type="text/x-template" id="delete-modal-template">
+<div ref="modal" class="modal fade" id="delete_confirmation_modal" tabindex="-1" aria-labelledby="modalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -106,7 +108,9 @@
                 <h5 class="modal-title" id="modalLabel">Delete confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body"></div>
+            <div class="modal-body">
+            Delete contact<slot name="contact-name"></slot>?
+            </div>
             <div class="modal-footer">
                 <button type="button"
                         class="btn btn-secondary"
@@ -114,6 +118,7 @@
                         id="modal-cancel">Cancel
                 </button>
                 <button type="button"
+                        @click="confirmDelete"
                         class="btn btn-danger"
                         data-bs-dismiss="modal"
                         id="modal-delete">Delete
@@ -122,9 +127,10 @@
         </div>
     </div>
 </div>
-<!--</script>-->
+</script>
 
 <!-- Contact exists Modal -->
+<script type="text/x-template" id="telephone-exists-modal-template">
 <div class="modal fade" id="contact_exists_modal" tabindex="-1" aria-labelledby="contactExistsModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -144,9 +150,6 @@
         </div>
     </div>
 </div>
-
-<script id="modal-delete" type="text/x-template">
-    <div></div>
-</script>
+<script>
 {% endverbatim %}
 {% endblock %}

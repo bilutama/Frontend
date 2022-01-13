@@ -29,6 +29,22 @@ function PhonebookService() {
     };
 }
 
+// noinspection JSAnnotator
+Vue.component("delete-modal", {
+    template: "#delete-modal-template",
+
+    methods: {
+        show: function () {
+            $(this.$refs.modal).show();
+        },
+
+        confirmDelete: function () {
+            this.$emit("confirm-delete");
+            $(this.$refs.modal).hide();
+        }
+    }
+});
+
 new Vue({
     el: "#app",
 
@@ -44,7 +60,8 @@ new Vue({
         telephone: "",
         term: "",
         contacts: [],
-        service: new PhonebookService()
+        service: new PhonebookService(),
+        contactForDelete: null
     },
 
     created: function () {
@@ -73,6 +90,16 @@ new Vue({
             }
 
             return stringArray.join(separator);
+        },
+
+        clearForm: function () {
+            this.firstName = "";
+            this.lastName = "";
+            this.telephone = "";
+
+            this.isFirstNameInvalid = false;
+            this.isLastNameInvalid = false;
+            this.isTelephoneInvalid = false;
         },
 
         addContact: function () {
@@ -109,29 +136,31 @@ new Vue({
             });
         },
 
-        deleteContact: function (contact) {
+        deleteConfirmDialog: function (contact) {
+            this.contactForDelete = contact;
+            this.$refs.confirmDeleteDialog.show();
+        },
+
+        deleteContact: function () {
             var self = this;
 
-            this.service.deleteContact(contact.id).done(function (response) {
+            this.service.deleteContact(self.contactForDelete.id).done(function (response) {
                 if (!response.success) {
                     alert(response.message);
                     return;
                 }
 
+                self.contactForDelete = null;
                 self.loadContacts();
             }).fail(function () {
                 alert("Contact was not deleted");
             });
-        },
+        }
+    },
 
-        clearForm: function () {
-            this.firstName = "";
-            this.lastName = "";
-            this.telephone = "";
-
-            this.isFirstNameInvalid = false;
-            this.isLastNameInvalid = false;
-            this.isTelephoneInvalid = false;
+    computed: {
+        isContactForDeleteExists() {
+            return this.contactForDelete !== null;
         }
     }
 });
