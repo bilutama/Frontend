@@ -33,14 +33,33 @@ function PhonebookService() {
 Vue.component("delete-modal", {
     template: "#delete-modal-template",
 
+    data: function() {
+        return {modal: $(this.$refs.modalConfirmDelete)};
+    },
+
     methods: {
         show: function () {
-            $(this.$refs.modal).show();
+            this.modal.show();
         },
 
         confirmDelete: function () {
             this.$emit("confirm-delete");
-            $(this.$refs.modal).hide();
+        }
+    }
+});
+
+// noinspection JSAnnotator
+Vue.component("telephone-exists-modal", {
+    template: "#telephone-exists-modal-template",
+
+    data: function() {
+        return {modal: $(this.$refs.modalTelephoneExists)};
+    },
+
+    methods: {
+        show: function () {
+            console.log("method show");
+            $(this.$refs.modalTelephoneExists).show();
         }
     }
 });
@@ -115,9 +134,16 @@ new Vue({
             }
 
             var self = this;
+            var mdes = this.$refs.telephoneExistsDialog;
 
             this.service.addContact(newContact).done(function (response) {
                 if (!response.success) {
+                    if (response.code === 4) {
+                        console.log("call dialog");
+                        mdes.show();
+                        return;
+                    }
+
                     alert(response.message);
                     return;
                 }
@@ -136,7 +162,7 @@ new Vue({
             });
         },
 
-        deleteConfirmDialog: function (contact) {
+        showConfirmDeleteDialog: function (contact) {
             this.contactForDelete = contact;
             this.$refs.confirmDeleteDialog.show();
         },

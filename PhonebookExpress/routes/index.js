@@ -31,6 +31,7 @@ router.post("/api/addContact", function (req, res) {
     if (!request.firstName) {
         res.send({
             success: false,
+            code: 1,
             message: "First name is obligatory"
         });
 
@@ -41,6 +42,7 @@ router.post("/api/addContact", function (req, res) {
     if (!request.lastName) {
         res.send({
             success: false,
+            code: 2,
             message: "Last name is obligatory"
         });
 
@@ -51,6 +53,7 @@ router.post("/api/addContact", function (req, res) {
     if (!request.telephone) {
         res.send({
             success: false,
+            code: 3,
             message: "Telephone is obligatory"
         });
 
@@ -63,6 +66,7 @@ router.post("/api/addContact", function (req, res) {
     })) {
         res.send({
             success: false,
+            code: 4,
             message: "Telephone already exists"
         });
 
