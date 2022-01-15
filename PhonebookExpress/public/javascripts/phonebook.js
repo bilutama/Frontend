@@ -33,17 +33,20 @@ function PhonebookService() {
 Vue.component("delete-modal", {
     template: "#delete-modal-template",
 
-    data: function() {
-        return {modal: $(this.$refs.modalConfirmDelete)};
+    data: function () {
+        return {
+            onConfirmContactDelete: null
+        }
     },
 
     methods: {
-        show: function () {
-            this.modal.show();
+        show: function (onConfirmContactDelete) {
+            this.onConfirmContactDelete = onConfirmContactDelete;
+            $(this.$refs.modalConfirmDelete).modal("show");
         },
 
         confirmDelete: function () {
-            this.$emit("confirm-delete");
+            this.onConfirmContactDelete();
         }
     }
 });
@@ -52,14 +55,9 @@ Vue.component("delete-modal", {
 Vue.component("telephone-exists-modal", {
     template: "#telephone-exists-modal-template",
 
-    data: function() {
-        return {modal: $(this.$refs.modalTelephoneExists)};
-    },
-
     methods: {
         show: function () {
-            console.log("method show");
-            $(this.$refs.modalTelephoneExists).show();
+            $(this.$refs.modalTelephoneExists).modal("show");
         }
     }
 });
@@ -84,11 +82,11 @@ new Vue({
     },
 
     created: function () {
-        this.loadContacts();
+        this.getContacts();
     },
 
     methods: {
-        loadContacts: function () {
+        getContacts: function () {
             var self = this;
 
             this.service.getContacts(this.term).done(function (contacts) {
@@ -134,52 +132,51 @@ new Vue({
             }
 
             var self = this;
-            var mdes = this.$refs.telephoneExistsDialog;
+            //var mdes = this.$refs;
 
             this.service.addContact(newContact).done(function (response) {
-                if (!response.success) {
-                    if (response.code === 4) {
-                        console.log("call dialog");
-                        mdes.show();
-                        return;
-                    }
+                if (response.success) {
+                    self.getContacts();
 
-                    alert(response.message);
+                    self.firstName = "";
+                    self.lastName = "";
+                    self.telephone = "";
+
+                    self.isFirstNameInvalid = false;
+                    self.isLastNameInvalid = false;
+                    self.isTelephoneInvalid = false;
+
                     return;
                 }
 
-                self.loadContacts();
+                if (response.code === 4) {
+                    console.log("call dialog");
+                    self.$refs.telephoneExistsDialog.show();
+                }
 
-                self.firstName = "";
-                self.lastName = "";
-                self.telephone = "";
-
-                self.isFirstNameInvalid = false;
-                self.isLastNameInvalid = false;
-                self.isTelephoneInvalid = false;
+                // alert(response.message);
             }).fail(function () {
                 alert("Contact was not added");
             });
         },
 
         showConfirmDeleteDialog: function (contact) {
+            // Used to pass contact data to modal dialog
             this.contactForDelete = contact;
-            this.$refs.confirmDeleteDialog.show();
-        },
-
-        deleteContact: function () {
             var self = this;
 
-            this.service.deleteContact(self.contactForDelete.id).done(function (response) {
-                if (!response.success) {
-                    alert(response.message);
-                    return;
-                }
+            this.$refs.confirmDeleteDialog.show(function () {
+                self.service.deleteContact(contact.id).done(function (response) {
+                    if (!response.success) {
+                        alert(response.message);
+                        return;
+                    }
 
-                self.contactForDelete = null;
-                self.loadContacts();
-            }).fail(function () {
-                alert("Contact was not deleted");
+                    self.contactForDelete = null;
+                    self.getContacts();
+                }).fail(function () {
+                    alert("Contact was not deleted");
+                });
             });
         }
     },

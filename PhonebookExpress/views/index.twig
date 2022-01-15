@@ -87,12 +87,11 @@
         </tbody>
     </table>
 
-    <delete-modal @confirm-delete="deleteContact" ref="confirmDeleteDialog">
+    <delete-modal ref="confirmDeleteDialog">
     <template v-if="isContactForDeleteExists" v-slot:contact-name> {{ contactForDelete.firstName }} {{ contactForDelete.lastName }}</template>
     </delete-modal>
 
     <telephone-exists-modal ref="telephoneExistsDialog">
-    <p>Telephone number already exists.</p>
     </telephone-exists-modal>
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -101,6 +100,31 @@
         </div>
     </footer>
 </div>
+
+<!-- Contact exists Modal -->
+<script type="text/x-template" id="telephone-exists-modal-template">
+<div ref="modalTelephoneExists" class="modal fade" tabindex="-1" aria-labelledby="modalTelephoneExistsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTelephoneExistsLabel">Cannot add the contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Telephone exists.
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-warning"
+                        data-bs-dismiss="modal"
+                        id="modal-dismiss">Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
 
 <!-- Confirm delete Modal -->
 <script type="text/x-template" id="delete-modal-template">
@@ -126,31 +150,6 @@
                         class="btn btn-danger"
                         data-bs-dismiss="modal"
                         id="modal-delete">Delete
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-</script>
-
-<!-- Contact exists Modal -->
-<script type="text/x-template" id="telephone-exists-modal-template">
-<div ref="modalTelephoneExists" class="modal fade" id="contact_exists_modal" tabindex="-1" aria-labelledby="contactExistsModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="contactExistsModalLabel">Cannot add the contact</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <slot></slot>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-warning"
-                        data-bs-dismiss="modal"
-                        id="modal-dismiss">Dismiss
                 </button>
             </div>
         </div>
