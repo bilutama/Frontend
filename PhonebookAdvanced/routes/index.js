@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-    res.render("index", {title: "Phonebook v2.0"});
+    res.render("index", {title: "Phonebook on Vue"});
 });
 
 // Global variables
@@ -94,7 +94,7 @@ router.post("/api/addContact", function (req, res) {
 // Delete contact request handler
 router.post("/api/deleteContact", function (req, res) {
     contacts = contacts.filter(function (contact) {
-        return contact.id !== req.body.id;
+        return !req.body.ids.includes(contact.id);
     });
 
     res.send({
