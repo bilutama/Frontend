@@ -40,11 +40,11 @@ Vue.component("to-do-item", {
 
     watch: {
         isModifying: function () {
-            this.$nextTick(function () {
-                if (this.isModifying === true) {
+            if (this.isModifying) {
+                this.$nextTick(function () {
                     this.$refs.autoResizableTextArea.dispatchEvent(new Event("input"));
-                }
-            });
+                });
+            }
         }
     }
 });
@@ -67,7 +67,7 @@ new Vue({
         }
     },
 
-    created: function () {
+    mounted: function () {
         this.triggerTextAreaInputEvent();
     },
 
