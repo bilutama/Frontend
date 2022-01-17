@@ -28,17 +28,17 @@ import {Modal} from "bootstrap";
 export default {
   data() {
     return {
-      modalWin: null
+      modalWindow: null
     }
   },
 
   mounted() {
-    this.modalWin = this.$refs.modalTelephoneExists;
+    this.modalWindow = this.$refs.modalTelephoneExists;
   },
 
   methods: {
     show() {
-      new Modal(this.modalWin, {}).show();
+      new Modal(this.modalWindow, {}).show();
     }
   }
 }

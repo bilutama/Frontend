@@ -110,8 +110,8 @@
 <script>
 import $ from "jquery";
 import "../images/phonebook.svg";
-import confirmDeleteModal from "./confirmdeletemodal.vue";
-import telephoneExistModal from "./telephoneexistmodal.vue";
+import confirmDeleteModal from "./confirmDeleteModal.vue";
+import telephoneExistModal from "./telephoneExistModal.vue";
 
 function get(url, data) {
   return $.get({
