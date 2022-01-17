@@ -1,4 +1,4 @@
-import "bootstrap/dist/js/bootstrap.bundle";
+import { Tooltip, Toast, Popover } from "bootstrap"
 
 import "bootstrap/dist/css/bootstrap.css";
 import "../css/style.css";
