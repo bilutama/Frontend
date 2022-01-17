@@ -26,19 +26,19 @@
 import {Modal} from "bootstrap";
 
 export default {
-  data: function () {
+  data() {
     return {
-      modal: null
+      modalWin: null
     }
   },
 
   mounted() {
-    this.modal = new Modal(this.$refs.modalTelephoneExists, {});
+    this.modalWin = this.$refs.modalTelephoneExists;
   },
 
   methods: {
     show() {
-      new Modal(this.$refs.modalTelephoneExists, {}).show();
+      new Modal(this.modalWin, {}).show();
     }
   }
 }
