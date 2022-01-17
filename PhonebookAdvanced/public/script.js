@@ -19230,18 +19230,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data() {
     return {
-      onConfirmContactDelete: null
+      onConfirmContactDelete: null,
+      contactFullName: ""
     }
   },
 
   methods: {
-    show(onConfirmContactDelete) {
+    show(contactFullName, onConfirmContactDelete) {
+      this.contactFullName = contactFullName;
       this.onConfirmContactDelete = onConfirmContactDelete;
       new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(this.$refs.modalConfirmDelete, {}).show();
     },
 
     confirmDelete() {
       this.onConfirmContactDelete();
+    }
+  },
+
+  computed: {
+    confirmDeleteModalMessage() {
+      return this.contactFullName === "" ? "Delete selected contacts?" : "Delete contact " + this.contactFullName + "?";
     }
   }
 });
@@ -19413,6 +19421,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -19457,10 +19466,8 @@ function PhonebookService() {
 
   data() {
     return {
-      //Form validation variables
-      isFirstNameInvalid: false,
-      isLastNameInvalid: false,
-      isTelephoneInvalid: false,
+      //Form validation mode
+      formValidatingMode: false,
 
       isGeneralCheckboxChecked: false,
       isGeneralCheckBoxIndeterminate: false,
@@ -19531,10 +19538,6 @@ function PhonebookService() {
     },
 
     addContact() {
-      this.isFirstNameInvalid = this.firstName.trim().length === 0;
-      this.isLastNameInvalid = this.lastName.trim().length === 0;
-      this.isTelephoneInvalid = this.telephone.trim().length === 0;
-
       var newContact = {
         checked: false,
         firstName: this.formatString(this.firstName, true),
@@ -19545,6 +19548,8 @@ function PhonebookService() {
       this.service.addContact(newContact).done(response => {
         if (response.success) {
           this.getContacts();
+
+          this.formValidatingMode = false;
 
           this.firstName = "";
           this.lastName = "";
@@ -19557,8 +19562,10 @@ function PhonebookService() {
           return;
         }
 
+        this.formValidatingMode = true;
+
         if (response.code === 4) {
-          _telephoneExistModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"].methods.show();
+          this.$refs.telephoneExistsModal.show();
         }
       }).fail(() => {
         alert("Contact is not added");
@@ -19585,7 +19592,9 @@ function PhonebookService() {
         this.contactForDelete = contact;
       }
 
-      _confirmDeleteModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"].methods.show(() => {
+      var contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
+
+      this.$refs.confirmDeleteModal.show(contactForDeleteFullName, () => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
           if (!response.success) {
             alert(response.message);
@@ -19606,6 +19615,18 @@ function PhonebookService() {
   computed: {
     isContactForDeleteExists() {
       return this.contactForDelete !== null;
+    },
+
+    isFirstNameInvalid() {
+      return (this.firstName.length === 0) && this.formValidatingMode;
+    },
+
+    isLastNameInvalid() {
+      return (this.lastName.length === 0) && this.formValidatingMode;
+    },
+
+    isTelephoneInvalid() {
+      return (this.telephone.length === 0) && this.formValidatingMode;
     }
   },
 
@@ -19741,23 +19762,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data() {
-    return {
-      modalWindow: null
-    }
-  },
-
-  mounted() {
-    this.modalWindow = this.$refs.modalTelephoneExists;
-  },
-
   methods: {
     show() {
-      new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(this.modalWindow, {}).show();
+      new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(this.$refs.modalTelephoneExists, {}).show();
     }
   }
 });
@@ -19896,12 +19908,11 @@ var render = function () {
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "modal-body" },
-            [_vm._t("confirm-delete-message")],
-            2
-          ),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("span", {
+              domProps: { textContent: _vm._s(_vm.confirmDeleteModalMessage) },
+            }),
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer" }, [
             _c(
@@ -19995,6 +20006,7 @@ var render = function () {
           "form",
           {
             staticClass: "row g-3 border needs-validation mt-3 py-2",
+            class: { "was-validated": _vm.formValidatingMode },
             attrs: { novalidate: "" },
             on: {
               submit: function ($event) {
@@ -20420,9 +20432,9 @@ var render = function () {
           ]
         ),
         _vm._v(" "),
-        _c("confirm-delete-modal"),
+        _c("confirm-delete-modal", { ref: "confirmDeleteModal" }),
         _vm._v(" "),
-        _c("telephone-exist-modal"),
+        _c("telephone-exist-modal", { ref: "telephoneExistsModal" }),
         _vm._v(" "),
         _vm._m(1),
       ],
@@ -29184,7 +29196,7 @@ if (inBrowser) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "images/phonebook.svg?39effc2a359c84d8ce01";
+module.exports = __webpack_require__.p + "images/phonebook.svg?b39e712acfbced179031";
 
 /***/ })
 
@@ -29301,7 +29313,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../css/style.css */ "./css/style.css");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js");
 /* harmony import */ var _phonebook_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./phonebook.vue */ "./js/phonebook.vue");
-
 
 
 

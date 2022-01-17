@@ -1,5 +1,6 @@
 <template>
-  <div ref="modalTelephoneExists" class="modal fade" tabindex="-1" aria-labelledby="modalTelephoneExistsLabel"
+  <div ref="modalTelephoneExists" class="modal fade" tabindex="-1"
+       aria-labelledby="modalTelephoneExistsLabel"
        aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -26,19 +27,9 @@
 import {Modal} from "bootstrap";
 
 export default {
-  data() {
-    return {
-      modalWindow: null
-    }
-  },
-
-  mounted() {
-    this.modalWindow = this.$refs.modalTelephoneExists;
-  },
-
   methods: {
     show() {
-      new Modal(this.modalWindow, {}).show();
+      new Modal(this.$refs.modalTelephoneExists, {}).show();
     }
   }
 }

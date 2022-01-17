@@ -8,7 +8,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <slot name="confirm-delete-message"></slot>
+          <span v-text="confirmDeleteModalMessage"></span>
         </div>
         <div class="modal-footer">
           <button type="button"
@@ -34,18 +34,26 @@ import {Modal} from "bootstrap";
 export default {
   data() {
     return {
-      onConfirmContactDelete: null
+      onConfirmContactDelete: null,
+      contactFullName: ""
     }
   },
 
   methods: {
-    show(onConfirmContactDelete) {
+    show(contactFullName, onConfirmContactDelete) {
+      this.contactFullName = contactFullName;
       this.onConfirmContactDelete = onConfirmContactDelete;
       new Modal(this.$refs.modalConfirmDelete, {}).show();
     },
 
     confirmDelete() {
       this.onConfirmContactDelete();
+    }
+  },
+
+  computed: {
+    confirmDeleteModalMessage() {
+      return this.contactFullName === "" ? "Delete selected contacts?" : "Delete contact " + this.contactFullName + "?";
     }
   }
 }

@@ -6,6 +6,7 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
     entry: "./js/app.js",
     devtool: "source-map",
+    watch: true,
     // Enable conversion to ES5
     //target: ["web", "es5"],
 

@@ -10,7 +10,8 @@
       </div>
     </nav>
     <div class="container">
-      <form @submit.prevent="addContact" class="row g-3 border needs-validation mt-3 py-2" novalidate>
+      <form @submit.prevent="addContact" class="row g-3 border needs-validation mt-3 py-2"
+            :class="{'was-validated': formValidatingMode}" novalidate>
         <div class="col-md-4 mt-0">
           <label for="first_name" class="form-label">First name</label>
           <input type="text" id="first_name" class="form-control" v-model.trim="firstName"
@@ -95,8 +96,8 @@
         </tbody>
       </table>
 
-      <confirm-delete-modal/>
-      <telephone-exist-modal/>
+      <confirm-delete-modal ref="confirmDeleteModal"/>
+      <telephone-exist-modal ref="telephoneExistsModal"/>
 
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-2 align-items-center">
@@ -151,10 +152,8 @@ export default {
 
   data() {
     return {
-      //Form validation variables
-      isFirstNameInvalid: false,
-      isLastNameInvalid: false,
-      isTelephoneInvalid: false,
+      //Form validation mode
+      formValidatingMode: false,
 
       isGeneralCheckboxChecked: false,
       isGeneralCheckBoxIndeterminate: false,
@@ -225,10 +224,6 @@ export default {
     },
 
     addContact() {
-      this.isFirstNameInvalid = this.firstName.trim().length === 0;
-      this.isLastNameInvalid = this.lastName.trim().length === 0;
-      this.isTelephoneInvalid = this.telephone.trim().length === 0;
-
       var newContact = {
         checked: false,
         firstName: this.formatString(this.firstName, true),
@@ -239,6 +234,8 @@ export default {
       this.service.addContact(newContact).done(response => {
         if (response.success) {
           this.getContacts();
+
+          this.formValidatingMode = false;
 
           this.firstName = "";
           this.lastName = "";
@@ -251,8 +248,10 @@ export default {
           return;
         }
 
+        this.formValidatingMode = true;
+
         if (response.code === 4) {
-          telephoneExistModal.methods.show();
+          this.$refs.telephoneExistsModal.show();
         }
       }).fail(() => {
         alert("Contact is not added");
@@ -279,7 +278,9 @@ export default {
         this.contactForDelete = contact;
       }
 
-      confirmDeleteModal.methods.show(() => {
+      var contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
+
+      this.$refs.confirmDeleteModal.show(contactForDeleteFullName, () => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
           if (!response.success) {
             alert(response.message);
@@ -300,6 +301,18 @@ export default {
   computed: {
     isContactForDeleteExists() {
       return this.contactForDelete !== null;
+    },
+
+    isFirstNameInvalid() {
+      return (this.firstName.length === 0) && this.formValidatingMode;
+    },
+
+    isLastNameInvalid() {
+      return (this.lastName.length === 0) && this.formValidatingMode;
+    },
+
+    isTelephoneInvalid() {
+      return (this.telephone.length === 0) && this.formValidatingMode;
     }
   },
 
