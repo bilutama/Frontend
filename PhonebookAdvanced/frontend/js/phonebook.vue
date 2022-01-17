@@ -279,7 +279,7 @@ export default {
         this.contactForDelete = contact;
       }
 
-      this.$refs.confirmDeleteDialog.show(() => {
+      confirmDeleteModal.methods.show(() => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
           if (!response.success) {
             alert(response.message);
