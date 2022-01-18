@@ -19617,16 +19617,35 @@ function PhonebookService() {
       return this.contactForDelete !== null;
     },
 
-    isFirstNameInvalid() {
-      return (this.firstName.length === 0) && this.formValidatingMode;
+    isFirstNameInvalid: {
+      get: function () {
+        return this.value;
+      },
+
+      set: function () {
+        this.value = (this.firstName.length === 0) && this.formValidatingMode;
+      }
     },
 
-    isLastNameInvalid() {
-      return (this.lastName.length === 0) && this.formValidatingMode;
+    isLastNameInvalid: {
+      get: function () {
+        return this.value;
+      },
+
+      set: function () {
+        this.value = (this.lastName.length === 0) && this.formValidatingMode;
+      }
     },
 
-    isTelephoneInvalid() {
-      return (this.telephone.length === 0) && this.formValidatingMode;
+    isTelephoneInvalid: {
+      get: function () {
+
+        return this.value;
+      },
+
+      set: function () {
+        this.value = (this.telephone.length === 0) && this.formValidatingMode
+      }
     }
   },
 
