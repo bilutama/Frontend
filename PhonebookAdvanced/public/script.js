@@ -19310,9 +19310,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _images_phonebook_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../images/phonebook.svg */ "./images/phonebook.svg");
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var _confirmDeleteModal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./confirmDeleteModal.vue */ "./js/confirmDeleteModal.vue");
-/* harmony import */ var _telephoneExistModal_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./telephoneExistModal.vue */ "./js/telephoneExistModal.vue");
+/* harmony import */ var _confirmDeleteModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./confirmDeleteModal.vue */ "./js/confirmDeleteModal.vue");
+/* harmony import */ var _telephoneExistModal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./telephoneExistModal.vue */ "./js/telephoneExistModal.vue");
 //
 //
 //
@@ -19423,7 +19422,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -19463,7 +19461,7 @@ function PhonebookService() {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    confirmDeleteModal: _confirmDeleteModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"], telephoneExistModal: _telephoneExistModal_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    confirmDeleteModal: _confirmDeleteModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"], telephoneExistModal: _telephoneExistModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
 
   data() {
