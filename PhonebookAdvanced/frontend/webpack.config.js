@@ -7,15 +7,11 @@ module.exports = {
     entry: "./js/app.js",
     devtool: "source-map",
     watch: true,
-    // Enable conversion to ES5
-    //target: ["web", "es5"],
 
     output: {
         filename: "script.js",
         path: path.resolve(__dirname, "..", "public"),
         assetModuleFilename: "[path][name][ext]?[contenthash]"
-        // TODO
-        //publicPath:
     },
 
     resolve: {
