@@ -111,8 +111,8 @@
 <script>
 import $ from "jquery";
 import "../images/phonebook.svg";
-import confirmDeleteModal from "./confirmDeleteModal.vue";
-import telephoneExistModal from "./telephoneExistModal.vue";
+import confirmDeleteModal from "./ConfirmDeleteModal.vue";
+import telephoneExistModal from "./TelephoneExistModal.vue";
 
 function get(url, data) {
   return $.get({
@@ -201,11 +201,11 @@ export default {
     },
 
     formatString(string, isCapitalized) {
-      var separator = " ";
-      var stringArray = string.trim().toLowerCase().split(separator);
+      const separator = " ";
+      let stringArray = string.trim().toLowerCase().split(separator);
 
       if (isCapitalized) {
-        for (var i = 0; i < stringArray.length; ++i) {
+        for (let i = 0; i < stringArray.length; ++i) {
           stringArray[i] = stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1);
         }
       }
@@ -221,10 +221,12 @@ export default {
       this.isFirstNameInvalid = false;
       this.isLastNameInvalid = false;
       this.isTelephoneInvalid = false;
+
+      this.formValidatingMode = false;
     },
 
     addContact() {
-      var newContact = {
+      const newContact = {
         checked: false,
         firstName: this.formatString(this.firstName, true),
         lastName: this.formatString(this.lastName, true),
@@ -263,7 +265,7 @@ export default {
         return;
       }
 
-      var contactIdsForDelete = contact === null ? this.selectedContactIds : [contact.id];
+      const contactIdsForDelete = contact === null ? this.selectedContactIds : [contact.id];
 
       // _contactForDelete_ is used to pass contact data to modal dialog
       // _contactForDelete_ is passed when contact deleted with x button or
@@ -278,7 +280,7 @@ export default {
         this.contactForDelete = contact;
       }
 
-      var contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
+      const contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
 
       this.$refs.confirmDeleteModal.show(contactForDeleteFullName, () => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
@@ -346,12 +348,11 @@ export default {
           this.isGeneralCheckBoxIndeterminate = false;
           return;
         }
-
-        var checkedCount = 0;
-        var uncheckedCount = 0;
+        let checkedCount = 0;
+        let uncheckedCount = 0;
 
         this.contacts.forEach(contact => {
-          var currentId = contact.id;
+          const currentId = contact.id;
 
           if (contact.checked) {
             ++checkedCount;
