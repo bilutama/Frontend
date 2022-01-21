@@ -133,7 +133,7 @@ function PhonebookService() {
   this.apiUrl = "/api/";
 
   this.getContacts = function (term) {
-    return get(this.apiUrl + "getContacts", {term: term});
+    return get(this.apiUrl + "getContacts", {term});
   };
 
   this.addContact = function (contact) {
@@ -141,7 +141,7 @@ function PhonebookService() {
   };
 
   this.deleteContact = function (ids) {
-    return post(this.apiUrl + "deleteContact", {ids: ids});
+    return post(this.apiUrl + "deleteContact", {ids});
   };
 }
 
@@ -202,15 +202,15 @@ export default {
 
     formatString(string, isCapitalized) {
       const separator = " ";
-      let stringArray = string.trim().toLowerCase().split(separator);
+      const stringsArray = string.trim().toLowerCase().split(separator);
 
       if (isCapitalized) {
-        for (let i = 0; i < stringArray.length; ++i) {
-          stringArray[i] = stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1);
+        for (let i = 0; i < stringsArray.length; ++i) {
+          stringsArray[i] = stringsArray[i].charAt(0).toUpperCase() + stringsArray[i].slice(1);
         }
       }
 
-      return stringArray.join(separator);
+      return stringsArray.join(separator);
     },
 
     clearForm() {
@@ -231,7 +231,7 @@ export default {
         firstName: this.formatString(this.firstName, true),
         lastName: this.formatString(this.lastName, true),
         telephone: this.formatString(this.telephone, false)
-      }
+      };
 
       this.service.addContact(newContact).done(response => {
         if (response.success) {
@@ -306,32 +306,31 @@ export default {
     },
 
     isFirstNameInvalid: {
-      get: function () {
+      get() {
         return this.value;
       },
 
-      set: function () {
+      set() {
         this.value = (this.firstName.length === 0) && this.formValidatingMode;
       }
     },
 
     isLastNameInvalid: {
-      get: function () {
+      get() {
         return this.value;
       },
 
-      set: function () {
+      set() {
         this.value = (this.lastName.length === 0) && this.formValidatingMode;
       }
     },
 
     isTelephoneInvalid: {
-      get: function () {
-
+      get() {
         return this.value;
       },
 
-      set: function () {
+      set() {
         this.value = (this.telephone.length === 0) && this.formValidatingMode
       }
     }
@@ -380,12 +379,7 @@ export default {
     },
 
     isGeneralCheckboxChecked() {
-      if (this.isGeneralCheckboxChecked) {
-        this.contacts.forEach(c => c.checked = true)
-        return;
-      }
-
-      this.contacts.forEach(c => c.checked = false);
+      this.contacts.forEach(c => c.checked = this.isGeneralCheckboxChecked)
     }
   }
 }
