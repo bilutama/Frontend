@@ -60,12 +60,12 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(),
-        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "style.css"
         }),
+        new VueLoaderPlugin(),
         new HtmlWebPackPlugin({
-            template: "index.html",
+            template: "index.html"
         })
     ]
 };
