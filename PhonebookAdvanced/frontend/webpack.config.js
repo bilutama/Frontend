@@ -1,8 +1,8 @@
 const path = require("path");
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     entry: "./js/app.js",
@@ -60,12 +60,12 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "style.css"
         }),
-        new VueLoaderPlugin(),
         new HtmlWebPackPlugin({
-            template: 'index.html',
+            template: "index.html",
         })
     ]
 };

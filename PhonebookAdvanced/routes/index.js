@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -7,14 +7,14 @@ router.get("/", function (req, res, next) {
 });
 
 // Global variables
-var currentContactId = 1;
-var contacts = []; // {id, firstName, secondName, telephone}
+let currentContactId = 1;
+let contacts = []; // {id, firstName, secondName, telephone}
 
 // Get contacts request handler that uses query string /getContacts/?term=...
 router.get("/api/getContacts", function (req, res) {
-    var term = (req.query.term || "").toLowerCase();
+    const term = (req.query.term || "").toLowerCase();
 
-    var result = term.length === 0 ? contacts : contacts.filter(function (contact) {
+    const result = term.length === 0 ? contacts : contacts.filter(function (contact) {
         return contact.firstName.toLowerCase().includes(term)
             || contact.lastName.toLowerCase().includes(term)
             || contact.telephone.toLowerCase().includes(term);
@@ -25,14 +25,14 @@ router.get("/api/getContacts", function (req, res) {
 
 // Add contact request handler
 router.post("/api/addContact", function (req, res) {
-    var request = req.body;
+    const request = req.body;
 
     // Check if first name is provided
     if (!request.firstName) {
         res.send({
             success: false,
             code: 1,
-            message: "First name is obligatory"
+            message: "First name is required"
         });
 
         return;
@@ -43,7 +43,7 @@ router.post("/api/addContact", function (req, res) {
         res.send({
             success: false,
             code: 2,
-            message: "Last name is obligatory"
+            message: "Last name is required"
         });
 
         return;
@@ -54,7 +54,7 @@ router.post("/api/addContact", function (req, res) {
         res.send({
             success: false,
             code: 3,
-            message: "Telephone is obligatory"
+            message: "Telephone is required"
         });
 
         return;
@@ -73,7 +73,7 @@ router.post("/api/addContact", function (req, res) {
         return;
     }
 
-    var newContact = {
+    const newContact = {
         id: currentContactId,
         checked: false,
         firstName: request.firstName,
