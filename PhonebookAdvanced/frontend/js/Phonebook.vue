@@ -96,8 +96,8 @@
         </tbody>
       </table>
 
-      <confirm-delete-modal ref="confirmDeleteModal"/>
-      <telephone-exist-modal ref="telephoneExistsModal"/>
+      <confirm-delete-modal ref="ConfirmDeleteModal"/>
+      <telephone-exist-modal ref="TelephoneExistsModal"/>
 
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-2 align-items-center">
@@ -109,45 +109,15 @@
 </template>
 
 <script>
-import $ from "jquery";
 import "../images/phonebook.svg";
-import confirmDeleteModal from "./ConfirmDeleteModal.vue";
-import telephoneExistModal from "./TelephoneExistModal.vue";
-
-function get(url, data) {
-  return $.get({
-    url,
-    data
-  });
-}
-
-function post(url, data) {
-  return $.post({
-    url,
-    data: JSON.stringify(data),
-    contentType: "application/json"
-  });
-}
-
-function PhonebookService() {
-  this.apiUrl = "/api/";
-
-  this.getContacts = function (term) {
-    return get(this.apiUrl + "getContacts", {term});
-  };
-
-  this.addContact = function (contact) {
-    return post(this.apiUrl + "addContact", contact);
-  };
-
-  this.deleteContact = function (ids) {
-    return post(this.apiUrl + "deleteContact", {ids});
-  };
-}
+import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
+import TelephoneExistModal from "./TelephoneExistModal.vue";
+import {PhonebookService} from "./phonebookService.js";
 
 export default {
   components: {
-    confirmDeleteModal, telephoneExistModal
+    ConfirmDeleteModal,
+    TelephoneExistModal
   },
 
   data() {
@@ -167,7 +137,7 @@ export default {
       service: new PhonebookService(),
       selectedContactIds: [],
       contactForDelete: null
-    }
+    };
   },
 
   directives: {
@@ -253,7 +223,7 @@ export default {
         this.formValidatingMode = true;
 
         if (response.code === 4) {
-          this.$refs.telephoneExistsModal.show();
+          this.$refs.TelephoneExistsModal.show();
         }
       }).fail(() => {
         alert("Contact is not added");
@@ -282,7 +252,7 @@ export default {
 
       const contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
 
-      this.$refs.confirmDeleteModal.show(contactForDeleteFullName, () => {
+      this.$refs.ConfirmDeleteModal.show(contactForDeleteFullName, () => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
           if (!response.success) {
             alert(response.message);
@@ -379,7 +349,7 @@ export default {
     },
 
     isGeneralCheckboxChecked() {
-      this.contacts.forEach(c => c.checked = this.isGeneralCheckboxChecked)
+      this.contacts.forEach(c => c.checked = this.isGeneralCheckboxChecked);
     }
   }
 }

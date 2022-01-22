@@ -8,4 +8,4 @@ new Vue({
     render(el) {
         return el(phonebook);
     }
-}).$mount("#app")
+}).$mount("#app");
