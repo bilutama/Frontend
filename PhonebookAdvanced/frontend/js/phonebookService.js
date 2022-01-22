@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-export { PhonebookService };
+export {PhonebookService};
 
 class PhonebookService {
     constructor() {
