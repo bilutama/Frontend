@@ -110,7 +110,7 @@
 
 <script>
 import "../images/phonebook.svg";
-import ConfirmDeleteModal from "./confirmDeleteModal.vue";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
 import TelephoneExistModal from "./TelephoneExistModal.vue";
 import PhonebookService from "./phonebookService.js";
 
