@@ -1,8 +1,6 @@
 import $ from "jquery";
 
-export {PhonebookService};
-
-class PhonebookService {
+export default class PhonebookService {
     constructor() {
         this.apiUrl = "/api/";
     }
@@ -24,13 +22,13 @@ class PhonebookService {
 
     getContacts(term) {
         return this.get(this.apiUrl + "getContacts", {term});
-    };
+    }
 
     addContact(contact) {
         return this.post(this.apiUrl + "addContact", contact);
-    };
+    }
 
     deleteContact(ids) {
         return this.post(this.apiUrl + "deleteContact", {ids});
-    };
+    }
 }
