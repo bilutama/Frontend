@@ -96,8 +96,8 @@
         </tbody>
       </table>
 
-      <confirm-delete-modal ref="ConfirmDeleteModal"/>
-      <telephone-exist-modal ref="TelephoneExistsModal"/>
+      <confirm-delete-modal ref="confirmDeleteModal"/>
+      <telephone-exist-modal ref="telephoneExistsModal"/>
 
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-2 align-items-center">
@@ -110,13 +110,13 @@
 
 <script>
 import "../images/phonebook.svg";
-import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
+import confirmDeleteModal from "./confirmDeleteModal.vue";
 import TelephoneExistModal from "./TelephoneExistModal.vue";
 import PhonebookService from "./phonebookService.js";
 
 export default {
   components: {
-    ConfirmDeleteModal,
+    confirmDeleteModal,
     TelephoneExistModal
   },
 
@@ -223,7 +223,7 @@ export default {
         this.formValidatingMode = true;
 
         if (response.code === 4) {
-          this.$refs.TelephoneExistsModal.show();
+          this.$refs.telephoneExistsModal.show();
         }
       }).fail(() => {
         alert("Contact is not added");
@@ -252,7 +252,7 @@ export default {
 
       const contactForDeleteFullName = this.contactForDelete === null ? "" : this.contactForDelete.firstName + " " + this.contactForDelete.lastName;
 
-      this.$refs.ConfirmDeleteModal.show(contactForDeleteFullName, () => {
+      this.$refs.confirmDeleteModal.show(contactForDeleteFullName, () => {
         this.service.deleteContact(contactIdsForDelete).done(response => {
           if (!response.success) {
             alert(response.message);
