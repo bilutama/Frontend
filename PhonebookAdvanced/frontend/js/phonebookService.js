@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-export default class PhonebookService {
+export default class {
     constructor() {
         this.apiUrl = "/api/";
     }
