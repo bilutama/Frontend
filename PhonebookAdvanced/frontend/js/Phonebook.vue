@@ -110,13 +110,13 @@
 
 <script>
 import "../images/phonebook.svg";
-import confirmDeleteModal from "./confirmDeleteModal.vue";
+import ConfirmDeleteModal from "./confirmDeleteModal.vue";
 import TelephoneExistModal from "./TelephoneExistModal.vue";
 import PhonebookService from "./phonebookService.js";
 
 export default {
   components: {
-    confirmDeleteModal,
+    ConfirmDeleteModal,
     TelephoneExistModal
   },
 
