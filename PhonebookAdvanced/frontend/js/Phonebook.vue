@@ -271,10 +271,6 @@ export default {
   },
 
   computed: {
-    isContactForDeleteExists() {
-      return this.contactForDelete !== null;
-    },
-
     isFirstNameInvalid: {
       get() {
         return this.value;
