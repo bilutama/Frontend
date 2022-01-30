@@ -4,14 +4,29 @@ import qs from "qs";
 
 export default class {
     constructor() {
-        this.hostApi = "https://api.themoviedb.org/3";
-        this.getPopularUrl = "/movie/popular";
-        this.searchUrl = "/search/movie";
-        this.genresUrl = "/genre/movie/list";
-        this.movieDetailsUrl = "/movie";
-        this.movieRecommendationsUrl = "/recommendations"; // Full url example: /movie/{movie_id}/recommendations
-        this.imageSourceBaseUrl = "https://image.tmdb.org/t/p/";
         this.apiKeyValue = apiKey.apiKey;
+        this.hostApi = "https://api.themoviedb.org/3";
+        this.getPopularUrl = this.hostApi + "/movie/popular";
+        this.searchUrl = this.hostApi + "/search/movie";
+        this.movieUrl = this.hostApi + "/movie";
+        this.movieRecommendationsPath = "/recommendations"; // Full url example: /movie/{movie_id}/recommendations
+        this.imagesSourceBaseUrl = "https://image.tmdb.org/t/p/w500";
+
+        /*
+getMovieGenres() - response object example
+{
+ "genres": [
+    {
+    "id": 28,
+    "name": "Action"
+    }
+  ]
+}
+* */
+        this.genres = this.get(this.hostApi + "/genre/movie/list", {
+            api_key: this.apiKeyValue,
+            language: "en-US"
+        });
     }
 
     get(url, query) {
@@ -25,37 +40,46 @@ export default class {
         return axios.post(url, qs.stringify(query));
     }
 
+    /* getPopularMovies() - response object structure:
+    {
+    "page": 1,
+    "results": [
+        {
+            "poster_path": "/poster.jpg",
+            "adult": false,
+            "overview": "overview text",
+            "release_date": "2016-08-03",
+            "genre_ids": [14, 28, 80],
+            "id": 297761,
+            "original_title": "Title",
+            "original_language": "en",
+            "title": "Title",
+            "backdrop_path": "/backdrop.jpg",
+            "popularity": 48.261451,
+            "vote_count": 1466,
+            "video": false,
+            "vote_average": 5.91
+        },
+        {...}
+    ],
+    "total_results": 19629,
+    "total_pages": 982
+    }*/
+
     getPopularMovies(page) {
-        return this.get(this.hostApi + this.getPopularUrl, {
+        return this.get(this.getPopularUrl, {
             api_key: this.apiKeyValue,
             language: "en-US",
-            page: page
+            page: typeof page === "undefined" ? 1 : page
         });
     }
 
-    /* getPopularMovies() - response object structure:
-    adult: false
-    backdrop_path: "/backdrop_image_name.jpg"
-    genre_ids: [28, 12, 878]
-    id: 634649
-    original_language: "en"
-    original_title: "Original movie title text"
-    overview: "some text"
-    popularity: 9425.322
-    poster_path: "/image_name.jpg"
-    release_date: "2021-12-15"
-    title: "Movie title"
-    video: false
-    vote_average: 8.5
-    vote_count: 5898
-    */
-
-    getMoviesBySearch(term, page) {
-        return this.get(this.hostApi + this.genresUrl, {
+    getMoviesBySearch(query, page) {
+        return this.get(this.searchUrl, {
             api_key: this.apiKeyValue,
             language: "en-US",
-            query: term,
-            page: page
+            query,
+            page
             /* optional:
             include_adult
             region
@@ -65,19 +89,81 @@ export default class {
         });
     }
 
-    getMovieGenres(movieId) {
-        return this.get(this.hostApi + this.searchUrl, {
+    /*
+    getMovieDetails() - Response object example:
+    {
+      "adult": false,
+      "backdrop_path": "/backdrop.jpg",
+      "belongs_to_collection": null,
+      "budget": 10000000,
+      "genres": [{"id": 18, "name": "Drama"}, {...}],
+      "homepage": "",
+      "id": 550,
+      "imdb_id": "tt0137523",
+      "original_language": "en",
+      "original_title": "Fight Club",
+      "overview": "some text",
+      "popularity": 0.5,
+      "poster_path": null,
+      "production_companies": [{"id": 508, "logo_path": "logo.png", "name": "Company", "origin_country": "US"}, {...}],
+      "production_countries": [{"iso_3166_1": "US", "name": "United States of America"}, {...}],
+      "release_date": "1999-10-12",
+      "revenue": 100853753,
+      "runtime": 139,
+      "spoken_languages": [{"iso_639_1": "en", "name": "English"}, {...}],
+      "status": "Released",
+      "tagline": "Some text",
+      "title": "Fight Club",
+      "video": false,
+      "vote_average": 7.8,
+      "vote_count": 3439
+    }
+    */
+    getMovieDetails(movieId) {
+        return this.get(this.movieUrl, {
+            movieId,
             api_key: this.apiKeyValue,
             language: "en-US",
-            query: term,
-            page: page
             /* optional:
-            language:
+            append_to_response: "query_string"
             */
         });
     }
-    //
-    // getMovieDetails(movieId) {
-    //     return null;
-    // }
+
+    /*
+    getMovieRecommendations() - response object example
+     {
+      "page": 1,
+      "results": [
+            {
+              "adult": false,
+              "backdrop_path": null,
+              "genre_ids": [28, ...],
+              "id": 106912,
+              "original_language": "en",
+              "original_title": "Darna! Ang Pagbabalik",
+              "overview": "Valentina, Darna's snake-haired arch enemy, is trying to take over the Phillipines through subliminal messages on religious TV shows. Darna has her own problems, however, as she has lost her magic pearl and with it the ability to transform into her scantily clad super self. Trapped as her alter-ego, the plucky reporter Narda, she must try to regain the pearl and foil Valentina's plans.",
+              "release_date": "1994-05-09",
+              "poster_path": null,
+              "popularity": 1.012564,
+              "title": "Darna: The Return",
+              "video": false,
+              "vote_average": 0,
+              "vote_count": 0
+            },
+            { ...
+            }
+      ],
+      "total_pages": 9,
+      "total_results": 168
+    }
+    * */
+    getMovieRecommendations(movieId, page) {
+        return this.get(this.movieUrl + movieId + this.movieRecommendationsPath, {
+            api_key: this.apiKeyValue,
+            // optional:
+            language: "en-US",
+            page
+        });
+    }
 }
