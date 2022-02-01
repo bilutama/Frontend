@@ -1,39 +1,24 @@
 <template>
-  <v-container>
+  <v-container class="py-3 " max-width="1000">
     <v-row>
       <v-col
           v-for="movie in movies"
           :key="movie.id"
           cols="3"
       >
-        <v-responsive :aspect-ratio="9/12">
-          <v-card
-          :href="'/movie/'+movie.id">
-            <v-img
-                :src="getImagePath(movie)"
-            >
-              <v-row
-                  align="center"
-                  class="mx-3 py-5"
-              >
-                <v-rating class="amber--text"
-                          :value="movie.vote_average/2"
-                          color="warning"
-                          background-color="grey"
-                          dense
-                          length="5"
-                          half-increments
-                          readonly
-                          size="16"
-                ></v-rating>
 
-                <div class="warning--text ms-2">
-                  {{ movie.vote_average + "/10" }}
-                </div>
-              </v-row>
-            </v-img>
-          </v-card>
-        </v-responsive>
+        <v-card
+            elevation="10"
+            :href="'/movie/'+movie.id">
+          <v-img
+              :src="getImagePath(movie)"
+          >
+            <v-card-text class="warning--text font-weight-bold ms-1">
+              {{ movie.vote_average + "/10" }}
+            </v-card-text>
+          </v-img>
+        </v-card>
+
       </v-col>
     </v-row>
   </v-container>
