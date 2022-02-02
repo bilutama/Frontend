@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-3 " max-width="1000">
+  <v-container class="py-3 ">
     <v-row>
       <v-col
           v-for="movie in movies"

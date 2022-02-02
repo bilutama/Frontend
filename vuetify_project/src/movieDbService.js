@@ -8,9 +8,10 @@ export default class {
         this.hostApi = "https://api.themoviedb.org/3";
         this.getPopularUrl = this.hostApi + "/movie/popular";
         this.searchUrl = this.hostApi + "/search/movie";
-        this.movieUrl = this.hostApi + "/movie";
+        this.movieUrl = this.hostApi + "/movie/";
         this.movieRecommendationsPath = "/recommendations"; // Full url example: /movie/{movie_id}/recommendations
         this.imagesSourceBaseUrl = "https://image.tmdb.org/t/p/w500";
+        this.imagesSourceFullUrl = "https://image.tmdb.org/t/p/original";
 
         /*
 getMovieGenres() - response object example
@@ -120,8 +121,7 @@ getMovieGenres() - response object example
     }
     */
     getMovieDetails(movieId) {
-        return this.get(this.movieUrl, {
-            movieId,
+        return this.get(this.movieUrl + movieId, {
             api_key: this.apiKeyValue,
             language: "en-US",
             /* optional:
