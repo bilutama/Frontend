@@ -13,9 +13,22 @@
           <v-img
               :src="getImagePath(movie)"
           >
-            <v-card-text class="warning--text font-weight-bold ms-1">
-              {{ movie.vote_average + "/10" }}
-            </v-card-text>
+            <div
+                class="d-flex justify-space-between mb-6"
+            >
+              <span class="warning--text font-weight-bold ma-1">
+                {{ movie.vote_average + "/10" }}
+              </span>
+
+              <v-btn
+                  color="white"
+                  icon
+              >
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+
+            </div>
+
           </v-img>
         </v-card>
 
