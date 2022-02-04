@@ -28,6 +28,7 @@ export default {
     this.imagesSourceUrl = this.service.imagesSourceFullUrl;
 
     this.service.getMovieDetails(this.$route.params.movieid).then(result => {
+      console.log(result.data);
       this.movie = result.data;
     }).catch(err => {
       console.log(err);
@@ -36,7 +37,7 @@ export default {
 
   methods: {
     getImagePath(movie) {
-      return (this.imagesSourceUrl + movie.poster_path);
+      return (this.imagesSourceUrl + movie['poster_path']);
     }
   }
 }

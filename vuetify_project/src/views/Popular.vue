@@ -21,6 +21,7 @@
               </span>
 
               <v-btn
+                  @click.native.prevent.stop.capture
                   color="white"
                   icon
               >

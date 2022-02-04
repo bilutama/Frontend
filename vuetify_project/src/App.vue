@@ -3,6 +3,7 @@
     <v-app-bar
         app
         color="#F0F0F0"
+
         flat
     >
       <v-container class="py-0 fill-height">
@@ -71,7 +72,7 @@ export default {
         {
           name: "Favorites",
           path: "/favorites",
-          icon: "mdi-star"
+          icon: "mdi-heart"
         },
       ],
     };
