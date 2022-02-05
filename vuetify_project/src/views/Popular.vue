@@ -1,6 +1,9 @@
 <template>
-  <v-container class="py-3 ">
-    <v-row>
+  <v-container class="py-6">
+    <v-divider>
+
+    </v-divider>
+    <v-row class="py-6">
       <v-col
           v-for="movie in movies"
           :key="movie.id"
@@ -27,12 +30,9 @@
               >
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
-
             </div>
-
           </v-img>
         </v-card>
-
       </v-col>
     </v-row>
   </v-container>

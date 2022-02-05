@@ -1,12 +1,19 @@
 <template>
   <v-container class="py-3 ">
-    <v-card
-        elevation="10">
-      <v-img
-          :src="getImagePath(movie)"
-      >
-      </v-img>
-    </v-card>
+    <v-row>
+      <v-col cols="4">
+        <v-card
+            elevation="10">
+          <v-img
+              :src="imagesSourceUrl"
+          >
+          </v-img>
+        </v-card>
+      </v-col>
+      <v-col>
+        <span class="black--text font-weight-bold ma-1">{{ fullTitle }}</span>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -25,19 +32,19 @@ export default {
   },
 
   mounted() {
-    this.imagesSourceUrl = this.service.imagesSourceFullUrl;
-
     this.service.getMovieDetails(this.$route.params.movieid).then(result => {
-      console.log(result.data);
       this.movie = result.data;
+      this.imagesSourceUrl = this.service.imagesSourceFullUrl + this.movie['poster_path'];
     }).catch(err => {
       console.log(err);
     });
   },
 
-  methods: {
-    getImagePath(movie) {
-      return (this.imagesSourceUrl + movie['poster_path']);
+  methods: {},
+
+  computed: {
+    fullTitle() {
+      return this.movie['title'] + " (" + this.movie['release_date'].substring(0, 4) + ")";
     }
   }
 }
