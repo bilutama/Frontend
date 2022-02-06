@@ -19,16 +19,19 @@
             <div
                 class="d-flex justify-space-between mb-6"
             >
-              <span class="warning--text font-weight-bold ma-1">
-                {{ movie.vote_average + "/10" }}
+              <span class="warning--text font-weight-bold ma-3">
+                {{ movie["vote_average"] + "/10" }}
               </span>
 
               <v-btn
-                  @click.native.prevent.stop.capture
-                  color="white"
-                  icon
+                  @click.native.prevent.stop.capture="isMovieFavoriteToggle(movie.id)"
+                  fab
+                  small
+                  class="ma-1"
               >
-                <v-icon>mdi-heart</v-icon>
+                <v-icon :color="isFavorite(movie.id) ? 'pink' : 'grey lighten-2'">
+                  mdi-heart
+                </v-icon>
               </v-btn>
             </div>
           </v-img>
@@ -50,7 +53,8 @@ export default {
       moviesCountInDb: 0,
       pagesCountInDb: 0,
       movies: [],
-      imagesSourceUrl: ""
+      imagesSourceUrl: "",
+      favoriteMoviesIds: []
     };
   },
 
@@ -58,17 +62,50 @@ export default {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
 
     this.service.getPopularMovies().then(resultMovies => {
-      this.moviesCountInDb = resultMovies.data.total_results;
-      this.pagesCountInDb = resultMovies.data.total_pages;
-      this.movies = resultMovies.data.results;
+      this.moviesCountInDb = resultMovies.data["total_results"];
+      this.pagesCountInDb = resultMovies.data["total_pages"];
+      this.movies = resultMovies.data["results"];
     }).catch(err => {
       console.log(err);
     });
+
+    // Get favorite movies ids from local storage
+    const favoriteMovies = localStorage.getItem("favoriteMovies");
+
+    if (favoriteMovies === null) {
+      this.favoriteMoviesIds = [];
+    }
+
+    try {
+      this.favoriteMoviesIds = JSON.parse(favoriteMovies);
+    } catch (err) {
+      localStorage.removeItem("favoriteMovies");
+      this.favoriteMoviesIds = [];
+    }
   },
 
   methods: {
     getImagePath(movie) {
-      return (this.imagesSourceUrl + movie.poster_path);
+      return (this.imagesSourceUrl + movie["poster_path"]);
+    },
+
+    isFavorite(id) {
+      return this.favoriteMoviesIds.indexOf(id) !== -1;
+    },
+
+    isMovieFavoriteToggle(id) {
+      const movieIdIndex = this.favoriteMoviesIds.indexOf(id);
+
+      // Add movie id if doesn't exist
+      if (movieIdIndex === -1) {
+        this.favoriteMoviesIds.push(id);
+        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMoviesIds));
+        return;
+      }
+
+      // Remove movie id if exists
+      this.favoriteMoviesIds.splice(movieIdIndex, 1);
+      localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMoviesIds));
     }
   },
 

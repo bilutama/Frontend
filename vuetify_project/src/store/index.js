@@ -6,26 +6,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    favouriteMoviesIds: []
+    favoriteMoviesIds: []
   },
 
   getters: {
-    favoriteMoviesIds: () => this.state.favouriteMoviesIds,
-    favoriteMoviesCount: () => this.state.favouriteMoviesIds.length,
+    favoriteMoviesIds: () => this.state.favoriteMoviesIds,
+    favoriteMoviesCount: () => this.state.favoriteMoviesIds.length,
   },
 
   mutations: {
     toggleMovieId (state, movieId) {
-      const movieIdIndex = state.favouriteMoviesIds.indexOf(movieId);
+      const movieIdIndex = state.favoriteMoviesIds.indexOf(movieId);
 
       // Add movie id if doesn't exist
       if (movieIdIndex === -1) {
-        state.favouriteMoviesIds.push(movieId);
+        state.favoriteMoviesIds.push(movieId);
         return;
       }
 
       // Remove movie id if exists
-      state.favouriteMoviesIds.splice(movieIdIndex, 1);
+      state.favoriteMoviesIds.splice(movieIdIndex, 1);
     }
   },
 
