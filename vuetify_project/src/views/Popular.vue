@@ -1,7 +1,11 @@
 <template>
   <v-container class="py-6">
+    <v-pagination
+        v-model="page"
+        class="my-4"
+        :length="pagesCountInDb"
+    ></v-pagination>
     <v-divider>
-
     </v-divider>
     <v-row class="py-6">
       <v-col
@@ -51,17 +55,18 @@ export default {
     return {
       service: new MovieDbService(),
       moviesCountInDb: 0,
-      pagesCountInDb: 0,
+      pagesCountInDb: 1,
       movies: [],
       imagesSourceUrl: "",
-      favoriteMoviesIds: []
+      favoriteMoviesIds: [],
+      page: 1
     };
   },
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
 
-    this.service.getPopularMovies().then(resultMovies => {
+    this.service.getPopularMovies(1).then(resultMovies => {
       this.moviesCountInDb = resultMovies.data["total_results"];
       this.pagesCountInDb = resultMovies.data["total_pages"];
       this.movies = resultMovies.data["results"];
@@ -85,6 +90,16 @@ export default {
   },
 
   methods: {
+    getPopularMovies(page) {
+      this.service.getPopularMovies(page).then(resultMovies => {
+        this.moviesCountInDb = resultMovies.data["total_results"];
+        this.pagesCountInDb = resultMovies.data["total_pages"];
+        this.movies = resultMovies.data["results"];
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+
     getImagePath(movie) {
       return (this.imagesSourceUrl + movie["poster_path"]);
     },
