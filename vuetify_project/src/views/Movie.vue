@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       service: new MovieDbService(),
+      fullTitle: "",
       imagesSourceUrl: "",
       movie: {}
     };
@@ -34,7 +35,6 @@ export default {
   mounted() {
     this.service.getMovieDetails(this.$route.params.movieid).then(result => {
       this.movie = result.data;
-      this.imagesSourceUrl = this.service.imagesSourceFullUrl + this.movie['poster_path'];
     }).catch(err => {
       console.log(err);
     });
@@ -43,8 +43,16 @@ export default {
   methods: {},
 
   computed: {
-    fullTitle() {
-      return this.movie['title'] + " (" + this.movie['release_date'].substring(0, 4) + ")";
+  },
+
+  watch: {
+    movie: {
+      immediate: false,
+
+      handler() {
+        this.imagesSourceUrl = this.service.imagesSourceFullUrl + this.movie['poster_path'];
+        this.fullTitle = this.movie['title'] + " (" + this.movie['release_date'].substring(0, 4) + ")";
+      }
     }
   }
 }

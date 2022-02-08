@@ -17,18 +17,18 @@
             />
           </router-link>
         </div>
-
         <v-spacer></v-spacer>
 
         <v-btn
             v-for="item in menuItems"
             :key="item.name"
-            :to="item.path"
+            @click.prevent="navigate(item)"
             large
             color="#3A4750"
             text
             exact
         >
+
           <v-icon class="pa-2"> {{ item.icon }}</v-icon>
           <span class="d-none d-md-inline-flex d-lg-inline-flex">{{ item.name }}</span>
         </v-btn>
@@ -46,7 +46,7 @@
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -62,6 +62,9 @@ export default {
         {
           name: "Popular",
           path: "/popular",
+          params: {
+            page: 1
+          },
           icon: "mdi-movie"
         },
         {
@@ -75,9 +78,13 @@ export default {
           icon: "mdi-heart"
         },
       ],
-
-
     };
   },
+
+  methods: {
+    navigate(item) {
+      this.$router.push({name: item.name, params: item.params}, () => {});
+    }
+  }
 }
 </script>

@@ -1,9 +1,11 @@
 <template>
   <v-container class="py-6">
     <v-pagination
-        v-model="page"
         class="my-4"
+        v-model="currentPage"
         :length="pagesCountInDb"
+        :total-visible="7"
+        @input="nextPage"
     ></v-pagination>
     <v-divider>
     </v-divider>
@@ -28,7 +30,7 @@
               </span>
 
               <v-btn
-                  @click.native.prevent.stop.capture="isMovieFavoriteToggle(movie.id)"
+                  @click.stop.prevent="isMovieFavoriteToggle(movie.id)"
                   fab
                   small
                   class="ma-1"
@@ -51,28 +53,23 @@ import MovieDbService from "../movieDbService.js";
 export default {
   name: "Popular",
 
+  props: {
+        startPage: Number
+  },
+
   data() {
     return {
       service: new MovieDbService(),
-      moviesCountInDb: 0,
-      pagesCountInDb: 1,
+      pagesCountInDb: 500, // Specified by API
       movies: [],
       imagesSourceUrl: "",
       favoriteMoviesIds: [],
-      page: 1
+      currentPage: this.startPage || 1
     };
   },
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-
-    this.service.getPopularMovies(1).then(resultMovies => {
-      this.moviesCountInDb = resultMovies.data["total_results"];
-      this.pagesCountInDb = resultMovies.data["total_pages"];
-      this.movies = resultMovies.data["results"];
-    }).catch(err => {
-      console.log(err);
-    });
 
     // Get favorite movies ids from local storage
     const favoriteMovies = localStorage.getItem("favoriteMovies");
@@ -90,14 +87,10 @@ export default {
   },
 
   methods: {
-    getPopularMovies(page) {
-      this.service.getPopularMovies(page).then(resultMovies => {
-        this.moviesCountInDb = resultMovies.data["total_results"];
-        this.pagesCountInDb = resultMovies.data["total_pages"];
-        this.movies = resultMovies.data["results"];
-      }).catch(err => {
-        console.log(err);
-      });
+    nextPage() {
+      if (this.currentPage !== this.$route.params.page) {
+        this.$router.push({params: {page: this.currentPage}});
+      }
     },
 
     getImagePath(movie) {
@@ -124,16 +117,26 @@ export default {
     }
   },
 
-  computed: {
-    moviesCount: {
-      get() {
-        return this.value;
-      },
+  computed: {},
 
-      set() {
-        this.value = this.movies.length;
+  watch: {
+    currentPage: {
+      immediate: true,
+
+      handler() {
+        this.service.getPopularMovies(this.currentPage).then(resultMovies => {
+          this.movies = resultMovies.data["results"];
+        }).catch(err => {
+          console.log(err);
+        });
       }
     },
+
+    $route(to, from) {
+      if (to.params.page !== from.params.page) {
+        this.currentPage = parseInt(to.params.page);
+      }
+    }
   }
 }
 </script>
