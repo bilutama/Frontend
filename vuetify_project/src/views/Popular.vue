@@ -34,12 +34,12 @@
               </span>
 
               <v-btn
-                  @click.stop.prevent="toggleMovieFavorite(movie.id)"
+                  @click.stop.prevent="toggleMovieFavorite(movie)"
                   fab
                   small
                   class="ma-1"
               >
-                <v-icon :color="isFavorite(movie.id) ? 'pink' : 'grey lighten-2'">
+                <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
                   mdi-heart
                 </v-icon>
               </v-btn>
@@ -53,7 +53,7 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import retrieveFavoriteMoviesIds from "../getFavorites.js";
+import retrieveFavoriteMovies from "../getFavorites.js";
 
 export default {
   name: "Popular",
@@ -64,7 +64,7 @@ export default {
       pagesCountInDb: 500, // Specified by API
       movies: [],
       imagesSourceUrl: "",
-      favoriteMoviesIds: retrieveFavoriteMoviesIds(),
+      favoriteMovies: retrieveFavoriteMovies(),
       currentPage: this.$store.state.currentPage
     };
   },
@@ -83,26 +83,31 @@ export default {
     },
 
     getImagePath(movie) {
-      return (this.imagesSourceUrl + movie["poster_path"]);
+      return this.imagesSourceUrl + movie["poster_path"];
     },
 
-    isFavorite(id) {
-      return this.favoriteMoviesIds.indexOf(id) !== -1;
+    isFavorite(movie) {
+      return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
     },
 
-    toggleMovieFavorite(id) {
-      const movieIdIndex = this.favoriteMoviesIds.indexOf(id);
+    toggleMovieFavorite(movie) {
+      const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
 
       // Add movie id if doesn't exist
-      if (movieIdIndex === -1) {
-        this.favoriteMoviesIds.push(id);
-        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMoviesIds));
+      if (movieIndex === -1) {
+        this.favoriteMovies.push({
+          id: movie["id"],
+          poster_path: movie["poster_path"],
+          vote_average: movie["vote_average"]
+        });
+
+        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
         return;
       }
 
       // Remove movie id if exists
-      this.favoriteMoviesIds.splice(movieIdIndex, 1);
-      localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMoviesIds));
+      this.favoriteMovies.splice(movieIndex, 1);
+      localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
     }
   },
 
@@ -112,6 +117,7 @@ export default {
     currentPage: {
       immediate: true,
 
+      // Retrieve movies from database
       handler() {
         this.service.getPopularMovies(this.currentPage).then(resultMovies => {
           this.movies = resultMovies.data["results"];

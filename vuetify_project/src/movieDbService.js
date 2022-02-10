@@ -65,7 +65,6 @@ getMovieGenres() - response object example
     "total_results": 19629,
     "total_pages": 982
     }*/
-
     getPopularMovies(page) {
         return this.get(this.getPopularUrl, {
             api_key: this.apiKeyValue,

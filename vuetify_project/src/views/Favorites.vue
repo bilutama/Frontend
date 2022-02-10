@@ -1,6 +1,8 @@
 <template>
   <v-container>
-    <span>Here are your favorite movies</span>
+    <div class="text-h5 d-flex justify-center my-2">
+      Here are your favorite movies
+    </div>
     <v-divider>
     </v-divider>
     <v-row class="py-6">
@@ -24,12 +26,12 @@
               </span>
 
               <v-btn
-                  @click.stop.prevent="toggleMovieFavorite(movie.id)"
+                  @click.stop.prevent="toggleMovieFavorite(movie)"
                   fab
                   small
                   class="ma-1"
               >
-                <v-icon :color="isFavorite(movie.id) ? 'pink' : 'grey lighten-2'">
+                <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
                   mdi-heart
                 </v-icon>
               </v-btn>
@@ -43,7 +45,7 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import retrieveFavoriteMoviesIds from "../getFavorites.js";
+import retrieveFavoriteMovies from "../getFavorites.js";
 
 export default {
   name: "Favorites",
@@ -51,8 +53,7 @@ export default {
   data() {
     return {
       service: new MovieDbService(),
-      favoriteMoviesIds: retrieveFavoriteMoviesIds(),
-      favoriteMovies: [],
+      favoriteMovies: retrieveFavoriteMovies(),
       imagesSourceUrl: "",
     };
   },
@@ -62,30 +63,22 @@ export default {
       return (this.imagesSourceUrl + movie["poster_path"]);
     },
 
-    isFavorite(id) {
-      return this.favoriteMoviesIds.indexOf(id) !== -1;
+    isFavorite(movie) {
+      return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
     },
 
-    toggleMovieFavorite(id) {
-      const movieIdIndex = this.favoriteMoviesIds.indexOf(id);
+    toggleMovieFavorite(movie) {
+      const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
 
-      if (movieIdIndex !== -1) {
-        this.favoriteMoviesIds.splice(movieIdIndex, 1);
-        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMoviesIds));
+      if (movieIndex !== -1) {
+        this.favoriteMovies.splice(movieIndex, 1);
+        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
       }
     }
   },
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-
-    this.service.getPopularMovies().then(resultMovies => {
-      // TODO: test append_to_request
-      this.favoriteMovies = resultMovies.data["results"].filter(movie => this.favoriteMoviesIds.indexOf(movie.id) > -1);
-    }).catch(err => {
-      console.log(err);
-    });
-
   }
 }
 </script>
