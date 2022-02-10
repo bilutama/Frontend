@@ -3,7 +3,6 @@
     <v-app-bar
         app
         color="#F0F0F0"
-
         flat
     >
       <v-container class="py-0 fill-height">
@@ -63,7 +62,7 @@ export default {
           name: "Popular",
           path: "/popular",
           params: {
-            page: 1
+            page: this.$store.state.currentPage
           },
           icon: "mdi-movie"
         },

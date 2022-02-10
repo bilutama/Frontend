@@ -12,13 +12,13 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
+        //redirect: '/popular/1',
         name: 'Home',
         component: Home
     },
     {
         path: '/popular/:page',
         name: 'Popular',
-        props: true,
         component: Popular
     },
     {
@@ -34,7 +34,6 @@ const routes = [
     {
         path: '/movie/:movieid',
         name: 'Movie',
-        props: true,
         component: Movie
     },
     {

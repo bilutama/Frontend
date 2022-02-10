@@ -11,7 +11,9 @@
         </v-card>
       </v-col>
       <v-col>
-        <span class="black--text font-weight-bold ma-1">{{ fullTitle }}</span>
+        <v-row class="black--text text-h4 font-weight-bold ma-1">{{ titleWithYear }}</v-row>
+        <v-row>{{ genres }}</v-row>
+        <v-row>{{ movie['overview'] }}</v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -26,15 +28,34 @@ export default {
   data() {
     return {
       service: new MovieDbService(),
-      fullTitle: "",
       imagesSourceUrl: "",
-      movie: {}
+      movie: {},
+      recommended: [],
+      recommendedToShow: 3,
+      similar: [],
+      similarToShow: 3,
+      titleWithYear: "",
+      genres: ""
     };
   },
 
   mounted() {
-    this.service.getMovieDetails(this.$route.params.movieid).then(result => {
+    const movieId = this.$route.params.movieid;
+
+    this.service.getMovieDetails(movieId).then(result => {
       this.movie = result.data;
+    }).catch(err => {
+      console.log(err);
+    });
+
+    this.service.getMovieRecommendations(movieId).then(result => {
+      this.recommended = result.data['results'];
+    }).catch(err => {
+      console.log(err);
+    });
+
+    this.service.getSimilarMovies(movieId).then(result => {
+      this.similar = result.data['results'];
     }).catch(err => {
       console.log(err);
     });
@@ -42,8 +63,7 @@ export default {
 
   methods: {},
 
-  computed: {
-  },
+  computed: {},
 
   watch: {
     movie: {
@@ -51,7 +71,8 @@ export default {
 
       handler() {
         this.imagesSourceUrl = this.service.imagesSourceFullUrl + this.movie['poster_path'];
-        this.fullTitle = this.movie['title'] + " (" + this.movie['release_date'].substring(0, 4) + ")";
+        this.titleWithYear = this.movie['title'] + " (" + this.movie['release_date'].substring(0, 4) + ")";
+        this.genres = this.movie['genres'].map(item => item['name']).join(', ')
       }
     }
   }

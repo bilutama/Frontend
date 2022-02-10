@@ -1,11 +1,15 @@
 <template>
-  <v-container class="py-6">
+  <v-container>
+    <div class="text-h5 d-flex justify-center my-2">
+      Movies that are popular today
+    </div>
+
     <v-pagination
-        class="my-4"
+        class="my-2"
         v-model="currentPage"
         :length="pagesCountInDb"
         :total-visible="7"
-        @input="nextPage"
+        @input="next"
     ></v-pagination>
     <v-divider>
     </v-divider>
@@ -30,7 +34,7 @@
               </span>
 
               <v-btn
-                  @click.stop.prevent="isMovieFavoriteToggle(movie.id)"
+                  @click.stop.prevent="toggleMovieFavorite(movie.id)"
                   fab
                   small
                   class="ma-1"
@@ -49,13 +53,10 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
+import retrieveFavoriteMoviesIds from "../getFavorites.js";
 
 export default {
   name: "Popular",
-
-  props: {
-        startPage: Number
-  },
 
   data() {
     return {
@@ -63,33 +64,21 @@ export default {
       pagesCountInDb: 500, // Specified by API
       movies: [],
       imagesSourceUrl: "",
-      favoriteMoviesIds: [],
-      currentPage: this.startPage || 1
+      favoriteMoviesIds: retrieveFavoriteMoviesIds(),
+      currentPage: this.$store.state.currentPage
     };
   },
 
   mounted() {
+    this.next();
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-
-    // Get favorite movies ids from local storage
-    const favoriteMovies = localStorage.getItem("favoriteMovies");
-
-    if (favoriteMovies === null) {
-      this.favoriteMoviesIds = [];
-    }
-
-    try {
-      this.favoriteMoviesIds = JSON.parse(favoriteMovies);
-    } catch (err) {
-      localStorage.removeItem("favoriteMovies");
-      this.favoriteMoviesIds = [];
-    }
   },
 
   methods: {
-    nextPage() {
-      if (this.currentPage !== this.$route.params.page) {
-        this.$router.push({params: {page: this.currentPage}});
+    next() {
+      if (this.currentPage !== parseInt(this.$route.params.page)) {
+        this.$router.push({params: {page: String(this.currentPage)}}, () => {
+        });
       }
     },
 
@@ -101,7 +90,7 @@ export default {
       return this.favoriteMoviesIds.indexOf(id) !== -1;
     },
 
-    isMovieFavoriteToggle(id) {
+    toggleMovieFavorite(id) {
       const movieIdIndex = this.favoriteMoviesIds.indexOf(id);
 
       // Add movie id if doesn't exist
@@ -132,9 +121,11 @@ export default {
       }
     },
 
+    // Update current page in store
     $route(to, from) {
       if (to.params.page !== from.params.page) {
-        this.currentPage = parseInt(to.params.page);
+        this.currentPage = Number(to.params.page);
+        this.$store.commit('changeState', this.currentPage);
       }
     }
   }

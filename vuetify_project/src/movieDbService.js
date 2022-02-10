@@ -8,8 +8,7 @@ export default class {
         this.hostApi = "https://api.themoviedb.org/3";
         this.getPopularUrl = this.hostApi + "/movie/popular";
         this.searchUrl = this.hostApi + "/search/movie";
-        this.movieUrl = this.hostApi + "/movie/";
-        this.movieRecommendationsPath = "/recommendations"; // Full url example: /movie/{movie_id}/recommendations
+        this.movieUrl = this.hostApi + "/movie";
         this.imagesSourceBaseUrl = "https://image.tmdb.org/t/p/w500";
         this.imagesSourceFullUrl = "https://image.tmdb.org/t/p/original";
 
@@ -121,7 +120,7 @@ getMovieGenres() - response object example
     }
     */
     getMovieDetails(movieId) {
-        return this.get(this.movieUrl + movieId, {
+        return this.get(`${this.movieUrl}/${movieId}`, {
             api_key: this.apiKeyValue,
             language: "en-US",
             /* optional:
@@ -159,11 +158,20 @@ getMovieGenres() - response object example
     }
     * */
     getMovieRecommendations(movieId, page) {
-        return this.get(this.movieUrl + movieId + this.movieRecommendationsPath, {
+        return this.get(`${this.movieUrl}/${movieId}/recommendations`, {
             api_key: this.apiKeyValue,
             // optional:
             language: "en-US",
-            page
+            page // max = 1000
+        });
+    }
+
+    getSimilarMovies(movieId, page) {
+        return this.get(`${this.movieUrl}/${movieId}/similar`, {
+            api_key: this.apiKeyValue,
+            // optional:
+            language: "en-US",
+            page // max = 1000
         });
     }
 }
