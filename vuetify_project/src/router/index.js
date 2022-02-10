@@ -19,6 +19,7 @@ const routes = [
     {
         path: '/popular/:page',
         name: 'Popular',
+        props: (route) => ({page: Number(route.params.page)}),
         component: Popular
     },
     {

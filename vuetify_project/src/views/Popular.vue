@@ -58,6 +58,13 @@ import retrieveFavoriteMovies from "../getFavorites.js";
 export default {
   name: "Popular",
 
+  props: {
+    page: {
+      type: Number,
+      required: true
+    }
+  },
+
   data() {
     return {
       service: new MovieDbService(),
@@ -65,16 +72,29 @@ export default {
       movies: [],
       imagesSourceUrl: "",
       favoriteMovies: retrieveFavoriteMovies(),
-      currentPage: this.$store.state.currentPage
+      currentPage: this.resolvePage()
     };
   },
 
   mounted() {
+    console.log("PROPS PAGE: " + this.page);
+    console.log("STORE PAGE: " + this.$store.state.currentPage);
+    console.log("CURRE PAGE: " + this.currentPage);
+
     this.next();
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
   },
 
   methods: {
+    resolvePage() {
+      if (this.page !== 1) {
+        this.$store.commit('changeState', this.page);
+        return this.page;
+      }
+
+      return this.$store.state.currentPage;
+    },
+
     next() {
       if (this.currentPage !== parseInt(this.$route.params.page)) {
         this.$router.push({params: {page: String(this.currentPage)}}, () => {

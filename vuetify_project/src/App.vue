@@ -62,7 +62,7 @@ export default {
           name: "Popular",
           path: "/popular",
           params: {
-            page: this.$store.state.currentPage
+            page: 1
           },
           icon: "mdi-movie"
         },
@@ -82,7 +82,8 @@ export default {
 
   methods: {
     navigate(item) {
-      this.$router.push({name: item.name, params: item.params}, () => {});
+      this.$router.push({name: item.name, params: item.params}, () => {
+      });
     }
   }
 }
