@@ -19,6 +19,7 @@
           cols="3"
       >
         <v-card
+            v-if="movie['poster_path'] !== null"
             elevation="10"
             :href="'/movie/'+movie.id">
           <v-img
@@ -42,6 +43,21 @@
               </span>
             </div>
           </v-img>
+        </v-card>
+        <v-card v-else
+                elevation="10"
+                :href="'/movie/'+movie['id']"
+        >
+          <v-responsive :aspect-ratio="18/27">
+            <v-card-title class="text-subtitle-1 font-weight-bold">
+              <v-responsive>
+                {{ movie["title"] }}
+              </v-responsive>
+            </v-card-title>
+            <v-card-text>
+              [No poster in database]
+            </v-card-text>
+          </v-responsive>
         </v-card>
       </v-col>
     </v-row>
@@ -74,19 +90,18 @@ export default {
   },
 
   mounted() {
-    this.next();
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
+    this.next();
   },
 
   methods: {
     resolveCurrentPage() {
       if (this.page !== 1) {
-        console.log("RES CUR PAGE");
-        this.$store.commit('changeState', this.page);
+        this.$store.commit('updatePopularMoviesPage', this.page);
         return this.page;
       }
 
-      return this.$store.state.currentPage;
+      return this.$store.state.currentPopularMoviesPage;
     },
 
     next() {
@@ -107,7 +122,7 @@ export default {
     toggleMovieFavorite(movie) {
       const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
 
-      // Add movie id if doesn't exist
+      // Add movie id if it doesn't exist
       if (movieIndex === -1) {
         this.favoriteMovies.push({
           id: movie["id"],
@@ -145,8 +160,7 @@ export default {
     $route(to, from) {
       if (to.params.page !== from.params.page) {
         this.currentPage = Number(to.params.page);
-        console.log("ROUTE WATCH");
-        this.$store.commit('changeState', this.currentPage);
+        this.$store.commit('updatePopularMoviesCurrentPage', this.currentPage);
       }
     }
   }

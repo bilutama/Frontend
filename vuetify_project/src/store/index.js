@@ -4,23 +4,24 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    state: {
+        currentPopularMoviesPage: 1,
+        currentSearchResultsPage: 1
+    },
 
-  state: {
-    currentPage: 1
-  },
+    getters: {},
 
-  getters: {
-  },
+    mutations: {
+        updatePopularMoviesCurrentPage(state, newValue) {
+            state.currentPopularMoviesPage = newValue;
+        },
 
-  mutations: {
-    changeState(state, newValue) {
-      state.currentPage = newValue;
-    }
-  },
+        updateSearchResultsPage(state, newValue) {
+            state.currentSearchResultsPage = newValue;
+        }
+    },
 
-  actions: {
-  },
+    actions: {},
 
-  modules: {
-  },
+    modules: {},
 })

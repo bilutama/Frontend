@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//import Home from "../views/Home.vue";
 import Popular from "../views/Popular";
 import Search from "../views/Search";
 import Movie from "../views/Movie";
@@ -18,18 +17,17 @@ const routes = [
                 page: 1
             }
         }
-        // name: 'Home',
-        // component: Home
     },
     {
-        path: '/:page',
+        path: '/popular/:page',
         name: 'Popular',
         props: (route) => ({page: Number(route.params.page)}),
         component: Popular
     },
     {
-        path: '/search',
+        path: '/search/:term/:page',
         name: 'Search',
+        props: (route) => ({term: route.params.term, page: Number(route.params.page)}),
         component: Search
     },
     {

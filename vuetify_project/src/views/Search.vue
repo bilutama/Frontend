@@ -1,21 +1,17 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center" justify="center">
-      <v-col cols="6">
-        <v-text-field
-            v-model="searchTerm"
-
-            append-outer-icon="mdi-magnify"
-            clear-icon="mdi-close-circle"
-            clearable
-            label="Type to search..."
-            type="text"
-            @click:append-outer="search"
-            @click:clear="clearTerm"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-
+    <div class="text-h5 d-flex justify-center my-2">
+      <span v-if="movies.length > 0">Search results</span>
+      <span v-else>No results for your query</span>
+    </div>
+    <v-pagination
+        v-if="movies.length > 0"
+        class="my-2"
+        v-model="searchPage"
+        :length="totalPages"
+        :total-visible="7"
+        @input="next"
+    ></v-pagination>
     <v-divider>
     </v-divider>
 
@@ -25,9 +21,10 @@
           :key="movie.id"
           cols="3">
         <v-card
+            v-if="movie['poster_path'] !== null"
             elevation="10"
             :href="'/movie/'+movie['id']">
-          <v-img v-if="movie['poster_path']!==null"
+          <v-img
               :src="getImagePath(movie)"
           >
             <div
@@ -48,7 +45,21 @@
               </span>
             </div>
           </v-img>
-            <v-card-title v-else>{{ movie["title"] }}</v-card-title>
+        </v-card>
+        <v-card v-else
+                elevation="10"
+                :href="'/movie/'+movie['id']"
+        >
+          <v-responsive :aspect-ratio="18/27">
+            <v-card-title class="text-subtitle-1 font-weight-bold">
+              <v-responsive>
+                {{ movie["title"] }}
+              </v-responsive>
+            </v-card-title>
+            <v-card-text>
+              [No poster in database]
+            </v-card-text>
+          </v-responsive>
         </v-card>
       </v-col>
     </v-row>
@@ -59,33 +70,62 @@ import MovieDbService from "../movieDbService.js";
 import retrieveFavoriteMovies from "../getFavorites.js";
 
 export default {
+  name: "Search",
+
+  props: {
+    term: {
+      type: String,
+      required: true
+    },
+    page: {
+      type: Number,
+      required: true
+    }
+  },
+
   data() {
     return {
       service: new MovieDbService(),
       movies: [],
+      totalPages: 1,
+      searchPage: this.resolveSearchPage(),
       imagesSourceUrl: "",
       favoriteMovies: retrieveFavoriteMovies(),
-      searchTerm: "",
+      searchTerm: this.term
     }
   },
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
+    this.next();
   },
 
   methods: {
-    search() {
-      // TODO SEARCH
-      this.service.getMoviesBySearch(this.searchTerm, 1).then(resultMovies => {
-        this.movies = resultMovies.data["results"];
-        this.clearTerm();
-      }).catch(err => {
-        console.log(err);
-      });
+    resolveSearchPage() {
+      if (this.page !== 1) {
+        this.$store.commit('updateSearchResultsPage', this.page);
+        return this.page;
+      }
+
+      return this.$store.state.currentSearchResultsPage;
     },
 
-    clearTerm() {
-      this.searchTerm = "";
+    next() {
+      const updateRequired = (this.searchPage !== Number(this.$route.params.page)) || (this.searchTerm !== this.$route.params.term);
+
+      console.log("UPDATE REQUIRED = " + updateRequired);
+
+      if (updateRequired) {
+        console.log("TERM = " + this.$route.params.term);
+        console.log("PAGE = " + Number(this.$route.params.page));
+
+        this.$router.push({
+          params: {
+            term: this.searchTerm,
+            page: this.searchPage
+          }
+        }, () => {});
+      }
     },
 
     getImagePath(movie) {
@@ -116,5 +156,43 @@ export default {
       localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
     }
   },
+
+  watch: {
+    searchPage: {
+      immediate: true,
+
+      handler() {
+        this.service.getMoviesBySearch(this.searchTerm, this.searchPage).then(resultMovies => {
+          this.movies = resultMovies.data["results"];
+          this.totalPages = resultMovies.data["total_pages"];
+        }).catch(err => {
+          console.log(err);
+        });
+      }
+    },
+
+    $route(to, from) {
+      if (to.params.term !== from.params.term) {
+        this.searchTerm = to.params.term;
+      }
+
+      if (to.params.page !== from.params.page) {
+        this.searchPage = Number(to.params.page);
+        this.$store.commit('updateSearchResultsPage', this.searchPage);
+      } else {
+        this.searchPage = 1;
+      }
+
+      this.next();
+    },
+
+    // Validate route before update
+    beforeRouteUpdate() {
+      if (this.searchPage > this.totalPages) {
+        console.log("BEFORE R UPDATE");
+        this.$router.push({name: 'NotFound'});
+      }
+    }
+  }
 }
 </script>

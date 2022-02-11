@@ -4,10 +4,13 @@
       <v-col cols="4">
         <v-card
             elevation="10">
-          <v-img
+          <v-img v-if="movie['poster_path'] !== null"
               :src="imagesSourceUrl"
           >
           </v-img>
+          <v-card-title class="justify-center" v-else>
+            [No poster in database]
+          </v-card-title>
         </v-card>
       </v-col>
       <v-col>
@@ -60,10 +63,6 @@ export default {
       console.log(err);
     });
   },
-
-  methods: {},
-
-  computed: {},
 
   watch: {
     movie: {
