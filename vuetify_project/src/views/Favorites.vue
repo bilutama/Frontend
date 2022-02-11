@@ -1,7 +1,10 @@
 <template>
   <v-container>
-    <div class="text-h5 d-flex justify-center my-2">
-      Here are your favorite movies
+    <div v-if="favoritesExist" class="text-h5 d-flex justify-center my-2">
+      Your favorite movies
+    </div>
+    <div v-else class="text-h5 d-flex justify-center my-2">
+      No favorites yet
     </div>
     <v-divider>
     </v-divider>
@@ -11,30 +14,28 @@
           :key="movie.id"
           cols="3"
       >
-
         <v-card
             elevation="10"
-            :href="'/movie/'+movie.id">
+            :href="'/movie/'+movie['id']">
           <v-img
               :src="getImagePath(movie)"
           >
             <div
                 class="d-flex justify-space-between mb-6"
             >
-              <span class="warning--text font-weight-bold ma-3">
-                {{ movie["vote_average"] + "/10" }}
-              </span>
-
               <v-btn
-                  @click.stop.prevent="toggleMovieFavorite(movie)"
+                  @click.stop.prevent="removeFromFavorite(movie)"
                   fab
-                  small
+                  x-small
                   class="ma-1"
               >
-                <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
+                <v-icon :color="'pink'">
                   mdi-heart
                 </v-icon>
               </v-btn>
+              <span class="warning--text font-weight-bold ma-3">
+                {{ movie["vote_average"] + "/10" }}
+              </span>
             </div>
           </v-img>
         </v-card>
@@ -54,6 +55,7 @@ export default {
     return {
       service: new MovieDbService(),
       favoriteMovies: retrieveFavoriteMovies(),
+      favoritesExist: false,
       imagesSourceUrl: "",
     };
   },
@@ -67,7 +69,7 @@ export default {
       return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
     },
 
-    toggleMovieFavorite(movie) {
+    removeFromFavorite(movie) {
       const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
 
       if (movieIndex !== -1) {
@@ -79,6 +81,17 @@ export default {
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
+  },
+
+  watch: {
+    favoriteMovies: {
+      immediate: true,
+      deep: true,
+
+      handler() {
+        this.favoritesExist = this.favoriteMovies.length > 0;
+      }
+    }
   }
 }
 </script>

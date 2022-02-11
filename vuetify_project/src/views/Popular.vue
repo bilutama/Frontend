@@ -3,7 +3,6 @@
     <div class="text-h5 d-flex justify-center my-2">
       Movies that are popular today
     </div>
-
     <v-pagination
         class="my-2"
         v-model="currentPage"
@@ -19,7 +18,6 @@
           :key="movie.id"
           cols="3"
       >
-
         <v-card
             elevation="10"
             :href="'/movie/'+movie.id">
@@ -29,20 +27,19 @@
             <div
                 class="d-flex justify-space-between mb-6"
             >
-              <span class="warning--text font-weight-bold ma-3">
-                {{ movie["vote_average"] + "/10" }}
-              </span>
-
               <v-btn
                   @click.stop.prevent="toggleMovieFavorite(movie)"
                   fab
-                  small
+                  x-small
                   class="ma-1"
               >
                 <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
                   mdi-heart
                 </v-icon>
               </v-btn>
+              <span class="warning--text font-weight-bold ma-3">
+                {{ movie["vote_average"] + "/10" }}
+              </span>
             </div>
           </v-img>
         </v-card>
@@ -72,22 +69,19 @@ export default {
       movies: [],
       imagesSourceUrl: "",
       favoriteMovies: retrieveFavoriteMovies(),
-      currentPage: this.resolvePage()
+      currentPage: this.resolveCurrentPage()
     };
   },
 
   mounted() {
-    console.log("PROPS PAGE: " + this.page);
-    console.log("STORE PAGE: " + this.$store.state.currentPage);
-    console.log("CURRE PAGE: " + this.currentPage);
-
     this.next();
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
   },
 
   methods: {
-    resolvePage() {
+    resolveCurrentPage() {
       if (this.page !== 1) {
+        console.log("RES CUR PAGE");
         this.$store.commit('changeState', this.page);
         return this.page;
       }
@@ -151,6 +145,7 @@ export default {
     $route(to, from) {
       if (to.params.page !== from.params.page) {
         this.currentPage = Number(to.params.page);
+        console.log("ROUTE WATCH");
         this.$store.commit('changeState', this.currentPage);
       }
     }

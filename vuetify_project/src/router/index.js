@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+//import Home from "../views/Home.vue";
 import Popular from "../views/Popular";
 import Search from "../views/Search";
 import Movie from "../views/Movie";
@@ -12,12 +12,17 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        //redirect: '/popular/1',
-        name: 'Home',
-        component: Home
+        redirect: {
+            name: 'Popular',
+            params: {
+                page: 1
+            }
+        }
+        // name: 'Home',
+        // component: Home
     },
     {
-        path: '/popular/:page',
+        path: '/:page',
         name: 'Popular',
         props: (route) => ({page: Number(route.params.page)}),
         component: Popular
@@ -36,14 +41,6 @@ const routes = [
         path: '/movie/:movieid',
         name: 'Movie',
         component: Movie
-    },
-    {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     },
     {
         path: '/*',
