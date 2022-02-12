@@ -5,14 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        currentPopularMoviesPage: 1,
+        popularMoviesCurrentPage: 1,
     },
 
     getters: {},
 
     mutations: {
         updatePopularMoviesCurrentPage(state, newValue) {
-            state.currentPopularMoviesPage = newValue;
+            state.popularMoviesCurrentPage = newValue;
         },
     },
 

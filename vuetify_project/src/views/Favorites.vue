@@ -17,28 +17,33 @@
         <v-card
             elevation="10"
             :href="'/movie/'+movie['id']">
-          <v-img
-              :src="getImagePath(movie)"
-              aspect-ratio="0.65"
+          <v-app-bar
+              color="#F0"
           >
-            <div
-                class="d-flex justify-space-between mb-6"
+            <v-toolbar-title>{{movie['title']}}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn
+                @click.stop.prevent="removeFromFavorite(movie)"
+                fab
+                x-small
+                class="ma-1"
             >
-              <v-btn
-                  @click.stop.prevent="removeFromFavorite(movie)"
-                  fab
-                  x-small
-                  class="ma-1"
-              >
-                <v-icon :color="'pink'">
-                  mdi-heart
-                </v-icon>
-              </v-btn>
-              <span class="warning--text font-weight-bold ma-3">
-                {{ movie["vote_average"] + "/10" }}
-              </span>
-            </div>
-          </v-img>
+              <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
+                mdi-heart
+              </v-icon>
+            </v-btn>
+          </v-app-bar>
+          <v-responsive :aspect-ratio="0.65">
+            <v-img
+                v-if="movie['poster_path'] !== null"
+                :src="getImagePath(movie)"
+                :aspect-ratio="posterRatio"
+            >
+            </v-img>
+            <v-card-title v-else class="text--secondary justify-center">
+              [No poster in database]
+            </v-card-title>
+          </v-responsive>
         </v-card>
       </v-col>
     </v-row>
@@ -54,6 +59,7 @@ export default {
 
   data() {
     return {
+      posterRatio: 0.65,
       service: new MovieDbService(),
       favoriteMovies: retrieveFavoriteMovies(),
       favoritesExist: false,

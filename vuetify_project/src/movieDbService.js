@@ -11,11 +11,6 @@ export default class {
         this.movieUrl = this.hostApi + "/movie";
         this.imagesSourceBaseUrl = "https://image.tmdb.org/t/p/w500";
         this.imagesSourceFullUrl = "https://image.tmdb.org/t/p/original";
-
-        this.genres = this.get(this.hostApi + "/genre/movie/list", {
-            api_key: this.apiKeyValue,
-            language: "en-US"
-        });
     }
 
     get(url, query) {
@@ -27,6 +22,13 @@ export default class {
 
     post(url, query) {
         return axios.post(url, qs.stringify(query));
+    }
+
+    getGenres() {
+        return this.get(this.hostApi + "/genre/movie/list", {
+            api_key: this.apiKeyValue,
+            language: "en-US"
+        });
     }
 
     /* getPopularMovies() - response object example:

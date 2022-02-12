@@ -9,7 +9,7 @@
         class="my-2"
         v-model="searchPage"
         :length="totalPages"
-        :total-visible="7"
+        :total-visible="visiblePages"
         @input="nextRoute"
     ></v-pagination>
     <v-divider>
@@ -19,53 +19,54 @@
       <v-col
           v-for="movie in movies"
           :key="movie.id"
-          cols="3">
+          cols="3"
+      >
         <v-card
-            v-if="movie['poster_path'] !== null"
             elevation="10"
-            :href="'/movie/'+movie['id']">
-          <v-img
-              :src="getImagePath(movie)"
-              aspect-ratio="0.65"
-          >
-            <div
-                class="d-flex justify-space-between mb-6"
-            >
-              <v-btn
-                  @click.stop.prevent="toggleMovieFavorite(movie)"
-                  fab
-                  x-small
-                  class="ma-1"
-              >
-                <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
-                  mdi-heart
-                </v-icon>
-              </v-btn>
-              <span class="warning--text font-weight-bold ma-3">
-                {{ movie["vote_average"] + "/10" }}
-              </span>
-            </div>
-          </v-img>
-        </v-card>
-        <v-card v-else
-                elevation="10"
-                :href="'/movie/'+movie['id']"
+            :href="'/movie/'+movie['id']"
         >
-          <v-responsive :aspect-ratio="0.65">
-            <v-card-title class="text-subtitle-1 font-weight-bold">
-              <v-responsive>
-                {{ movie["title"] }}
-              </v-responsive>
-            </v-card-title>
-            <v-card-text>
+          <v-app-bar
+              color="#F0"
+          >
+            <v-toolbar-title>{{ movie['title'] }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn
+                @click.stop.prevent="toggleMovieFavorite(movie)"
+                fab
+                x-small
+                class="ma-1"
+            >
+              <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
+                mdi-heart
+              </v-icon>
+            </v-btn>
+          </v-app-bar>
+
+          <v-responsive
+              :aspect-ratio="posterRatio"
+          >
+            <v-img
+                v-if="movie['poster_path'] !== null"
+                :src="getImagePath(movie)"
+                :aspect-ratio="posterRatio"
+            ></v-img>
+            <v-card-title
+                v-else
+                class="text--secondary justify-center"
+            >
               [No poster in database]
-            </v-card-text>
+            </v-card-title>
           </v-responsive>
+
+          <v-card-text class="text--secondary">
+            <div>{{ getMovieGenres(movie) }}</div>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
 <script>
 import MovieDbService from "../movieDbService.js";
 import retrieveFavoriteMovies from "../getFavorites.js";
@@ -82,8 +83,11 @@ export default {
 
   data() {
     return {
+      visiblePages: 7,
+      posterRatio: 0.65,
       service: new MovieDbService(),
       movies: [],
+      genres: [],
       totalPages: 1,
       searchPage: 1,
       imagesSourceUrl: "",
@@ -92,16 +96,35 @@ export default {
     }
   },
 
-  mounted() {
+  beforeMount() {
+    this.service.getGenres().then(result => this.genres = result['data']['genres']).catch(err => console.log(err));
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
+  },
+
+  mounted() {
     this.nextRoute();
   },
 
   methods: {
     nextRoute() {
       if (this.searchTerm !== this.$route.params.term) {
-        this.$router.push({params: {term: this.searchTerm}}, () => {});
+        this.$router.push({params: {term: this.searchTerm}}, () => {
+        });
       }
+    },
+
+    getMovieGenres(movie) {
+      if (this.genres.length === 0) {
+        return "[Failed to load genres]";
+      }
+
+      if (movie['genre_ids'].length === 0) {
+        return "[No specific genre]"
+      }
+
+      return movie['genre_ids'].map(genreId => this.genres.find(genre => genre['id'] === genreId)['name'])
+          .join(" · ")
+          .toLowerCase();
     },
 
     getImagePath(movie) {
@@ -112,6 +135,15 @@ export default {
       return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
     },
 
+    fetchMovies() {
+      this.service.getMoviesBySearch(this.searchTerm, this.searchPage).then(resultMovies => {
+        this.movies = resultMovies.data["results"];
+        this.totalPages = resultMovies.data["total_pages"];
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+
     toggleMovieFavorite(movie) {
       const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
 
@@ -119,6 +151,7 @@ export default {
       if (movieIndex === -1) {
         this.favoriteMovies.push({
           id: movie["id"],
+          title: movie["title"],
           poster_path: movie["poster_path"],
           vote_average: movie["vote_average"]
         });
@@ -138,12 +171,15 @@ export default {
       immediate: true,
 
       handler() {
-        this.service.getMoviesBySearch(this.searchTerm, this.searchPage).then(resultMovies => {
-          this.movies = resultMovies.data["results"];
-          this.totalPages = resultMovies.data["total_pages"];
-        }).catch(err => {
-          console.log(err);
-        });
+        this.fetchMovies();
+      }
+    },
+
+    searchPage: {
+      immediate: true,
+
+      handler() {
+        this.fetchMovies();
       }
     },
 
