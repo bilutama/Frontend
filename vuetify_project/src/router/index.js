@@ -25,9 +25,9 @@ const routes = [
         component: Popular
     },
     {
-        path: '/search/:term/:page',
+        path: '/search/:term',
         name: 'Search',
-        props: (route) => ({term: route.params.term, page: Number(route.params.page)}),
+        props: (route) => ({term: route.params.term}),
         component: Search
     },
     {

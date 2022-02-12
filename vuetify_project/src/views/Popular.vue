@@ -8,7 +8,7 @@
         v-model="currentPage"
         :length="pagesCountInDb"
         :total-visible="7"
-        @input="next"
+        @input="nextRoute"
     ></v-pagination>
     <v-divider>
     </v-divider>
@@ -19,11 +19,12 @@
           cols="3"
       >
         <v-card
-            v-if="movie['poster_path'] !== null"
             elevation="10"
+            v-if="movie['poster_path'] !== null"
             :href="'/movie/'+movie.id">
           <v-img
               :src="getImagePath(movie)"
+              aspect-ratio="0.65"
           >
             <div
                 class="d-flex justify-space-between mb-6"
@@ -91,7 +92,7 @@ export default {
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-    this.next();
+    this.nextRoute();
   },
 
   methods: {
@@ -104,7 +105,7 @@ export default {
       return this.$store.state.currentPopularMoviesPage;
     },
 
-    next() {
+    nextRoute() {
       if (this.currentPage !== parseInt(this.$route.params.page)) {
         this.$router.push({params: {page: String(this.currentPage)}}, () => {
         });

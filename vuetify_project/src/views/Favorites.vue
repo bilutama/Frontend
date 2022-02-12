@@ -19,6 +19,7 @@
             :href="'/movie/'+movie['id']">
           <v-img
               :src="getImagePath(movie)"
+              aspect-ratio="0.65"
           >
             <div
                 class="d-flex justify-space-between mb-6"

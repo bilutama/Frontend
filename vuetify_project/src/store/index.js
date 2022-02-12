@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         currentPopularMoviesPage: 1,
-        currentSearchResultsPage: 1
     },
 
     getters: {},
@@ -15,10 +14,6 @@ export default new Vuex.Store({
         updatePopularMoviesCurrentPage(state, newValue) {
             state.currentPopularMoviesPage = newValue;
         },
-
-        updateSearchResultsPage(state, newValue) {
-            state.currentSearchResultsPage = newValue;
-        }
     },
 
     actions: {},

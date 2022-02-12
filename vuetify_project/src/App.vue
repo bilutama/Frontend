@@ -23,6 +23,7 @@
               hide-details
               outlined
               clearable
+              placeholder="Search"
           ></v-text-field>
         </v-responsive>
         <v-btn

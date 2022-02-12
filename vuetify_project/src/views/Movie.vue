@@ -5,7 +5,7 @@
         <v-card
             elevation="10">
           <v-img v-if="movie['poster_path'] !== null"
-              :src="imagesSourceUrl"
+                 :src="imagesSourceUrl"
           >
           </v-img>
           <v-card-title class="justify-center" v-else>

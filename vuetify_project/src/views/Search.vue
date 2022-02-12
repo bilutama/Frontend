@@ -10,7 +10,7 @@
         v-model="searchPage"
         :length="totalPages"
         :total-visible="7"
-        @input="next"
+        @input="nextRoute"
     ></v-pagination>
     <v-divider>
     </v-divider>
@@ -26,6 +26,7 @@
             :href="'/movie/'+movie['id']">
           <v-img
               :src="getImagePath(movie)"
+              aspect-ratio="0.65"
           >
             <div
                 class="d-flex justify-space-between mb-6"
@@ -50,7 +51,7 @@
                 elevation="10"
                 :href="'/movie/'+movie['id']"
         >
-          <v-responsive :aspect-ratio="18/27">
+          <v-responsive :aspect-ratio="0.65">
             <v-card-title class="text-subtitle-1 font-weight-bold">
               <v-responsive>
                 {{ movie["title"] }}
@@ -76,10 +77,6 @@ export default {
     term: {
       type: String,
       required: true
-    },
-    page: {
-      type: Number,
-      required: true
     }
   },
 
@@ -88,7 +85,7 @@ export default {
       service: new MovieDbService(),
       movies: [],
       totalPages: 1,
-      searchPage: this.resolveSearchPage(),
+      searchPage: 1,
       imagesSourceUrl: "",
       favoriteMovies: retrieveFavoriteMovies(),
       searchTerm: this.term
@@ -97,34 +94,13 @@ export default {
 
   mounted() {
     this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-    this.next();
+    this.nextRoute();
   },
 
   methods: {
-    resolveSearchPage() {
-      if (this.page !== 1) {
-        this.$store.commit('updateSearchResultsPage', this.page);
-        return this.page;
-      }
-
-      return this.$store.state.currentSearchResultsPage;
-    },
-
-    next() {
-      const updateRequired = (this.searchPage !== Number(this.$route.params.page)) || (this.searchTerm !== this.$route.params.term);
-
-      console.log("UPDATE REQUIRED = " + updateRequired);
-
-      if (updateRequired) {
-        console.log("TERM = " + this.$route.params.term);
-        console.log("PAGE = " + Number(this.$route.params.page));
-
-        this.$router.push({
-          params: {
-            term: this.searchTerm,
-            page: this.searchPage
-          }
-        }, () => {});
+    nextRoute() {
+      if (this.searchTerm !== this.$route.params.term) {
+        this.$router.push({params: {term: this.searchTerm}}, () => {});
       }
     },
 
@@ -158,7 +134,7 @@ export default {
   },
 
   watch: {
-    searchPage: {
+    searchTerm: {
       immediate: true,
 
       handler() {
@@ -174,23 +150,8 @@ export default {
     $route(to, from) {
       if (to.params.term !== from.params.term) {
         this.searchTerm = to.params.term;
-      }
-
-      if (to.params.page !== from.params.page) {
-        this.searchPage = Number(to.params.page);
-        this.$store.commit('updateSearchResultsPage', this.searchPage);
-      } else {
         this.searchPage = 1;
-      }
-
-      this.next();
-    },
-
-    // Validate route before update
-    beforeRouteUpdate() {
-      if (this.searchPage > this.totalPages) {
-        console.log("BEFORE R UPDATE");
-        this.$router.push({name: 'NotFound'});
+        this.nextRoute();
       }
     }
   }
