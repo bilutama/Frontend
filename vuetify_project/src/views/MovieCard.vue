@@ -34,8 +34,8 @@
       </v-card-title>
     </v-responsive>
 
-    <v-card-text class="text--secondary">
-      <div>{{ movieGenres }}</div>
+    <v-card-text class="overflow-x-hidden" >
+      {{ movieGenres }}
     </v-card-text>
   </v-card>
 </template>

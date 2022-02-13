@@ -51,7 +51,7 @@
             </v-btn>
           </v-card-actions>
 
-          <v-card-text>RECOMMENDED MOVIES</v-card-text>
+          <v-card-text class="text-subtitle-1">YOU MAY ALSO LIKE:</v-card-text>
 
           <v-slide-group
               class="pa-1"
@@ -64,7 +64,7 @@
             >
               <v-card
                   :href="'/movie/'+movie['id']"
-                  class="ma-2"
+                  class="ma-1"
                   width="100"
               >
                 <v-img
