@@ -1,5 +1,7 @@
 <template>
-  <div>
-    <h1>404 Not found</h1>
-  </div>
+  <v-container>
+    <div class="text-h5 d-flex justify-center my-2">
+      404 Page is not found
+    </div>
+  </v-container>
 </template>
