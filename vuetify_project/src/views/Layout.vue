@@ -1,56 +1,55 @@
 <template>
-  <v-container>
-    <div v-if="favoritesService.movies.length > 0" class="text-h5 d-flex justify-center my-2">
-      Your favorite movies
-    </div>
-    <div v-else class="text-h5 d-flex justify-center my-2">
-      No favorites yet
-    </div>
-    <v-divider>
-    </v-divider>
-    <v-row class="py-6">
-      <v-col
-          v-for="movie in favoritesService.movies"
+  <v-row class="py-6">
+    <v-col
+        v-for="movie in movies"
+        :key="movie['id']"
+        :cols="adaptiveCols"
+    >
+      <MovieCard
           :key="movie['id']"
-          :cols="adaptiveCols"
+          :movie="movie"
+          :is-favorite="isFavorite(movie)"
+          @toggleFavorite="toggleMovieFavorite(movie)"
+          :movie-genres="getMovieGenres(movie)"
+          :poster-path="getPosterPath(movie)"
       >
-        <MovieCard
-            :key="movie['id']"
-            :movie="movie"
-            :is-favorite="isFavorite(movie)"
-            @toggleFavorite="toggleMovieFavorite(movie)"
-            :movie-genres="getMovieGenres(movie)"
-            :poster-path="getPosterPath(movie)"
-        >
-        </MovieCard>
-      </v-col>
-    </v-row>
-  </v-container>
+      </MovieCard>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import MovieDbService from "../movieDbService.js";
+import MovieDbService from "@/movieDbService";
 import favoritesService from "@/favoritesService";
 import MovieCard from "@/views/MovieCard";
 
 export default {
-  name: "Favorites",
+  name: "Layout",
 
   components: {
     MovieCard
   },
 
+  props: {
+    movies: {
+      type: Array,
+      required: true
+    }
+  },
+
   data() {
     return {
+      posterRatio: 0.65,
       service: new MovieDbService(),
       favoritesService: new favoritesService(),
-      genresIds: [],
-      favoritesExist: false,
+      favoriteMovies: [],
       imagesSourceBaseUrl: "",
+      genresIds: [],
     };
   },
 
   mounted() {
+    this.favoriteMovies = this.favoritesService.movies;
     this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
     this.service.getGenres().then(result => this.genresIds = result["data"]["genres"])
         .catch(err => console.log(err));
@@ -72,7 +71,7 @@ export default {
     },
 
     getPosterPath(movie) {
-      return (this.imagesSourceBaseUrl + movie["poster_path"]);
+      return this.imagesSourceBaseUrl + movie["poster_path"];
     },
 
     isFavorite(movie) {
