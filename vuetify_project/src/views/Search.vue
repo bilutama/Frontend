@@ -10,7 +10,7 @@
         v-model="searchPage"
         :length="totalPages"
         :total-visible="visiblePages"
-        @input="nextRoute"
+        @input="navigate"
     ></v-pagination>
     <v-divider>
     </v-divider>
@@ -18,50 +18,18 @@
     <v-row class="py-6">
       <v-col
           v-for="movie in movies"
-          :key="movie.id"
+          :key="movie['id']"
           cols="3"
       >
-        <v-card
-            elevation="10"
-            :href="'/movie/'+movie['id']"
+        <MovieCard
+            :key="movie['id']"
+            :movie="movie"
+            :is-favorite="isFavorite(movie)"
+            @toggleFavorite="toggleMovieFavorite(movie)"
+            :movie-genres="getMovieGenres(movie)"
+            :poster-path="getPosterPath(movie)"
         >
-          <v-app-bar
-              color="#F0"
-          >
-            <v-toolbar-title>{{ movie['title'] }}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn
-                @click.stop.prevent="toggleMovieFavorite(movie)"
-                fab
-                x-small
-                class="ma-1"
-            >
-              <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
-                mdi-heart
-              </v-icon>
-            </v-btn>
-          </v-app-bar>
-
-          <v-responsive
-              :aspect-ratio="posterRatio"
-          >
-            <v-img
-                v-if="movie['poster_path'] !== null"
-                :src="getImagePath(movie)"
-                :aspect-ratio="posterRatio"
-            ></v-img>
-            <v-card-title
-                v-else
-                class="text--secondary justify-center"
-            >
-              [No poster in database]
-            </v-card-title>
-          </v-responsive>
-
-          <v-card-text class="text--secondary">
-            <div>{{ getMovieGenres(movie) }}</div>
-          </v-card-text>
-        </v-card>
+        </MovieCard>
       </v-col>
     </v-row>
   </v-container>
@@ -70,9 +38,14 @@
 <script>
 import MovieDbService from "../movieDbService.js";
 import retrieveFavoriteMovies from "../getFavorites.js";
+import MovieCard from "@/views/MovieCard";
 
 export default {
   name: "Search",
+
+  components: {
+    MovieCard
+  },
 
   props: {
     term: {
@@ -90,23 +63,22 @@ export default {
       genres: [],
       totalPages: 1,
       searchPage: 1,
-      imagesSourceUrl: "",
+      imagesSourceBaseUrl: "",
       favoriteMovies: retrieveFavoriteMovies(),
       searchTerm: this.term
     }
   },
 
-  beforeMount() {
-    this.service.getGenres().then(result => this.genres = result['data']['genres']).catch(err => console.log(err));
-    this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
-  },
-
   mounted() {
-    this.nextRoute();
+    this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
+    this.service.getGenres().then(result => this.genres = result['data']['genres'])
+        .catch(err => console.log(err));
+
+    this.navigate();
   },
 
   methods: {
-    nextRoute() {
+    navigate() {
       if (this.searchTerm !== this.$route.params.term) {
         this.$router.push({params: {term: this.searchTerm}}, () => {
         });
@@ -127,8 +99,8 @@ export default {
           .toLowerCase();
     },
 
-    getImagePath(movie) {
-      return this.imagesSourceUrl + movie["poster_path"];
+    getPosterPath(movie) {
+      return this.imagesSourceBaseUrl + movie["poster_path"];
     },
 
     isFavorite(movie) {
@@ -153,7 +125,8 @@ export default {
           id: movie["id"],
           title: movie["title"],
           poster_path: movie["poster_path"],
-          vote_average: movie["vote_average"]
+          vote_average: movie["vote_average"],
+          genre_ids: movie["genre_ids"]
         });
 
         localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
@@ -187,7 +160,7 @@ export default {
       if (to.params.term !== from.params.term) {
         this.searchTerm = to.params.term;
         this.searchPage = 1;
-        this.nextRoute();
+        this.navigate();
       }
     }
   }

@@ -11,40 +11,18 @@
     <v-row class="py-6">
       <v-col
           v-for="movie in favoriteMovies"
-          :key="movie.id"
+          :key="movie['id']"
           cols="3"
       >
-        <v-card
-            elevation="10"
-            :href="'/movie/'+movie['id']">
-          <v-app-bar
-              color="#F0"
-          >
-            <v-toolbar-title>{{movie['title']}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn
-                @click.stop.prevent="removeFromFavorite(movie)"
-                fab
-                x-small
-                class="ma-1"
-            >
-              <v-icon :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'">
-                mdi-heart
-              </v-icon>
-            </v-btn>
-          </v-app-bar>
-          <v-responsive :aspect-ratio="0.65">
-            <v-img
-                v-if="movie['poster_path'] !== null"
-                :src="getImagePath(movie)"
-                :aspect-ratio="posterRatio"
-            >
-            </v-img>
-            <v-card-title v-else class="text--secondary justify-center">
-              [No poster in database]
-            </v-card-title>
-          </v-responsive>
-        </v-card>
+        <MovieCard
+            :key="movie['id']"
+            :movie="movie"
+            :is-favorite="isFavorite(movie)"
+            @toggleFavorite="removeFromFavorite(movie)"
+            :movie-genres="getMovieGenres(movie)"
+            :poster-path="getPosterPath(movie)"
+        >
+        </MovieCard>
       </v-col>
     </v-row>
   </v-container>
@@ -53,23 +31,49 @@
 <script>
 import MovieDbService from "../movieDbService.js";
 import retrieveFavoriteMovies from "../getFavorites.js";
+import MovieCard from "@/views/MovieCard";
 
 export default {
   name: "Favorites",
+
+  components: {
+    MovieCard
+  },
 
   data() {
     return {
       posterRatio: 0.65,
       service: new MovieDbService(),
+      genresIds: [],
       favoriteMovies: retrieveFavoriteMovies(),
       favoritesExist: false,
-      imagesSourceUrl: "",
+      imagesSourceBaseUrl: "",
     };
   },
 
+  mounted() {
+    this.service.getGenres().then(result => this.genresIds = result['data']['genres'])
+        .catch(err => console.log(err));
+    this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
+  },
+
   methods: {
-    getImagePath(movie) {
-      return (this.imagesSourceUrl + movie["poster_path"]);
+    getMovieGenres(movie) {
+      if (this.genresIds.length === 0) {
+        return "[Failed to load genres]";
+      }
+
+      if (movie['genre_ids'].length === 0) {
+        return "[Genre is not specified]"
+      }
+
+      return movie['genre_ids'].map(genreId => this.genresIds.find(genre => genre['id'] === genreId)['name'])
+          .join(" · ")
+          .toLowerCase();
+    },
+
+    getPosterPath(movie) {
+      return (this.imagesSourceBaseUrl + movie["poster_path"]);
     },
 
     isFavorite(movie) {
@@ -84,10 +88,6 @@ export default {
         localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
       }
     }
-  },
-
-  mounted() {
-    this.imagesSourceUrl = this.service.imagesSourceBaseUrl;
   },
 
   watch: {

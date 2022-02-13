@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Popular from "../views/Popular";
 import Search from "../views/Search";
-import Movie from "../views/Movie";
+import Movie from "../views/MovieDetails";
 import Favorites from "../views/Favorites";
 import NotFound from "../views/NotFound";
 
