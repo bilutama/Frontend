@@ -5,17 +5,17 @@
         color="#F0"
         height="70"
     >
-      <v-container class="py-1 fill-height">
+      <v-container class="py-1 px-0 fill-height">
         <router-link to="/">
           <v-img
-              v-if="$vuetify.breakpoint.smAndUp"
+              v-if="$vuetify.breakpoint.mdAndUp"
               src="./assets/films.png"
               max-width="180"
               contain
           />
           <v-icon
               v-else
-              text
+              large
               color="#3A4750"
           >
             mdi-movie-roll
@@ -38,7 +38,7 @@
 
         <router-link :to="{name: 'Favorites'}">
           <v-btn
-              v-if="$vuetify.breakpoint.smAndUp"
+              v-if="$vuetify.breakpoint.mdAndUp"
               large
               color="#3A4750"
               text
@@ -49,7 +49,7 @@
             </v-icon>
             <span>favorites</span>
           </v-btn>
-          <v-icon v-else>
+          <v-icon large v-else>
               mdi-heart
           </v-icon>
         </router-link>
