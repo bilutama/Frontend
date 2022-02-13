@@ -19,7 +19,7 @@
         </v-card>
       </v-col>
       <v-col cols="7">
-        <v-card elevation="5" >
+        <v-card elevation="5">
           <v-card-title
               class="text-h5"
           >
@@ -31,13 +31,13 @@
             {{ genres }}
           </v-card-subtitle>
 
-            <v-card-text class="text-subtitle-1 font-weight-light">
-              Release date: {{ movie['release_date'] }}
-            </v-card-text>
+          <v-card-text class="text-subtitle-1 font-weight-light">
+            Release date: {{ movie['release_date'] }}
+          </v-card-text>
 
-            <v-card-text class="text-subtitle-1 font-weight-light black--text">
-              {{ movie['overview'] }}
-            </v-card-text>
+          <v-card-text class="text-subtitle-1 font-weight-light black--text">
+            {{ movie['overview'] }}
+          </v-card-text>
 
           <v-card-actions>
             <v-btn
@@ -51,9 +51,15 @@
             </v-btn>
           </v-card-actions>
 
-          <v-card-text class="text-subtitle-1">YOU MAY ALSO LIKE:</v-card-text>
+          <v-card-text
+              v-if="recommendedMovies.length > 0"
+              class="text-subtitle-1"
+          >
+            YOU MAY ALSO LIKE:
+          </v-card-text>
 
           <v-slide-group
+              v-if="recommendedMovies.length > 0"
               class="pa-1"
               center-active
               show-arrows

@@ -3,59 +3,57 @@
     <v-app-bar
         app
         color="#F0"
+        height="70"
     >
-      <v-container class="py-0 fill-height">
+      <v-container class="py-1 fill-height">
         <router-link to="/">
           <v-img
+              v-if="$vuetify.breakpoint.smAndUp"
               src="./assets/films.png"
               max-width="180"
               contain
           />
+          <v-icon
+              v-else
+              text
+              color="#3A4750"
+          >
+            mdi-movie-roll
+          </v-icon>
         </router-link>
-
         <v-spacer></v-spacer>
 
-        <v-responsive max-width="260">
+        <v-responsive max-width="300">
           <v-text-field
               v-model.trim="searchTerm"
-              dense
-              flat
               hide-details
               outlined
-              clearable
+              dense
               placeholder="Search"
+              append-outer-icon="mdi-magnify"
+              @click:append-outer="search()"
           ></v-text-field>
         </v-responsive>
-        <v-btn
-            width="15"
-            text
-            @click.prevent="search()">
-          <v-icon
-              large
-              class="px-2"
-          >
-            mdi-magnify
-          </v-icon>
-        </v-btn>
-
         <v-spacer></v-spacer>
 
-        <v-btn
-            v-for="item in menuItems"
-            :key="item.name"
-            @click.prevent="navigate(item)"
-            large
-            color="#3A4750"
-            text
-            exact
-        >
-          <v-icon class="pa-2">
-            {{ item.icon }}
+        <router-link :to="{name: 'Favorites'}">
+          <v-btn
+              v-if="$vuetify.breakpoint.smAndUp"
+              large
+              color="#3A4750"
+              text
+              exact
+          >
+            <v-icon>
+              mdi-heart
+            </v-icon>
+            <span>favorites</span>
+          </v-btn>
+          <v-icon v-else>
+              mdi-heart
           </v-icon>
-          <span class="d-none d-md-inline-flex d-lg-inline-flex">
-            {{ item.name }}
-          </span>
-        </v-btn>
+        </router-link>
+
       </v-container>
     </v-app-bar>
 
@@ -72,23 +70,11 @@ export default {
 
   data() {
     return {
-      menuItems: [
-        {
-          name: "Favorites",
-          path: "/favorites",
-          icon: "mdi-heart"
-        }
-      ],
-      searchTerm: "",
+      searchTerm: ""
     };
   },
 
   methods: {
-    navigate(item) {
-      this.$router.push({name: item.name, params: item.params}, () => {
-      });
-    },
-
     search() {
       this.searchTerm = this.searchTerm.trim();
 
@@ -100,3 +86,8 @@ export default {
   }
 }
 </script>
+<style>
+a:link {
+  text-decoration: none;
+}
+</style>
