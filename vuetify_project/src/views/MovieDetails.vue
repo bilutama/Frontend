@@ -19,23 +19,36 @@
         </v-card>
       </v-col>
       <v-col cols="7">
-        <v-card elevation="5">
+        <v-card
+            elevation="5"
+        >
           <v-card-title
               class="text-h5"
           >
             {{ movie['title'] }}
           </v-card-title>
           <v-card-subtitle
-              class="text-subtitle-1"
+              class="text-subtitle-1 pb-0"
           >
             {{ genres }}
           </v-card-subtitle>
 
-          <v-card-text class="text-subtitle-1 font-weight-light">
+          <v-card-subtitle
+              class="text-subtitle-1 pb-0"
+              v-if="movie['vote_count'] > 0"
+          >
+            Rating: {{ movie['vote_average'] }} ({{movie['vote_count']}} votes)
+          </v-card-subtitle>
+
+          <v-card-text
+              class="text-subtitle-1 font-weight-light"
+          >
             Release date: {{ movie['release_date'] }}
           </v-card-text>
 
-          <v-card-text class="text-subtitle-1 font-weight-light black--text">
+          <v-card-text
+              class="text-subtitle-1 font-weight-light black--text"
+          >
             {{ movie['overview'] }}
           </v-card-text>
 
