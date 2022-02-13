@@ -35,7 +35,6 @@
 <script>
 import MovieDbService from "../movieDbService.js";
 import retrieveFavoriteMovies from "../getFavorites.js";
-//import FastAverageColor from "fast-average-color";
 import MovieCard from "@/views/MovieCard";
 
 export default {
