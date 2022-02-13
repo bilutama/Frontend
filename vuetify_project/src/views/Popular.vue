@@ -56,7 +56,7 @@ export default {
       visiblePages: 7,
       posterRatio: 0.65,
       service: new MovieDbService(),
-      pagesCountInDb: 500, // Specified by API
+      pagesCountInDb: 500, // Specified in API description
       movies: [],
       genreIds: [],
       imagesSourceBaseUrl: "",
@@ -66,10 +66,10 @@ export default {
   },
 
   mounted() {
+    this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
     this.service.getGenres().then(result => this.genreIds = result['data']['genres'])
         .catch(err => console.log(err));
 
-    this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
     this.navigate();
   },
 
