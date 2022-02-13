@@ -12,7 +12,7 @@
       <v-col
           v-for="movie in favoriteMovies"
           :key="movie['id']"
-          cols="3"
+          :cols="adaptiveCols"
       >
         <MovieCard
             :key="movie['id']"
@@ -86,6 +86,20 @@ export default {
       if (movieIndex !== -1) {
         this.favoriteMovies.splice(movieIndex, 1);
         localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
+      }
+    }
+  },
+
+  computed: {
+    adaptiveCols: {
+      get() {
+        if (this.$vuetify.breakpoint.lgAndUp) {
+          return 3;
+        } else if (this.$vuetify.breakpoint.smAndUp) {
+          return 6;
+        } else {
+          return 12
+        }
       }
     }
   },
