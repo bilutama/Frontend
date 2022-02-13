@@ -37,7 +37,7 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import retrieveFavoriteMovies from "../getFavorites.js";
+import favoritesService from "@/favoritesService";
 import MovieCard from "@/views/MovieCard";
 
 export default {
@@ -59,19 +59,19 @@ export default {
       visiblePages: 7,
       posterRatio: 0.65,
       service: new MovieDbService(),
+      favoritesService: new favoritesService(),
       movies: [],
       genres: [],
       totalPages: 1,
       searchPage: 1,
       imagesSourceBaseUrl: "",
-      favoriteMovies: retrieveFavoriteMovies(),
       searchTerm: this.term
     }
   },
 
   mounted() {
     this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
-    this.service.getGenres().then(result => this.genres = result['data']['genres'])
+    this.service.getGenres().then(result => this.genres = result["data"]["genres"])
         .catch(err => console.log(err));
 
     this.navigate();
@@ -90,21 +90,13 @@ export default {
         return "[Failed to load genres]";
       }
 
-      if (movie['genre_ids'].length === 0) {
+      if (movie["genre_ids"].length === 0) {
         return "[No specific genre]"
       }
 
-      return movie['genre_ids'].map(genreId => this.genres.find(genre => genre['id'] === genreId)['name'])
+      return movie["genre_ids"].map(genreId => this.genres.find(genre => genre["id"] === genreId)["name"])
           .join(" · ")
           .toLowerCase();
-    },
-
-    getPosterPath(movie) {
-      return this.imagesSourceBaseUrl + movie["poster_path"];
-    },
-
-    isFavorite(movie) {
-      return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
     },
 
     fetchMovies() {
@@ -116,26 +108,16 @@ export default {
       });
     },
 
+    getPosterPath(movie) {
+      return this.imagesSourceBaseUrl + movie["poster_path"];
+    },
+
+    isFavorite(movie) {
+      return this.favoritesService.isFavorite(movie);
+    },
+
     toggleMovieFavorite(movie) {
-      const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
-
-      // Add movie id if doesn't exist
-      if (movieIndex === -1) {
-        this.favoriteMovies.push({
-          id: movie["id"],
-          title: movie["title"],
-          poster_path: movie["poster_path"],
-          vote_average: movie["vote_average"],
-          genre_ids: movie["genre_ids"]
-        });
-
-        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
-        return;
-      }
-
-      // Remove movie id if exists
-      this.favoriteMovies.splice(movieIndex, 1);
-      localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
+      this.favoritesService.toggleFavorites(movie);
     }
   },
 

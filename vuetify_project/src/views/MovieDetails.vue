@@ -37,7 +37,7 @@
               class="text-subtitle-1 pb-0"
               v-if="movie['vote_count'] > 0"
           >
-            Rating: {{ movie['vote_average'] }} ({{movie['vote_count']}} votes)
+            Rating: {{ movie['vote_average'] }} ({{ movie['vote_count'] }} votes)
           </v-card-subtitle>
 
           <v-card-text
@@ -102,22 +102,22 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import retrieveFavoriteMovies from "@/getFavorites";
+import favoritesService from "@/favoritesService";
 
 export default {
   name: "Movie",
 
   data() {
     return {
+      posterRatio: 0.65,
       service: new MovieDbService(),
+      favoritesService: new favoritesService(),
       imagesSource: "",
       imagesSourceBaseUrl: "",
-      posterRatio: 0.65,
       movie: {},
-      favoriteMovies: retrieveFavoriteMovies(),
+      favoriteMovies: [],
       recommendedMovies: [],
       genres: "",
-      genreIds: []
     };
   },
 
@@ -132,7 +132,7 @@ export default {
       const movieId = this.$route.params.movieid;
 
       this.service.getMovieDetails(movieId).then(result => {
-        this.movie = result.data;
+        this.movie = result["data"];
       }).catch(err => {
         console.log(err);
       });
@@ -146,37 +146,19 @@ export default {
       const movieId = this.$route.params.movieid;
 
       this.service.getMovieRecommendations(movieId).then(result => {
-        this.recommendedMovies = result.data['results'];
+        this.recommendedMovies = result.data["results"];
       }).catch(err => {
         console.log(err);
       });
     },
 
-    toggleMovieFavorite(movie) {
-      const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
-
-      // Add movie id if it doesn't exist
-      if (movieIndex === -1) {
-        this.favoriteMovies.push({
-          id: movie["id"],
-          title: movie["title"],
-          poster_path: movie["poster_path"],
-          vote_average: movie["vote_average"],
-          genre_ids: this.genreIds
-        });
-
-        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
-        return;
-      }
-
-      // Remove movie id if exists
-      this.favoriteMovies.splice(movieIndex, 1);
-      localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
-    },
-
     isFavorite(movie) {
-      return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
+      return this.favoritesService.isFavorite(movie);
     },
+
+    toggleMovieFavorite(movie) {
+      this.favoritesService.toggleFavorites(movie);
+    }
   },
 
   watch: {
@@ -186,7 +168,6 @@ export default {
       handler() {
         this.imagesSource = this.service.imagesSourceFullUrl + this.movie['poster_path'];
         this.genres = this.movie['genres'].map(item => item['name']).join(', ');
-        this.genreIds = this.movie['genres'].map(item => item['id']);
       }
     }
   }

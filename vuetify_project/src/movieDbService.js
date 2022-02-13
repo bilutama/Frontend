@@ -17,7 +17,7 @@ export default class {
         return axios.get(url, {
                 params: query
             }
-        )
+        );
     }
 
     post(url, query) {
@@ -41,10 +41,10 @@ export default class {
         });
     }
 
-    getMoviesBySearch(query, page, include_adult, region, year, primary_release_year) {
+    getMoviesBySearch(query, page, language, include_adult, region, year, primary_release_year) {
         return this.get(this.searchUrl, {
             api_key: this.apiKeyValue,
-            language: "en-US",
+            language, // optional
             query,
             page,
             // optional:

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div v-if="favoritesExist" class="text-h5 d-flex justify-center my-2">
+    <div v-if="favoritesService.movies.length > 0" class="text-h5 d-flex justify-center my-2">
       Your favorite movies
     </div>
     <div v-else class="text-h5 d-flex justify-center my-2">
@@ -10,7 +10,7 @@
     </v-divider>
     <v-row class="py-6">
       <v-col
-          v-for="movie in favoriteMovies"
+          v-for="movie in favoritesService.movies"
           :key="movie['id']"
           :cols="adaptiveCols"
       >
@@ -18,7 +18,7 @@
             :key="movie['id']"
             :movie="movie"
             :is-favorite="isFavorite(movie)"
-            @toggleFavorite="removeFromFavorite(movie)"
+            @toggleFavorite="toggleMovieFavorite(movie)"
             :movie-genres="getMovieGenres(movie)"
             :poster-path="getPosterPath(movie)"
         >
@@ -30,7 +30,7 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import retrieveFavoriteMovies from "../getFavorites.js";
+import favoritesService from "@/favoritesService";
 import MovieCard from "@/views/MovieCard";
 
 export default {
@@ -44,17 +44,17 @@ export default {
     return {
       posterRatio: 0.65,
       service: new MovieDbService(),
+      favoritesService: new favoritesService(),
       genresIds: [],
-      favoriteMovies: retrieveFavoriteMovies(),
       favoritesExist: false,
       imagesSourceBaseUrl: "",
     };
   },
 
   mounted() {
-    this.service.getGenres().then(result => this.genresIds = result['data']['genres'])
-        .catch(err => console.log(err));
     this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
+    this.service.getGenres().then(result => this.genresIds = result["data"]["genres"])
+        .catch(err => console.log(err));
   },
 
   methods: {
@@ -63,11 +63,11 @@ export default {
         return "[Failed to load genres]";
       }
 
-      if (movie['genre_ids'].length === 0) {
+      if (movie["genre_ids"].length === 0) {
         return "[Genre is not specified]"
       }
 
-      return movie['genre_ids'].map(genreId => this.genresIds.find(genre => genre['id'] === genreId)['name'])
+      return movie["genre_ids"].map(genreId => this.genresIds.find(genre => genre["id"] === genreId)["name"])
           .join(" · ")
           .toLowerCase();
     },
@@ -77,16 +77,11 @@ export default {
     },
 
     isFavorite(movie) {
-      return this.favoriteMovies.findIndex(item => item["id"] === movie["id"]) !== -1;
+      return this.favoritesService.isFavorite(movie);
     },
 
-    removeFromFavorite(movie) {
-      const movieIndex = this.favoriteMovies.findIndex(item => item["id"] === movie["id"]);
-
-      if (movieIndex !== -1) {
-        this.favoriteMovies.splice(movieIndex, 1);
-        localStorage.setItem("favoriteMovies", JSON.stringify(this.favoriteMovies));
-      }
+    toggleMovieFavorite(movie) {
+      this.favoritesService.toggleFavorites(movie);
     }
   },
 
@@ -100,17 +95,6 @@ export default {
         } else {
           return 12
         }
-      }
-    }
-  },
-
-  watch: {
-    favoriteMovies: {
-      immediate: true,
-      deep: true,
-
-      handler() {
-        this.favoritesExist = this.favoriteMovies.length > 0;
       }
     }
   }

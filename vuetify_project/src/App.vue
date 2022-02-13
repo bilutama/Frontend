@@ -79,7 +79,7 @@ export default {
       this.searchTerm = this.searchTerm.trim();
 
       if (this.searchTerm.length > 0) {
-        this.$router.push({name: 'Search', params: {term: this.searchTerm}}, () => {
+        this.$router.push({name: "Search", params: {term: this.searchTerm}}, () => {
         });
       }
     }
