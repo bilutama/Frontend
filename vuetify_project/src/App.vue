@@ -23,13 +23,14 @@
         </router-link>
         <v-spacer></v-spacer>
 
-        <v-responsive max-width="300">
+        <v-responsive max-width="500">
           <v-text-field
               v-model.trim="searchTerm"
               hide-details
               outlined
               dense
               placeholder="Search"
+              @keydown.enter="search()"
               append-outer-icon="mdi-magnify"
               @click:append-outer="search()"
           ></v-text-field>
