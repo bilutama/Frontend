@@ -31,9 +31,18 @@
               dense
               placeholder="Search"
               @keydown.enter="search()"
-              append-outer-icon="mdi-magnify"
-              @click:append-outer="search()"
-          ></v-text-field>
+          >
+
+            <v-tooltip right open-delay="700" slot="append-outer">
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" href="search">
+                  mdi-magnify
+                </v-icon>
+              </template>
+              <span>Search movies</span>
+            </v-tooltip>
+
+          </v-text-field>
         </v-responsive>
         <v-spacer></v-spacer>
 
@@ -80,12 +89,11 @@ export default {
       this.searchTerm = this.searchTerm.trim();
 
       if (this.searchTerm.length > 0) {
-        this.$router.push({name: "Search", params: {term: this.searchTerm}}, () => {
-        });
+        this.$router.push({name: "Search", params: {term: this.searchTerm}});
       }
     }
   }
-}
+};
 </script>
 <style>
 a:link {

@@ -43,7 +43,7 @@ export default {
       pagesCountInDb: 500, // Specified in API description
       service: new MovieDbService(),
       movies: [],
-      currentPage: this.getResolvedPage(),
+      currentPage: this.getResolvedPage()
     };
   },
 
@@ -63,10 +63,9 @@ export default {
 
     navigate() {
       if (this.currentPage !== Number(this.$route.params.page)) {
-        this.$router.push({params: {page: String(this.currentPage)}}, () => {
-        });
+        this.$router.push({params: {page: String(this.currentPage)}});
       }
-    },
+    }
   },
 
   watch: {
@@ -91,5 +90,5 @@ export default {
       }
     }
   }
-}
+};
 </script>

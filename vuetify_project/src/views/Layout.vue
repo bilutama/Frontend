@@ -20,7 +20,7 @@
 
 <script>
 import MovieDbService from "@/movieDbService";
-import favoritesService from "@/favoritesService";
+import favoritesService from "@/favoritesStorageService";
 import MovieCard from "@/views/MovieCard";
 
 export default {
@@ -44,14 +44,15 @@ export default {
       favoritesService: new favoritesService(),
       favoriteMovies: [],
       imagesSourceBaseUrl: "",
-      genresIds: [],
+      genresIds: []
     };
   },
 
   mounted() {
     this.favoriteMovies = this.favoritesService.movies;
     this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
-    this.service.getGenres().then(result => this.genresIds = result["data"]["genres"])
+    this.service.getGenres()
+        .then(result => this.genresIds = result["data"]["genres"])
         .catch(err => console.log(err));
   },
 
@@ -62,7 +63,7 @@ export default {
       }
 
       if (movie["genre_ids"].length === 0) {
-        return "[Genre is not specified]"
+        return "[Genre is not specified]";
       }
 
       return movie["genre_ids"].map(genreId => this.genresIds.find(genre => genre["id"] === genreId)["name"])
@@ -91,10 +92,10 @@ export default {
         } else if (this.$vuetify.breakpoint.smAndUp) {
           return 6;
         } else {
-          return 12
+          return 12;
         }
       }
     }
   }
-}
+};
 </script>

@@ -51,7 +51,7 @@ export default {
       totalPages: 1,
       searchPage: 1,
       searchTerm: this.term
-    }
+    };
   },
 
   mounted() {
@@ -101,5 +101,5 @@ export default {
       }
     }
   }
-}
+};
 </script>

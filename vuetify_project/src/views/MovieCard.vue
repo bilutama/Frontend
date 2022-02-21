@@ -8,16 +8,24 @@
     >
       <v-toolbar-title>{{ movie['title'] }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-          @click.stop.prevent="$emit('toggleFavorite', movie)"
-          fab
-          x-small
-          class="ma-1"
-      >
-        <v-icon :color="isFavorite ? 'pink' : 'grey lighten-2'">
-          mdi-heart
-        </v-icon>
-      </v-btn>
+      <v-tooltip top open-delay="700">
+        <template v-slot:activator="{on}">
+          <v-btn
+              v-on="on"
+              title="Add to favorites"
+              @click.stop.prevent="$emit('toggleFavorite', movie)"
+              fab
+              x-small
+              class="ma-1"
+          >
+            <v-icon :color="isFavorite ? 'pink' : 'grey lighten-2'">
+              mdi-heart
+            </v-icon>
+          </v-btn>
+        </template>
+        <span v-if="isFavorite">Remove from favorites</span>
+        <span v-else>Add to favorites</span>
+      </v-tooltip>
     </v-app-bar>
 
     <v-responsive :aspect-ratio="posterRatio">
@@ -67,7 +75,7 @@ export default {
     return {
       visiblePages: 7,
       posterRatio: 0.65
-    }
+    };
   }
-}
+};
 </script>

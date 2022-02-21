@@ -102,7 +102,7 @@
 
 <script>
 import MovieDbService from "../movieDbService.js";
-import favoritesService from "@/favoritesService";
+import favoritesService from "@/favoritesStorageService";
 
 export default {
   name: "Movie",
@@ -117,7 +117,7 @@ export default {
       movie: {},
       favoriteMovies: [],
       recommendedMovies: [],
-      genres: "",
+      genres: ""
     };
   },
 
@@ -166,10 +166,10 @@ export default {
       immediate: false,
 
       handler() {
-        this.imagesSource = this.service.imagesSourceFullUrl + this.movie['poster_path'];
-        this.genres = this.movie['genres'].map(item => item['name']).join(', ');
+        this.imagesSource = this.service.imagesSourceFullUrl + this.movie["poster_path"];
+        this.genres = this.movie["genres"].map(item => item["name"]).join(", ");
       }
     }
   }
-}
+};
 </script>

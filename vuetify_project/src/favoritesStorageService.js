@@ -22,8 +22,10 @@ export default class {
     toggleFavorites(movie) {
         const movieIndex = this.movies.findIndex(item => item["id"] === movie["id"]);
 
-        // Add movie id if it doesn't exist
-        if (movieIndex === -1) {
+        if (movieIndex !== -1) {
+            // Remove movie id if it exists
+            this.movies.splice(movieIndex, 1);
+        } else {
             let genre_ids = [];
 
             // If movie is being added from Popular or Search results,
@@ -46,9 +48,6 @@ export default class {
                 vote_average: movie["vote_average"],
                 genre_ids
             });
-        } else {
-            // Remove movie id if exists
-            this.movies.splice(movieIndex, 1);
         }
 
         localStorage.setItem("favoriteMovies", JSON.stringify(this.movies));

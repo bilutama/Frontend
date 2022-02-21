@@ -58,7 +58,7 @@ export default class {
     getMovieDetails(movieId, language) {
         return this.get(`${this.movieUrl}/${movieId}`, {
             api_key: this.apiKeyValue,
-            language,
+            language
         });
     }
 
