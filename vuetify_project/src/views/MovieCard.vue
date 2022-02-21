@@ -1,12 +1,12 @@
 <template>
   <v-card
       elevation="10"
-      :href="'/movie/'+movie['id']"
+      :href="'/movie/'+movie.id"
   >
     <v-app-bar
         color="#F0"
     >
-      <v-toolbar-title>{{ movie['title'] }}</v-toolbar-title>
+      <v-toolbar-title>{{ movie.title }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip top open-delay="700">
         <template v-slot:activator="{on}">
@@ -30,7 +30,7 @@
 
     <v-responsive :aspect-ratio="posterRatio">
       <v-img
-          v-if="movie['poster_path'] !== null"
+          v-if="movie.poster_path !== null"
           :src="posterPath"
           :aspect-ratio="posterRatio"
       ></v-img>

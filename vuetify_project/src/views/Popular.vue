@@ -75,7 +75,7 @@ export default {
       // Fetch movies from database
       handler() {
         this.service.getPopularMovies(this.currentPage).then(resultMovies => {
-          this.movies = resultMovies.data["results"];
+          this.movies = resultMovies.data.results;
         }).catch(err => {
           console.log(err);
         });

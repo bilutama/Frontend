@@ -52,7 +52,7 @@ export default {
     this.favoriteMovies = this.favoritesService.movies;
     this.imagesSourceBaseUrl = this.service.imagesSourceBaseUrl;
     this.service.getGenres()
-        .then(result => this.genresIds = result["data"]["genres"])
+        .then(result => this.genresIds = result.data.genres)
         .catch(err => console.log(err));
   },
 
@@ -62,17 +62,18 @@ export default {
         return "[Failed to load genres]";
       }
 
-      if (movie["genre_ids"].length === 0) {
+      if (movie.genre_ids.length === 0) {
         return "[Genre is not specified]";
       }
 
-      return movie["genre_ids"].map(genreId => this.genresIds.find(genre => genre["id"] === genreId)["name"])
+      return movie.genre_ids
+          .map(genreId => this.genresIds.find(genre => genre.id === genreId).name)
           .join(" · ")
           .toLowerCase();
     },
 
     getPosterPath(movie) {
-      return this.imagesSourceBaseUrl + movie["poster_path"];
+      return this.imagesSourceBaseUrl + movie.poster_path;
     },
 
     isFavorite(movie) {

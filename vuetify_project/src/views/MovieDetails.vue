@@ -5,7 +5,7 @@
         <v-card
             elevation="10">
           <v-responsive :aspect-ratio="0.75">
-            <v-img v-if="movie['poster_path'] !== null"
+            <v-img v-if="movie.poster_path !== null"
                    :src="imagesSource"
             >
             </v-img>
@@ -25,7 +25,7 @@
           <v-card-title
               class="text-h5"
           >
-            {{ movie['title'] }}
+            {{ movie.title }}
           </v-card-title>
           <v-card-subtitle
               class="text-subtitle-1 pb-0"
@@ -35,21 +35,21 @@
 
           <v-card-subtitle
               class="text-subtitle-1 pb-0"
-              v-if="movie['vote_count'] > 0"
+              v-if="movie.vote_count > 0"
           >
-            Rating: {{ movie['vote_average'] }} ({{ movie['vote_count'] }} votes)
+            Rating: {{ movie.vote_average }} ({{ movie.vote_count }} votes)
           </v-card-subtitle>
 
           <v-card-text
               class="text-subtitle-1 font-weight-light"
           >
-            Release date: {{ movie['release_date'] }}
+            Release date: {{ movie.release_date }}
           </v-card-text>
 
           <v-card-text
               class="text-subtitle-1 font-weight-light black--text"
           >
-            {{ movie['overview'] }}
+            {{ movie.overview }}
           </v-card-text>
 
           <v-card-actions>
@@ -132,21 +132,21 @@ export default {
       const movieId = this.$route.params.movieid;
 
       this.service.getMovieDetails(movieId).then(result => {
-        this.movie = result["data"];
+        this.movie = result.data;
       }).catch(err => {
         console.log(err);
       });
     },
 
     getPosterPath(movie) {
-      return (this.imagesSourceBaseUrl + movie["poster_path"]);
+      return (this.imagesSourceBaseUrl + movie.poster_path);
     },
 
     fetchRecommendedMovies() {
       const movieId = this.$route.params.movieid;
 
       this.service.getMovieRecommendations(movieId).then(result => {
-        this.recommendedMovies = result.data["results"];
+        this.recommendedMovies = result.data.results;
       }).catch(err => {
         console.log(err);
       });
@@ -166,8 +166,8 @@ export default {
       immediate: false,
 
       handler() {
-        this.imagesSource = this.service.imagesSourceFullUrl + this.movie["poster_path"];
-        this.genres = this.movie["genres"].map(item => item["name"]).join(", ");
+        this.imagesSource = this.service.imagesSourceFullUrl + this.movie.poster_path;
+        this.genres = this.movie.genres.map(item => item.name).join(", ");
       }
     }
   }

@@ -61,18 +61,19 @@ export default {
   methods: {
     navigate() {
       if (this.searchTerm !== this.$route.params.term) {
-        this.$router.push({params: {term: this.searchTerm}}, () => {
-        });
+        this.$router.push({params: {term: this.searchTerm}});
       }
     },
 
     fetchMovies() {
-      this.service.getMoviesBySearch(this.searchTerm, this.searchPage).then(resultMovies => {
-        this.movies = resultMovies.data["results"];
-        this.totalPages = resultMovies.data["total_pages"];
-      }).catch(err => {
-        console.log(err);
-      });
+      this.service.getMoviesBySearch(this.searchTerm, this.searchPage)
+          .then(resultMovies => {
+            this.movies = resultMovies.data.results;
+            this.totalPages = resultMovies.data.total_pages;
+          })
+          .catch(err => {
+            console.log(err);
+          });
     }
   },
 
