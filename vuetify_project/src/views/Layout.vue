@@ -2,11 +2,11 @@
   <v-row class="py-6">
     <v-col
         v-for="movie in movies"
-        :key="movie['id']"
+        :key="movie.id"
         :cols="adaptiveCols"
     >
       <MovieCard
-          :key="movie['id']"
+          :key="movie.id"
           :movie="movie"
           :is-favorite="isFavorite(movie)"
           @toggleFavorite="toggleMovieFavorite(movie)"

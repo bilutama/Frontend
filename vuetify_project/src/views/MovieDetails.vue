@@ -56,6 +56,7 @@
             <v-btn
                 :color="isFavorite(movie) ? 'pink' : 'grey lighten-2'"
                 text
+                elevation="2"
                 @click="toggleMovieFavorite(movie)"
             >
               <v-icon v-if="isFavorite(movie)">mdi-heart</v-icon>
@@ -79,10 +80,10 @@
           >
             <v-slide-item
                 v-for="movie in recommendedMovies"
-                :key="movie['id']"
+                :key="movie.id"
             >
               <v-card
-                  :href="'/movie/'+movie['id']"
+                  :href="'/movie/'+movie.id"
                   class="ma-1"
                   width="100"
               >
